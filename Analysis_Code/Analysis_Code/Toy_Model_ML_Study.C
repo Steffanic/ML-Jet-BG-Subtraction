@@ -107,10 +107,10 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   if( corrjet_bin == 1 ){
 
     if(Data){
-      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_PJ_10_30_FF_test2_DATA.root" , HF);
+      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_CB=%d_PJ_10_30_FF_test2_DATA.root" , HF , cent_bin);
     }
     else if(!Data){
-      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_PJ_10_30_FF_test2_RESPONSE.root" , HF);
+      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_CB=%d_PJ_10_30_FF_test2_RESPONSE.root" , HF , cent_bin);
     }
 
     jet_pT_cut_low = 10.;
@@ -122,10 +122,10 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   else if( corrjet_bin == 2){
 
     if(Data){
-      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_PJ_30_50_FF_test2_DATA.root" , HF);
+      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_CB=%d_PJ_30_50_FF_test2_DATA.root" , HF, cent_bin);
     }
     else if(!Data){
-      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_PJ_30_50_FF_test2_RESPONSE.root" , HF);
+      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_CB=%d_PJ_30_50_FF_test2_RESPONSE.root" , HF , cent_bin);
     }
 
     jet_pT_cut_low = 30.;
@@ -138,10 +138,10 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   else if( corrjet_bin == 3){
 
     if(Data){
-      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_PJ_50_70_FF_test2_DATA.root" , HF);
+      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_CB=%d_PJ_50_70_FF_test2_DATA.root" , HF , cent_bin);
     }
     else if(!Data){
-      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_PJ_50_70_FF_test2_RESPONSE.root" , HF);
+      sprintf(expression1 , "Background_And_Pythia_Test_3_HF=%d_CB=%d_PJ_50_70_FF_test2_RESPONSE.root" , HF, cent_bin);
     }
 
     jet_pT_cut_low = 50.;
@@ -740,11 +740,58 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   UInt_t seed6 = ((jobID+834)*33) + (timestamp->GetSec() - static_cast<Int_t> (1446000000)); // for file shuffling
 
+
+
+//____________________________________________________________________________________________________________________//
+
+//Patrick these are the lines for the TTree Christine wanted
+
+  char treestr[128];
+  sprintf( treestr , "Pythia_and_TennGen_HF_%d_CB_%d" , HF, cent_bin);
+  TTree *tree = new TTree(treestr,"TreeID");
+
+  //making variables for the tree branches (jet properties)
+  Float_t p_T_tree; //0th
+  Float_t Eta_tree; //1st
+  Float_t Phi_tree; //2nd
+  Float_t p_T_corr_tree; //3rd
+  Float_t N_Trk_tree; //4th
+  Float_t Angularity_tree; //5th
+  Float_t Mean_p_T_tree; //6th
+  Float_t p_T_1_tree; //7th
+  Float_t p_T_2_tree; //8th
+  Float_t p_T_3_tree; //9th
+  Float_t p_T_4_tree; //10th
+  Float_t p_T_5_tree; //11th
+  Float_t X_tru_tree; //12th
+
+
+  //Now add these branches to the trees
+
+   tree->Branch("pT",&p_T_tree,"pT/F");
+   tree->Branch("Eta",&Eta_tree,"Eta/F");
+   tree->Branch("Phi",&Phi_tree,"Phi/F");
+   tree->Branch("pTcorr",&p_T_corr_tree,"pTcorr/F");
+   tree->Branch("NTrk",&N_Trk_tree,"NTrk/F");
+   tree->Branch("Angularity",&Angularity_tree,"Angularity/F");
+   tree->Branch("MeanpT",&Mean_p_T_tree,"MeanpT/F");
+   tree->Branch("pT1",&p_T_1_tree,"pT1/F");
+   tree->Branch("pT2",&p_T_2_tree,"pT2/F");
+   tree->Branch("pT3",&p_T_3_tree,"pT3/F");
+   tree->Branch("pT4",&p_T_4_tree,"pT4/F");
+   tree->Branch("pT5",&p_T_5_tree,"pT5/F");
+   tree->Branch("XTru",&X_tru_tree,"XTru/F");
+
+
+
 //____________________________________________________________________________________________________________________//
 
   char filepathstr[512];
 
-  sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
+  //sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
+
+
+  sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
 
   //getcwd(filepathstr, sizeof(filepathstr));
 
@@ -1151,7 +1198,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           event_median = 0.;
         }
         
-        cout<<"\n\n\n|||||||||||||The median rho*area is = "<<event_median<<"||||||||||||||||||"<<endl;
+        cout<<"\n\n\n|||||||||||||The (true) median rho*area is = "<<event_median<<"||||||||||||||||||"<<endl;
         histmedianrhoebe_bgkd->Fill(event_median/(TMath::Pi()*Jet_Radius*Jet_Radius));
         rho_vec.clear();
 
@@ -1198,7 +1245,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           event_median_realistic = 0.;
         }
       }
-      cout<<"\n\n\n|||||||||||||The median rho*area (drop 2) is = "<<event_median_realistic<<"||||||||||||||||||"<<endl;
+      cout<<"\n\n\n|||||||||||||The (estimated) median rho*area (drop 2) is = "<<event_median_realistic<<"||||||||||||||||||"<<endl;
       histmedianrhoebe_pythia_AND_bkgd->Fill(event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius));
       rho_vec_TOTAL.clear();
 
@@ -1223,17 +1270,21 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           histpT_pytha_AND_bkgd_jet -> Fill(selected_jetsTOTAL_sorted[t_jet].pt());
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt()<<", ";
+          p_T_tree = selected_jetsTOTAL_sorted[t_jet].pt();
 
           histeta_pytha_AND_bkgd_jet -> Fill(selected_jetsTOTAL_sorted[t_jet].eta());
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].eta()<<", ";
+          Eta_tree = selected_jetsTOTAL_sorted[t_jet].eta();
 
           histphi_pytha_AND_bkgd_jet -> Fill(selected_jetsTOTAL_sorted[t_jet].phi());
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].phi()<<", ";
+          Phi_tree = selected_jetsTOTAL_sorted[t_jet].phi();
 
           histpT_area_corr_pytha_AND_bkgd_jet->Fill(selected_jetsTOTAL_sorted[t_jet].pt() - event_median_realistic );
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic<<", ";
+          p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic;
       
           vector <fastjet::PseudoJet> constituents_total = selected_jetsTOTAL_sorted[t_jet].constituents();
           vector <Double_t> total_constit_pT_vec;
@@ -1241,6 +1292,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           Int_t nPart_total = constituents_total.size();
           histnumtr_pytha_AND_bkgd_jet->Fill(constituents_total.size()); //number of consituents
           pbgOut<<constituents_total.size()<<", ";
+          N_Trk_tree = constituents_total.size();
 
           Double_t angularity_sum =0;
 
@@ -1285,17 +1337,24 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           histangularity_pytha_AND_bkgd_jet->Fill(angularity_sum);
 
           pbgOut<<angularity_sum<<", ";
+          Angularity_tree = angularity_sum;
 
           if(total_constit_pT_vec.size() > 0){
           
             histmeanpTtr_pytha_AND_bkgd_jet->Fill( std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size() ); //mean track pT in the jet
 
             pbgOut<<std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()<<", ";
+            Mean_p_T_tree = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
 
             std::sort(total_constit_pT_vec.begin(), total_constit_pT_vec.end()); //sorts least to greatest
             histldtr_pytha_AND_bkgd_jet->Fill(total_constit_pT_vec[total_constit_pT_vec.size() - 1]); // grab leading track in jet
 
             pbgOut<<total_constit_pT_vec[total_constit_pT_vec.size() - 1]<<", "<<total_constit_pT_vec[total_constit_pT_vec.size() - 2]<<", "<<total_constit_pT_vec[total_constit_pT_vec.size() - 3]<<", "<<total_constit_pT_vec[total_constit_pT_vec.size() - 4]<<", "<<total_constit_pT_vec[total_constit_pT_vec.size() - 5]<<", ";
+            p_T_1_tree = total_constit_pT_vec[total_constit_pT_vec.size() - 1];
+            p_T_2_tree = total_constit_pT_vec[total_constit_pT_vec.size() - 2];
+            p_T_3_tree = total_constit_pT_vec[total_constit_pT_vec.size() - 3];
+            p_T_4_tree = total_constit_pT_vec[total_constit_pT_vec.size() - 4];
+            p_T_5_tree = total_constit_pT_vec[total_constit_pT_vec.size() - 5];
 
 
             if(total_constit_pT_vec.size() > 1){
@@ -1307,11 +1366,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
             }
           } //end if check for total jet constit
           pbgOut<<X_tru<<endl;
+          X_tru_tree = X_tru;
            total_constit_pT_vec.clear();
           constituents_total.clear();
-
+          tree->Fill();
         } //end looping over the background + pythiajets
         pbgOut.close();
+        
       } //end if you have jets in the total
 
 
@@ -1439,6 +1500,10 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 //_______________________________________START OF BACKGROUND AND PYTHIA_________________________________________________________//
 
   background_and_pythia->cd();
+
+  tree->Write();
+
+  delete tree;
 
   histpythia_AND_bkgd_jets->Write();
 

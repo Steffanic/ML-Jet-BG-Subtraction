@@ -5,7 +5,8 @@ void maindriver_newton(Int_t nEvents = 100000000, Int_t jobID =39034, Int_t tune
 
 //________________load Pythia 6 and link to your library (libPythia6.s0)_________________________________________________//
 gSystem->Load("libEGPythia6");
-gSystem->Load("/home/alidock/ML/pythia6/libPythia6.so"); //change to your setup
+//gSystem->Load("/home/alidock/ML/pythia6/libPythia6.so"); //change to your setup
+gSystem->Load("/home/charles/Documents/alice_software/pythia6/libPythia6.so"); //change to your setup
   gSystem->Load("$PYTHIA6428/libPythia6"); //change to your setup
 
 //__________________________________________________________________________________________________//
