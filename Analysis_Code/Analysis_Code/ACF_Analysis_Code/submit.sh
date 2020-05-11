@@ -1,3 +1,3 @@
 #!/bin/bash
 
-qsub -v $1 submit.sge
+qsub -F "$1" submit.sge
