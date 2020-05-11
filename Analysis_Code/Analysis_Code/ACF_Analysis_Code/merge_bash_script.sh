@@ -9,7 +9,7 @@ do
    CSV_STR=$"$JOB_NUM"".csv"
 if [ -d $DIR_STR ]
 then
-hadd $FILE_STR $DIR_STR/3*/*.root
+hadd $FILE_STR $DIR_STR/3*/Background_And_Pythia*.root
 cat $DIR_STR/3*/*.csv > $CSV_STR
 fi
 done
