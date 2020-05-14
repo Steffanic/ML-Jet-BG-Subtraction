@@ -746,6 +746,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
 
+  //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
+
   //getcwd(filepathstr, sizeof(filepathstr));
 
   bkgd2->PassInSettings(filepathstr,  0 , 0 , 0 , seed6 );
@@ -1089,7 +1091,6 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           vector <Double_t> bkgd_constit_pT_vec;
 
           Int_t nPart_bkgd = constituents_bkgd.size();
-          histnumtr_bkgd_jet->Fill(constituents_bkgd.size()); //number of consituents
 
           Double_t angularity_sum_back =0;
         
@@ -1108,6 +1109,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
               angularity_sum_back += (delri_back * z);
             }
           }
+
+          histnumtr_bkgd_jet->Fill(bkgd_constit_pT_vec.size()); //number of consituents
 
           constituents_bkgd.clear(); 
           histangularity_bkgd_jet->Fill(angularity_sum_back);
@@ -1239,8 +1242,6 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           vector <Double_t> total_constit_pT_vec;
 
           Int_t nPart_total = constituents_total.size();
-          histnumtr_pytha_AND_bkgd_jet->Fill(constituents_total.size()); //number of consituents
-          pbgOut<<constituents_total.size()<<", ";
 
           Double_t angularity_sum =0;
 
@@ -1266,21 +1267,32 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
             }
           }
 
+          pbgOut<<total_constit_pT_vec.size()<<", ";
+          histnumtr_pytha_AND_bkgd_jet->Fill(total_constit_pT_vec.size()); //number of constituents
+
           Double_t X_tru = tru_sum/total_constit_pT_vec.size();
           Double_t X_fake = fake_sum/total_constit_pT_vec.size();
 
           //cout<<"\ntrusum = "<<tru_sum<<" jet size (no ghosts) = "<<total_constit_pT_vec.size()<<" Xtru = "<<X_tru<<endl;
           //cout<<"fakesum = "<<fake_sum<<" jet size (no ghosts) = "<<total_constit_pT_vec.size()<<" Xfake = "<<X_fake<<endl;
 
-          histX_pythia_tru_pythia_AND_bkgd->Fill(X_tru);
+          histX_pythia_tru_pythia_AND_bkgd->Fill((X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt());
 
+/* commenting out debug lines, so Patrick ignore these
+          if( (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt() > 1 ){
+            cout<<"____________________________________________________________________________"<<endl;
+            cout<<"\n\n\n\n\nYou had a real X_tru > 1, THAT SHOULD NOT BE POSSIBLE !!!\n\n\n\n\n"<<endl;
+            cout<<"____________________________________________________________________________"<<endl;
+            break;
+          }
+*/
           Int_t label = X_tru<0.1?0:X_tru<0.5?1:X_tru<0.9?2:3;//0-fake, 1-mostly fake, 2-mostly real, 3-real
 
           
 
           histX_pythia_tru_pythia_AND_bkgd_jet_pT_raw->Fill(X_tru, selected_jetsTOTAL_sorted[t_jet].pt());
 
-          histX_bkgd_fake_pythia_AND_bkgd->Fill(X_fake);
+          histX_bkgd_fake_pythia_AND_bkgd->Fill((X_fake*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt());
 
           histangularity_pytha_AND_bkgd_jet->Fill(angularity_sum);
 
