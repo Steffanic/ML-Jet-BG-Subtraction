@@ -91,7 +91,7 @@ int HEADER__=1;
 // constit_cut - for pythia + bkgd jets
 // Data - file naming
 // RT_Stats - use to get a feel for how long events take
-void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Radius, Int_t HF , Double_t DCA , Int_t cent_bin , Int_t corrjet_bin , Double_t constit_cut, Bool_t Data = kTRUE, Bool_t RT_Stats = kFALSE ){
+void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Radius, Int_t HF , Double_t DCA , Int_t cent_bin , Int_t corrjet_bin , Double_t constit_cut, Bool_t Data = kTRUE, Bool_t RT_Stats = kFALSE , Bool_t GRID = kFALSE ){
 
   //Int_t HF = 0; // set harmonics flag (0 : v1 - v5) , (1 : v2 - v5) , (2: v3 - v5) , (3: v1 - v4) , (4: v1 - v3) , (5: no vn, uniform phi) , (6: v1 - v2 , v4 - v5) , (7: v1 -v3 , v5) , (8: v1 , v3 - v5) , (9: v1 only) , (10: v2 only) , (11: v3 only) , (12: v4 only) , (13: v5 only)
 
@@ -861,11 +861,17 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   char filepathstr[512];
 
-  sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
+  if( !GRID ){
 
-  //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
+    sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");s
+    //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
 
-  //getcwd(filepathstr, sizeof(filepathstr));
+  }
+  else if( GRID ){
+
+   getcwd(filepathstr, sizeof(filepathstr));
+
+  }
 
   bkgd2->PassInSettings(filepathstr,  0 , 0 , 0 , seed6 );
   bkgd2->Load();
