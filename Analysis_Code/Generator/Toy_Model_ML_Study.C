@@ -1082,6 +1082,10 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         cout<<"you got the new background event\n\n"<<endl;
       } 
 
+      if( num_background_events == 1){ // you have not yet called the background, therefore not filled the XL file !!!
+        remove( "pbgOut.csv" );
+      }
+
       histbackground_events->Fill(1.00);
 
       Double_t mass;
