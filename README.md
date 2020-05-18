@@ -9,5 +9,5 @@ The code also requires Pythia 6 which is included in the git, but there is no ex
 
 The machine learning requires python3 and a couple of libraries that can be installed via pip
 
-'pip3 install pandas matplotlib numpy sklearn'
+`pip3 install pandas matplotlib numpy sklearn`
 
