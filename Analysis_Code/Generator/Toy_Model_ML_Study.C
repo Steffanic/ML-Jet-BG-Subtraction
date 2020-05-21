@@ -74,7 +74,7 @@ using namespace fastjet;
 #endif
 class TPythia6;
 		
-
+Double_t RelativePhi(Double_t Jphi, Double_t constit_phi, Double_t Rparam) ; //declaring function to calculate azimuthal separation between jet axis phi and jet constit phi
 //class BackgroundGenerator;
 
 //#include "TPythia8.h"
@@ -177,9 +177,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   char expression14[256];
   char expression15[256];
 
-  sprintf(expression2, "p_{T} distribution of all anti-k_{T} Pythia Particles with |#eta| < 0.9" );
-  sprintf(expression3, "#eta distribution of all anti-k_{T} Pythia Particles with |#eta| < 0.9" );
-  sprintf(expression4, "#phi distribution of all anti-k_{T} Pythia Particles with |#eta| < 0.9" );
+  sprintf(expression2, "p_{T} distribution of all Pythia Particles with |#eta| < 0.9" );
+  sprintf(expression3, "#eta distribution of all Pythia Particles with |#eta| < 0.9" );
+  sprintf(expression4, "#phi distribution of all Pythia Particles with |#eta| < 0.9" );
 
   sprintf(expression5, "p_{T} distribution of all anti-k_{T} Pythia Jets %lf - %lf GeV/c with |#eta| < %lf", jet_pT_cut_low, jet_pT_cut_high , 0.9 - Jet_Radius  );
   sprintf(expression6, "#eta distribution of all anti-k_{T} Pythia Jets %lf - %lf GeV/c with |#eta| < %lf", jet_pT_cut_low, jet_pT_cut_high , 0.9 - Jet_Radius);
@@ -241,7 +241,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histmeanpTtr_pyth_jet->SetXTitle("<p_{T}^{track}> (GeV/c)");
   histmeanpTtr_pyth_jet->SetYTitle("dN/d<p_{T}^{track}>");
 
-  TH1D *histangularity_pyth_jet = new TH1D("histangularity_pyth_jet", expression10,100,0.,10.);
+  TH1D *histangularity_pyth_jet = new TH1D("histangularity_pyth_jet", expression10,100,-0.5,Jet_Radius + 0.5);
   histangularity_pyth_jet -> Sumw2();
   histangularity_pyth_jet->SetXTitle("g (#phi - #eta distance units)");
   histangularity_pyth_jet->SetYTitle("dN/dg");
@@ -271,25 +271,42 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histlesub_pyth_jet->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
   histlesub_pyth_jet->SetYTitle("dN/dLeSub");
 
+  TH2D *hist_diagnostic_jet_cone_pyth_jet = new TH2D("hist_diagnostic_jet_cone_pyth_jet" , "Diagnostic Test of distribution of particles in pythia only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_pyth_jet -> Sumw2();
+  hist_diagnostic_jet_cone_pyth_jet->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_pyth_jet->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
 //___________________________________BACKGROUND ONLY PARTICLES_________________________________//
 
   TH1D *histbackground_events = new TH1D( "histbackground_events" , "Number of background Events" , 1 , 0.5 , 1.5 );
-  TH1D *histbackground_jets = new TH1D( "histbackground_jets" , "Number of background Jets" , 1 , 0.5 , 1.5 );
+  TH1D *histbackground_kT_jets = new TH1D( "histbackground_kT_jets" , "Number of k_{T} background Jets" , 1 , 0.5 , 1.5 );
+  TH1D *histbackground_antikT_jets = new TH1D( "histbackground_antikT_jets" , "Number of anti-k_{T} background Jets" , 1 , 0.5 , 1.5 );
 
   char expression16[256];
   char expression17[256];
   char expression18[256];
   char expression19[256];
+  char expression19a[256];
   char expression20[256];
+  char expression20a[256];
   char expression21[256];
+  char expression21a[256];
   char expression22[256];
+  char expression22a[256];
   char expression23[256];
+  char expression23a[256];
   char expression24[256];
+  char expression24a[256];
   char expression25[256];
+  char expression25a[256];
   char expression26[256];
+  char expression26a[256];
   char expression27[256];
+  char expression27a[256];
   char expression28[256];
+  char expression28a[256];
   char expression29[256];
+  char expression29a[256];
 
   char expression30[256];
   char expression31[256];
@@ -299,24 +316,35 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   char expression35[256];
 
-  sprintf(expression16, "p_{T} distribution of all k_{T} Background Particles with |#eta| < 0.9" );
-  sprintf(expression17, "#eta distribution of all k_{T} Background Particles with |#eta| < 0.9" );
-  sprintf(expression18, "#phi distribution of all k_{T} Background Particles with |#eta| < 0.9" );
+  sprintf(expression16, "p_{T} distribution of all Background Particles with |#eta| < 0.9" );
+  sprintf(expression17, "#eta distribution of all Background Particles with |#eta| < 0.9" );
+  sprintf(expression18, "#phi distribution of all Background Particles with |#eta| < 0.9" );
 
   sprintf(expression19, "p_{T} distribution of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius  );
+  sprintf(expression19a, "p_{T} distribution of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius  );
   sprintf(expression20, "#eta distribution of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius);
+  sprintf(expression20a, "#eta distribution of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius);
   sprintf(expression21, "#phi distribution of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression21a, "#phi distribution of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
 
   sprintf(expression22, "Number of tracks for all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius  );
+  sprintf(expression22a, "Number of tracks for all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius  );
   sprintf(expression23, "Mean track p_{T} (<p_{T}>) of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius);
+  sprintf(expression23a, "Mean track p_{T} (<p_{T}>) of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius);
   sprintf(expression24, "Jet Angularity of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression24a, "Jet Angularity of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
 
   sprintf(expression25, "Leading Track p_{T} of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression25a, "Leading Track p_{T} of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
   sprintf(expression26, "Sub-Leading Track p_{T} of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression26a, "Sub-Leading Track p_{T} of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
   sprintf(expression27, "3rd Leading Track p_{T} of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression27a, "3rd Leading Track p_{T} of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
 
   sprintf(expression28, "Raw Fragmentation Function of all k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression28a, "Raw Fragmentation Function of all anti-k_{T} Background Jets %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
   sprintf(expression29, "LeSub of all k_{T} Background Jets, %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
+  sprintf(expression29a, "LeSub of all anti-k_{T} Background Jets, %lf - %lf GeV/c with |#eta| < %lf", constit_cut, 1000. , 0.9 - Jet_Radius );
 
   sprintf(expression30, "Reconstructed #Psi_{1}^{EP} distribution for background particles");
   sprintf(expression31, "Reconstructed #Psi_{2}^{EP} distribution for background particles");
@@ -345,62 +373,127 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 //______________________________________________________________//
 
-  TH1D *histpT_bkgd_jet = new TH1D("histpT_bkgd_jet", expression19,100,0.,100.);
-  histpT_bkgd_jet -> Sumw2();
-  histpT_bkgd_jet->SetXTitle("p_{T} (GeV/c)");
-  histpT_bkgd_jet->SetYTitle("dN/dp_{T} (GeV/c)");
+  TH1D *histpT_bkgd_jet_kT = new TH1D("histpT_bkgd_jet_kT", expression19,100,0.,100.);
+  histpT_bkgd_jet_kT -> Sumw2();
+  histpT_bkgd_jet_kT->SetXTitle("p_{T} (GeV/c)");
+  histpT_bkgd_jet_kT->SetYTitle("dN/dp_{T} (GeV/c)");
 
-  TH1D *histeta_bkgd_jet = new TH1D("histeta_bkgd_jet", expression20,100,-0.9,0.9);
-  histeta_bkgd_jet -> Sumw2();
-  histeta_bkgd_jet->SetXTitle("#eta^{jet} (pseudo-rap units)");
-  histeta_bkgd_jet->SetYTitle("dN/d#eta");
+  TH1D *histpT_bkgd_jet_antikT = new TH1D("histpT_bkgd_jet_antikT", expression19a,100,0.,100.);
+  histpT_bkgd_jet_antikT -> Sumw2();
+  histpT_bkgd_jet_antikT->SetXTitle("p_{T} (GeV/c)");
+  histpT_bkgd_jet_antikT->SetYTitle("dN/dp_{T} (GeV/c)");
 
-  TH1D *histphi_bkgd_jet = new TH1D("histphi_bkgd_jet", expression21,100,0.,2.*TMath::Pi());
-  histphi_bkgd_jet -> Sumw2();
-  histphi_bkgd_jet->SetXTitle("#phi)^{jet} (radians)");
-  histphi_bkgd_jet->SetYTitle("dN/d#phi");
+  TH1D *histeta_bkgd_jet_kT = new TH1D("histeta_bkgd_jet_kT", expression20,100,-0.9,0.9);
+  histeta_bkgd_jet_kT -> Sumw2();
+  histeta_bkgd_jet_kT->SetXTitle("#eta^{jet} (pseudo-rap units)");
+  histeta_bkgd_jet_kT->SetYTitle("dN/d#eta");
+
+  TH1D *histeta_bkgd_jet_antikT = new TH1D("histeta_bkgd_jet_antikT", expression20a,100,-0.9,0.9);
+  histeta_bkgd_jet_antikT -> Sumw2();
+  histeta_bkgd_jet_antikT->SetXTitle("#eta^{jet} (pseudo-rap units)");
+  histeta_bkgd_jet_antikT->SetYTitle("dN/d#eta");
+
+  TH1D *histphi_bkgd_jet_kT = new TH1D("histphi_bkgd_jet_kT", expression21,100,0.,2.*TMath::Pi());
+  histphi_bkgd_jet_kT -> Sumw2();
+  histphi_bkgd_jet_kT->SetXTitle("#phi)^{jet} (radians)");
+  histphi_bkgd_jet_kT->SetYTitle("dN/d#phi");
+
+  TH1D *histphi_bkgd_jet_antikT = new TH1D("histphi_bkgd_jet_antikT", expression21a,100,0.,2.*TMath::Pi());
+  histphi_bkgd_jet_antikT -> Sumw2();
+  histphi_bkgd_jet_antikT->SetXTitle("#phi)^{jet} (radians)");
+  histphi_bkgd_jet_antikT->SetYTitle("dN/d#phi");
 
 //______________________________________________________________//
 
-  TH1D *histnumtr_bkgd_jet = new TH1D("histnumtr_bkgd_jet", expression22,500,0,500);
-  histnumtr_bkgd_jet -> Sumw2();
-  histnumtr_bkgd_jet->SetXTitle("N_{tracks}");
-  histnumtr_bkgd_jet->SetYTitle("dN/dN_{tracks}");
+  TH1D *histnumtr_bkgd_jet_kT = new TH1D("histnumtr_bkgd_jet_kT", expression22,500,0,500);
+  histnumtr_bkgd_jet_kT -> Sumw2();
+  histnumtr_bkgd_jet_kT->SetXTitle("N_{tracks}");
+  histnumtr_bkgd_jet_kT->SetYTitle("dN/dN_{tracks}");
 
-  TH1D *histmeanpTtr_bkgd_jet = new TH1D("histmeanpTtr_bkgd_jet", expression23,100,0,10);
-  histmeanpTtr_bkgd_jet -> Sumw2();
-  histmeanpTtr_bkgd_jet->SetXTitle("<p_{T}^{track}> (GeV/c)");
-  histmeanpTtr_bkgd_jet->SetYTitle("dN/d<p_{T}^{track}>");
+  TH1D *histnumtr_bkgd_jet_antikT = new TH1D("histnumtr_bkgd_jet_antikT", expression22a,500,0,500);
+  histnumtr_bkgd_jet_antikT -> Sumw2();
+  histnumtr_bkgd_jet_antikT->SetXTitle("N_{tracks}");
+  histnumtr_bkgd_jet_antikT->SetYTitle("dN/dN_{tracks}");
 
-  TH1D *histangularity_bkgd_jet = new TH1D("histangularity_bkgd_jet", expression24,100,0.,10.);
-  histangularity_bkgd_jet -> Sumw2();
-  histangularity_bkgd_jet->SetXTitle("g (#phi - #eta distance units)");
-  histangularity_bkgd_jet->SetYTitle("dN/dg");
+  TH1D *histmeanpTtr_bkgd_jet_kT = new TH1D("histmeanpTtr_bkgd_jet_kT", expression23,100,0,10);
+  histmeanpTtr_bkgd_jet_kT -> Sumw2();
+  histmeanpTtr_bkgd_jet_kT->SetXTitle("<p_{T}^{track}> (GeV/c)");
+  histmeanpTtr_bkgd_jet_kT->SetYTitle("dN/d<p_{T}^{track}>");
 
-  TH1D *histldtr_bkgd_jet = new TH1D("histldtr_bkgd_jet", expression25,100,0.,10.);
-  histldtr_bkgd_jet -> Sumw2();
-  histldtr_bkgd_jet->SetXTitle("p_{T}^{ld. tr.} (GeV/c)");
-  histldtr_bkgd_jet->SetYTitle("dN/dp_{T}^{ld. tr.} ");
+  TH1D *histmeanpTtr_bkgd_jet_antikT = new TH1D("histmeanpTtr_bkgd_jet_antikT", expression23a,100,0,10);
+  histmeanpTtr_bkgd_jet_antikT -> Sumw2();
+  histmeanpTtr_bkgd_jet_antikT->SetXTitle("<p_{T}^{track}> (GeV/c)");
+  histmeanpTtr_bkgd_jet_antikT->SetYTitle("dN/d<p_{T}^{track}>");
 
-  TH1D *histsubldtr_bkgd_jet = new TH1D("histsubldtr_bkgd_jet", expression26,100,0.,10.);
-  histsubldtr_bkgd_jet -> Sumw2();
-  histsubldtr_bkgd_jet->SetXTitle("p_{T}^{sub-ld. tr.} (GeV/c)");
-  histsubldtr_bkgd_jet->SetYTitle("dN/dp_{T}^{sub-ld. tr.}");
+  TH1D *histangularity_bkgd_jet_kT = new TH1D("histangularity_bkgd_jet_kT", expression24,100,-0.5,Jet_Radius + 0.5);
+  histangularity_bkgd_jet_kT -> Sumw2();
+  histangularity_bkgd_jet_kT->SetXTitle("g (#phi - #eta distance units)");
+  histangularity_bkgd_jet_kT->SetYTitle("dN/dg");
 
-  TH1D *histthrdldtr_bkgd_jet = new TH1D("histthrdldtr_bkgd_jet", expression27,100,0.,10.);
-  histthrdldtr_bkgd_jet -> Sumw2();
-  histthrdldtr_bkgd_jet->SetXTitle("p_{T}^{3rd-ld. tr.} (GeV/c");
-  histthrdldtr_bkgd_jet->SetYTitle("dN/dp_{T}^{3rd-ld. tr.}");
+  TH1D *histangularity_bkgd_jet_antikT = new TH1D("histangularity_bkgd_jet_antikT", expression24a,100,-0.5,Jet_Radius + 0.5);
+  histangularity_bkgd_jet_antikT -> Sumw2();
+  histangularity_bkgd_jet_antikT->SetXTitle("g (#phi - #eta distance units)");
+  histangularity_bkgd_jet_antikT->SetYTitle("dN/dg");
 
-  TH1D *histFF_bkgd_jet = new TH1D("histFF_bkgd_jet", expression28,100,0.,1.);
-  histFF_bkgd_jet -> Sumw2();
-  histFF_bkgd_jet->SetXTitle("z");
-  histFF_bkgd_jet->SetYTitle("dN/dz");
+  TH1D *histldtr_bkgd_jet_kT = new TH1D("histldtr_bkgd_jet_kT", expression25,100,0.,10.);
+  histldtr_bkgd_jet_kT -> Sumw2();
+  histldtr_bkgd_jet_kT->SetXTitle("p_{T}^{ld. tr.} (GeV/c)");
+  histldtr_bkgd_jet_kT->SetYTitle("dN/dp_{T}^{ld. tr.} ");
 
-  TH1D *histlesub_bkgd_jet = new TH1D("histlesub_bkgd_jet", expression29,100,0.,10.);
-  histlesub_bkgd_jet -> Sumw2();
-  histlesub_bkgd_jet->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
-  histlesub_bkgd_jet->SetYTitle("dN/dLeSub");
+  TH1D *histldtr_bkgd_jet_antikT = new TH1D("histldtr_bkgd_jet_antikT", expression25a,100,0.,10.);
+  histldtr_bkgd_jet_antikT -> Sumw2();
+  histldtr_bkgd_jet_antikT->SetXTitle("p_{T}^{ld. tr.} (GeV/c)");
+  histldtr_bkgd_jet_antikT->SetYTitle("dN/dp_{T}^{ld. tr.} ");
+
+  TH1D *histsubldtr_bkgd_jet_kT = new TH1D("histsubldtr_bkgd_jet_kT", expression26,100,0.,10.);
+  histsubldtr_bkgd_jet_kT -> Sumw2();
+  histsubldtr_bkgd_jet_kT->SetXTitle("p_{T}^{sub-ld. tr.} (GeV/c)");
+  histsubldtr_bkgd_jet_kT->SetYTitle("dN/dp_{T}^{sub-ld. tr.}");
+
+  TH1D *histsubldtr_bkgd_jet_antikT = new TH1D("histsubldtr_bkgd_jet_antikT", expression26a,100,0.,10.);
+  histsubldtr_bkgd_jet_antikT -> Sumw2();
+  histsubldtr_bkgd_jet_antikT->SetXTitle("p_{T}^{sub-ld. tr.} (GeV/c)");
+  histsubldtr_bkgd_jet_antikT->SetYTitle("dN/dp_{T}^{sub-ld. tr.}");
+
+  TH1D *histthrdldtr_bkgd_jet_kT = new TH1D("histthrdldtr_bkgd_jet_kT", expression27,100,0.,10.);
+  histthrdldtr_bkgd_jet_kT -> Sumw2();
+  histthrdldtr_bkgd_jet_kT->SetXTitle("p_{T}^{3rd-ld. tr.} (GeV/c");
+  histthrdldtr_bkgd_jet_kT->SetYTitle("dN/dp_{T}^{3rd-ld. tr.}");
+
+  TH1D *histthrdldtr_bkgd_jet_antikT = new TH1D("histthrdldtr_bkgd_jet_antikT", expression27a,100,0.,10.);
+  histthrdldtr_bkgd_jet_antikT -> Sumw2();
+  histthrdldtr_bkgd_jet_antikT->SetXTitle("p_{T}^{3rd-ld. tr.} (GeV/c");
+  histthrdldtr_bkgd_jet_antikT->SetYTitle("dN/dp_{T}^{3rd-ld. tr.}");
+
+  TH1D *histFF_bkgd_jet_kT = new TH1D("histFF_bkgd_jet_kT", expression28,100,0.,1.);
+  histFF_bkgd_jet_kT -> Sumw2();
+  histFF_bkgd_jet_kT->SetXTitle("z");
+  histFF_bkgd_jet_kT->SetYTitle("dN/dz");
+
+  TH1D *histFF_bkgd_jet_antikT = new TH1D("histFF_bkgd_jet_antikT", expression28a,100,0.,1.);
+  histFF_bkgd_jet_antikT -> Sumw2();
+  histFF_bkgd_jet_antikT->SetXTitle("z");
+  histFF_bkgd_jet_antikT->SetYTitle("dN/dz");
+
+  TH1D *histlesub_bkgd_jet_kT = new TH1D("histlesub_bkgd_jet_kT", expression29,100,0.,10.);
+  histlesub_bkgd_jet_kT -> Sumw2();
+  histlesub_bkgd_jet_kT->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
+  histlesub_bkgd_jet_kT->SetYTitle("dN/dLeSub");
+
+  TH1D *histlesub_bkgd_jet_antikT = new TH1D("histlesub_bkgd_jet_antikT", expression29a,100,0.,10.);
+  histlesub_bkgd_jet_antikT -> Sumw2();
+  histlesub_bkgd_jet_antikT->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
+  histlesub_bkgd_jet_antikT->SetYTitle("dN/dLeSub");
+
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_kT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_kT" , "Diagnostic Test of distribution of particles in background only k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_bkgd_jet_kT -> Sumw2();
+  hist_diagnostic_jet_cone_bkgd_jet_kT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_bkgd_jet_kT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_antikT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_antikT" , "Diagnostic Test of distribution of particles in background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_bkgd_jet_antikT -> Sumw2();
+  hist_diagnostic_jet_cone_bkgd_jet_antikT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_bkgd_jet_antikT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
 
 //____________________________EVENT PLANES___________________________________________________________//
 
@@ -540,7 +633,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histmeanpTtr_pytha_AND_bkgd_jet->SetXTitle("<p_{T}^{track}> (GeV/c)");
   histmeanpTtr_pytha_AND_bkgd_jet->SetYTitle("dN/d<p_{T}^{track}>");
 
-  TH1D *histangularity_pytha_AND_bkgd_jet = new TH1D("histangularity_pytha_AND_bkgd_jet", expression45,100,0.,10.);
+  TH1D *histangularity_pytha_AND_bkgd_jet = new TH1D("histangularity_pytha_AND_bkgd_jet", expression45,100,-0.5,Jet_Radius + 0.5);
   histangularity_pytha_AND_bkgd_jet -> Sumw2();
   histangularity_pytha_AND_bkgd_jet->SetXTitle("g (#phi - #eta distance units)");
   histangularity_pytha_AND_bkgd_jet->SetYTitle("dN/dg");
@@ -569,6 +662,11 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histlesub_pytha_AND_bkgd_jet -> Sumw2();
   histlesub_pytha_AND_bkgd_jet->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
   histlesub_pytha_AND_bkgd_jet->SetYTitle("dN/dLeSub");
+
+  TH2D *hist_diagnostic_jet_cone_pythia_AND_bkgd_jet = new TH2D("hist_diagnostic_jet_cone_pythia_AND_bkgd_jet" , "Diagnostic Test of distribution of particles in pythia + background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet -> Sumw2();
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
 
 //______________________________________________________
 
@@ -637,13 +735,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   //initializing run time stats
 
-  Int_t* time_array;
-  Int_t* time_interval_array;
-  Int_t* event_array;
+  //Int_t* time_array;
+  //Int_t* time_interval_array;
+  //Int_t* event_array;
 
-  time_array = new Int_t[nEvents + 1];
-  time_interval_array = new Int_t[nEvents];
-  event_array = new Int_t[nEvents];
+  std::vector<Int_t> time_array;
+  //time_array = new Int_t[nEvents + 1];
+
 
   ///////////////////////////////////////////////////////////////////////
   //Creating a Jet Definition, choosing a Jet Algorithm
@@ -717,7 +815,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   TDatime *time = new TDatime(); //creating new time stamp
   cout<< "\n\nStart Time is " << time->GetTime() <<"\n\n\n" <<endl;
-  time_array[0] = ((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
+  time_array.push_back((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
 
   Int_t user_index = 0;
 
@@ -739,6 +837,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   BkgrLoad *bkgd2 = new BkgrLoad();
 
   UInt_t seed6 = ((jobID+834)*33) + (timestamp->GetSec() - static_cast<Int_t> (1446000000)); // for file shuffling
+
+  TFile *ff = new TFile(expression1,"RECREATE"); //make output files and directories
+  TDirectory *pythia_only = ff->mkdir("pythia_only");
+  TDirectory *background_only = ff->mkdir("background_only");
+  TDirectory *background_and_pythia = ff->mkdir("background_and_pythia");
+  TDirectory *Run_Time_Stats = ff->mkdir("Run_Time_Stats");
+
 
 //____________________________________________________________________________________________________________________//
 
@@ -784,11 +889,14 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 
 //_______________________________________________________//
-  char bkgd_treestr[128];
-  sprintf( bkgd_treestr , "TennGen_HF_%d_CB_%d" , HF, cent_bin);
-  TTree *tree_bkgd = new TTree(bkgd_treestr,"tree_bkgd");
 
-  //making variables for the tree branches (TennGen jet properties)
+
+  //___________________kT below______________________//
+  char bkgd_kt_treestr[128];
+  sprintf( bkgd_kt_treestr , "TennGen_kT_HF_%d_CB_%d" , HF, cent_bin);
+  TTree *tree_bkgd_kt = new TTree(bkgd_kt_treestr,"tree_bkgd_kt");
+
+  //making variables for the tree branches (TennGen kT jet properties)
   Float_t p_T_tree_bkgd; //0th
   Float_t Eta_tree_bkgd; //1st
   Float_t Phi_tree_bkgd; //2nd
@@ -806,19 +914,60 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   //Now add these branches to the trees
 
-   tree_bkgd->Branch("pT",&p_T_tree_bkgd,"pT/F");
-   tree_bkgd->Branch("Eta",&Eta_tree_bkgd,"Eta/F");
-   tree_bkgd->Branch("Phi",&Phi_tree_bkgd,"Phi/F");
-   tree_bkgd->Branch("pTcorr",&p_T_corr_tree_bkgd,"pTcorr/F");
-   tree_bkgd->Branch("NTrk",&N_Trk_tree_bkgd,"NTrk/F");
-   tree_bkgd->Branch("Angularity",&Angularity_tree_bkgd,"Angularity/F");
-   tree_bkgd->Branch("MeanpT",&Mean_p_T_tree_bkgd,"MeanpT/F");
-   tree_bkgd->Branch("pT1",&p_T_1_tree_bkgd,"pT1/F");
-   tree_bkgd->Branch("pT2",&p_T_2_tree_bkgd,"pT2/F");
-   tree_bkgd->Branch("pT3",&p_T_3_tree_bkgd,"pT3/F");
-   tree_bkgd->Branch("pT4",&p_T_4_tree_bkgd,"pT4/F");
-   tree_bkgd->Branch("pT5",&p_T_5_tree_bkgd,"pT5/F");
-   tree_bkgd->Branch("XTru",&X_tru_tree_bkgd,"XTru/F");
+   tree_bkgd_kt->Branch("pT",&p_T_tree_bkgd,"pT/F");
+   tree_bkgd_kt->Branch("Eta",&Eta_tree_bkgd,"Eta/F");
+   tree_bkgd_kt->Branch("Phi",&Phi_tree_bkgd,"Phi/F");
+   tree_bkgd_kt->Branch("pTcorr",&p_T_corr_tree_bkgd,"pTcorr/F");
+   tree_bkgd_kt->Branch("NTrk",&N_Trk_tree_bkgd,"NTrk/F");
+   tree_bkgd_kt->Branch("Angularity",&Angularity_tree_bkgd,"Angularity/F");
+   tree_bkgd_kt->Branch("MeanpT",&Mean_p_T_tree_bkgd,"MeanpT/F");
+   tree_bkgd_kt->Branch("pT1",&p_T_1_tree_bkgd,"pT1/F");
+   tree_bkgd_kt->Branch("pT2",&p_T_2_tree_bkgd,"pT2/F");
+   tree_bkgd_kt->Branch("pT3",&p_T_3_tree_bkgd,"pT3/F");
+   tree_bkgd_kt->Branch("pT4",&p_T_4_tree_bkgd,"pT4/F");
+   tree_bkgd_kt->Branch("pT5",&p_T_5_tree_bkgd,"pT5/F");
+   tree_bkgd_kt->Branch("XTru",&X_tru_tree_bkgd,"XTru/F");
+
+   //_______________antikT below______________________//
+  char bkgd_antikt_treestr[128];
+  sprintf( bkgd_antikt_treestr , "TennGen_antikT_HF_%d_CB_%d" , HF, cent_bin);
+  TTree *tree_bkgd_antikt = new TTree(bkgd_antikt_treestr,"tree_bkgd_antikt");
+
+  //making variables for the tree branches (TennGen kT jet properties)
+  Float_t p_T_tree_antikt_bkgd; //0th
+  Float_t Eta_tree_antikt_bkgd; //1st
+  Float_t Phi_tree_antikt_bkgd; //2nd
+  Float_t p_T_corr_tree_antikt_bkgd; //3rd
+  Float_t N_Trk_tree_antikt_bkgd; //4th
+  Float_t Angularity_tree_antikt_bkgd; //5th
+  Float_t Mean_p_T_tree_antikt_bkgd; //6th
+  Float_t p_T_1_tree_antikt_bkgd; //7th
+  Float_t p_T_2_tree_antikt_bkgd; //8th
+  Float_t p_T_3_tree_antikt_bkgd; //9th
+  Float_t p_T_4_tree_antikt_bkgd; //10th
+  Float_t p_T_5_tree_antikt_bkgd; //11th
+  Float_t X_tru_tree_antikt_bkgd; //12th
+
+
+  //Now add these branches to the trees
+
+   tree_bkgd_antikt->Branch("pT",&p_T_tree_antikt_bkgd,"pT/F");
+   tree_bkgd_antikt->Branch("Eta",&Eta_tree_antikt_bkgd,"Eta/F");
+   tree_bkgd_antikt->Branch("Phi",&Phi_tree_antikt_bkgd,"Phi/F");
+   tree_bkgd_antikt->Branch("pTcorr",&p_T_corr_tree_antikt_bkgd,"pTcorr/F");
+   tree_bkgd_antikt->Branch("NTrk",&N_Trk_tree_antikt_bkgd,"NTrk/F");
+   tree_bkgd_antikt->Branch("Angularity",&Angularity_tree_antikt_bkgd,"Angularity/F");
+   tree_bkgd_antikt->Branch("MeanpT",&Mean_p_T_tree_antikt_bkgd,"MeanpT/F");
+   tree_bkgd_antikt->Branch("pT1",&p_T_1_tree_antikt_bkgd,"pT1/F");
+   tree_bkgd_antikt->Branch("pT2",&p_T_2_tree_antikt_bkgd,"pT2/F");
+   tree_bkgd_antikt->Branch("pT3",&p_T_3_tree_antikt_bkgd,"pT3/F");
+   tree_bkgd_antikt->Branch("pT4",&p_T_4_tree_antikt_bkgd,"pT4/F");
+   tree_bkgd_antikt->Branch("pT5",&p_T_5_tree_antikt_bkgd,"pT5/F");
+   tree_bkgd_antikt->Branch("XTru",&X_tru_tree_antikt_bkgd,"XTru/F");
+
+
+
+
 //___________________________________________________________________________________//
   char treestr[128];
   sprintf( treestr , "Pythia_and_TennGen_HF_%d_CB_%d" , HF, cent_bin);
@@ -902,7 +1051,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         free(time);
         TDatime *time = new TDatime(); //creating new time stamp
         //cout << "\n\n\n\n\nTime at Event # "<< event << " is " << time->GetTime() <<"\n\n\n\n" << endl;
-        time_array[event] = ((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
+        time_array.push_back((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
         Int_t user_index = 0; //must reset this each event iteration loop
         Int_t N_reco_det_level = 0; //must reset this each event iteration loop
         Int_t N_reco_det_level_bkgd = 0;
@@ -924,7 +1073,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       Double_t p_eta =  0.5*(TMath::Log((p+MPart->GetPz())/(p-MPart->GetPz()))) ;
       Double_t phi = 1.0*(TMath::Pi()+TMath::ATan2(-MPart->GetPy(),-MPart->GetPx()));
      
-      if(pt > constit_cut && pt < jet_pT_cut_high && (TMath::Abs(p_eta)) < 0.9  ){ //looking for particles in the EMCAL with pT = 0.15 GeV/c (c = 1)   
+//      if(pt > constit_cut && pt < jet_pT_cut_high && (TMath::Abs(p_eta)) < 0.9  ){ //looking for particles in the EMCAL with pT = 0.15 GeV/c (c = 1)   
+      if(pt > constit_cut && (TMath::Abs(p_eta)) < 0.9  ){ //looking for particles in the EMCAL with pT = 0.15 GeV/c (c = 1) 
         if( DCA_calc < DCA ){ //you want primary particles only
 
             fastjet::PseudoJet p1( MPart->GetPx(), MPart->GetPy() , MPart->GetPz() , MPart->GetEnergy() );//creating temp pseudojet p1
@@ -1011,19 +1161,22 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
         Double_t angularity_sum =0;
         Int_t num_const_gt_cut =0;
+        Double_t z_sum = 0;
 
-        
+       // cout<<"__________________________Pythia Jet__________________________"<<endl;
         for (Int_t np_part = 0; np_part < nPart_part; np_part++){ //loop over the constituents
           if(constituents_part[np_part].perp() > 1e-50){ //MAKE SURE you have no ghosts
             num_const_gt_cut++;
             pythia_constit_pT_vec.push_back(constituents_part[np_part].perp()); 
 
             Double_t z = constituents_part[np_part].perp()/jet_pt;
-
+            z_sum += z;
             Double_t pphi = constituents_part[np_part].phi();
             Double_t peta = constituents_part[np_part].eta();
 
-            Double_t delri = TMath::Sqrt( ((TMath::Abs(jet_phi - pphi))*(TMath::Abs(jet_phi - pphi))) + ((TMath::Abs(jet_eta - peta))*(TMath::Abs(jet_eta - peta))) );
+            Double_t delri = TMath::Sqrt( (TMath::Abs(RelativePhi(jet_phi,pphi,Jet_Radius)))*(TMath::Abs(RelativePhi(jet_phi,pphi,Jet_Radius))) + ((TMath::Abs(jet_eta - peta))*(TMath::Abs(jet_eta - peta))) );
+
+            hist_diagnostic_jet_cone_pyth_jet->Fill(RelativePhi(jet_phi,pphi,Jet_Radius),(jet_eta - peta),constituents_part[np_part].perp());
    
             histFF_pyth_jet->Fill(z); //frag func
 
@@ -1031,6 +1184,14 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           }
 	}
 
+/* Debug lines below
+       if(angularity_sum > Jet_Radius){
+         cout<<"\n\n______________________________________________________________"<<endl;
+         cout<<"\n\nangularity was too big for this jet, angularity = "<<angularity_sum<<endl;     
+         cout<<"\n\n______________________________________________________________"<<endl;
+         exit(0);
+       }
+*/
         histangularity_pyth_jet->Fill(angularity_sum); //angularity
         Angularity_tree_pyth = angularity_sum;
         histnumtr_pyth_jet->Fill(num_const_gt_cut); //number of consituents
@@ -1177,6 +1338,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
       vector <fastjet::PseudoJet> inclusiveJetsBackground, sortedJetsBackground; // 
       fastjet::ClusterSequenceArea clustSeqBackground(fjInputs_Background, *jetDef2 , *AreaDef ); //
+
+      vector <fastjet::PseudoJet> inclusiveJetsBackground_antikT, sortedJetsBackground_antikT; // 
+      fastjet::ClusterSequenceArea clustSeqBackground_antikT(fjInputs_Background, *jetDef , *AreaDef ); //
       //fastjet::ClusterSequence clustSeqBackground(fjInputs_Background, *jetDef2 ); // 
       fjInputs_Background.clear();
 
@@ -1190,6 +1354,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       ////////////////////////////////////////////
       inclusiveJetsBackground = clustSeqBackground.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
       inclusiveJetsTOTAL_kT = clustSeqTOTAL_kT.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
+      inclusiveJetsBackground_antikT = clustSeqBackground_antikT.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
       ////////////////////////////////////////////
 
 
@@ -1198,6 +1363,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       sortedJetsTOTAL   = sorted_by_pt(inclusiveJetsTOTAL); //sort by decreasing transverse momentum
       sortedJetsBackground   = sorted_by_pt(inclusiveJetsBackground); //sort by decreasing transverse momentum
       sortedJets_TOTAL_kT = sorted_by_pt(inclusiveJetsTOTAL_kT); //sort by decreasing transverse momentum
+      sortedJetsBackground_antikT = sorted_by_pt( inclusiveJetsBackground_antikT ); //sort by decreasing transverse momentum
       ////////////////////////////////////////////
 
       vector<fastjet::PseudoJet>selected_jetsTOTAL = select_both3(sortedJetsTOTAL); 
@@ -1209,23 +1375,30 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       vector<fastjet::PseudoJet>selected_jetsTOTAL_kT = select_both2(sortedJets_TOTAL_kT); 
       vector<fastjet::PseudoJet>selected_jetsTOTAL_kT_sorted = sorted_by_pt(selected_jetsTOTAL_kT);
 
+      vector<fastjet::PseudoJet>selected_jetsBackground_antikT = select_both2(sortedJetsBackground_antikT); 
+      vector<fastjet::PseudoJet>selected_jetsBackground_antikT_sorted = sorted_by_pt(selected_jetsTOTAL_kT);
+
 
       Double_t running_rho_average = 0;
 
-      cout<<"\n\n\n|||||||||||The total background jet population is = "<<selected_jetsBackground_sorted.size()<<"|||||||||||||||||"<<endl;
+      cout<<"\n\n\n|||||||||||The total kT background jet population is = "<<selected_jetsBackground_sorted.size()<<"|||||||||||||||||"<<endl;
 
-      if(selected_jetsBackground_sorted.size() > 0){
+      Double_t event_median_shared;
+
+/////////////////loop over the kT background only jets///////////////////////////////////////////////
+
+      if(selected_jetsBackground_sorted.size() > 0){ 
         for(unsigned i_jet = 0 ; i_jet < selected_jetsBackground_sorted.size() ; i_jet++ ){ 
 
-          histbackground_jets->Fill(1.00);
+          histbackground_kT_jets->Fill(1.00);
     
-          histpT_bkgd_jet -> Fill(selected_jetsBackground_sorted[i_jet].pt());
+          histpT_bkgd_jet_kT -> Fill(selected_jetsBackground_sorted[i_jet].pt());
           p_T_tree_bkgd = selected_jetsBackground_sorted[i_jet].pt();
 
-          histeta_bkgd_jet -> Fill(selected_jetsBackground_sorted[i_jet].eta());
+          histeta_bkgd_jet_kT -> Fill(selected_jetsBackground_sorted[i_jet].eta());
           Eta_tree_bkgd = selected_jetsBackground_sorted[i_jet].eta();
 
-          histphi_bkgd_jet -> Fill(selected_jetsBackground_sorted[i_jet].phi());
+          histphi_bkgd_jet_kT -> Fill(selected_jetsBackground_sorted[i_jet].phi());
           Phi_tree_bkgd = selected_jetsBackground_sorted[i_jet].phi();
 
           Double_t jet_pT_back = selected_jetsBackground_sorted[i_jet].pt();
@@ -1248,37 +1421,39 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
               bkgd_constit_pT_vec.push_back(constituents_bkgd[np_bkgd].perp());    
 
               Double_t z = constituents_bkgd[np_bkgd].perp()/jet_pT_back;
-              histFF_bkgd_jet->Fill(z);
+              histFF_bkgd_jet_kT->Fill(z);
 
               Double_t pphi_back = constituents_bkgd[np_bkgd].phi();
               Double_t peta_back = constituents_bkgd[np_bkgd].eta();
 
-              Double_t delri_back = TMath::Sqrt( ((TMath::Abs(jet_phi_back - pphi_back))*(TMath::Abs(jet_phi_back - pphi_back))) + ((TMath::Abs(jet_eta_back - peta_back))*(TMath::Abs(jet_eta_back - peta_back))) );
+              Double_t delri_back = TMath::Sqrt( (TMath::Abs(RelativePhi(jet_phi_back,pphi_back,Jet_Radius)))*(TMath::Abs(RelativePhi(jet_phi_back,pphi_back,Jet_Radius))) + ((TMath::Abs(jet_eta_back - peta_back))*(TMath::Abs(jet_eta_back - peta_back))) );
 
               angularity_sum_back += (delri_back * z);
+
+              hist_diagnostic_jet_cone_bkgd_jet_kT->Fill(RelativePhi(jet_phi_back,pphi_back,Jet_Radius),(jet_eta_back - peta_back),constituents_bkgd[np_bkgd].perp()); 
             }
           }
 
-          histnumtr_bkgd_jet->Fill(bkgd_constit_pT_vec.size()); //number of consituents
+          histnumtr_bkgd_jet_kT->Fill(bkgd_constit_pT_vec.size()); //number of consituents
           N_Trk_tree_bkgd = bkgd_constit_pT_vec.size();
 
           constituents_bkgd.clear(); 
-          histangularity_bkgd_jet->Fill(angularity_sum_back);
+          histangularity_bkgd_jet_kT->Fill(angularity_sum_back);
           Angularity_tree_bkgd = angularity_sum_back;
 
           if(bkgd_constit_pT_vec.size() > 0){
           
-            histmeanpTtr_bkgd_jet->Fill( std::accumulate(bkgd_constit_pT_vec.begin(), bkgd_constit_pT_vec.end(), 0.0) / bkgd_constit_pT_vec.size() ); //mean track pT in the jet
+            histmeanpTtr_bkgd_jet_kT->Fill( std::accumulate(bkgd_constit_pT_vec.begin(), bkgd_constit_pT_vec.end(), 0.0) / bkgd_constit_pT_vec.size() ); //mean track pT in the jet
             Mean_p_T_tree_bkgd = std::accumulate(bkgd_constit_pT_vec.begin(), bkgd_constit_pT_vec.end(), 0.0) / bkgd_constit_pT_vec.size();
 
             std::sort(bkgd_constit_pT_vec.begin(), bkgd_constit_pT_vec.end()); //sorts least to greatest
-            histldtr_bkgd_jet->Fill(bkgd_constit_pT_vec[bkgd_constit_pT_vec.size()-1]); // grab leading track in jet
+            histldtr_bkgd_jet_kT->Fill(bkgd_constit_pT_vec[bkgd_constit_pT_vec.size()-1]); // grab leading track in jet
 
             if(bkgd_constit_pT_vec.size() > 1){
-              histsubldtr_bkgd_jet->Fill(bkgd_constit_pT_vec[bkgd_constit_pT_vec.size() - 2]); // grab sub-leading track in jet
-              histlesub_bkgd_jet->Fill( bkgd_constit_pT_vec[bkgd_constit_pT_vec.size()-1] - bkgd_constit_pT_vec[bkgd_constit_pT_vec.size() - 2] );
+              histsubldtr_bkgd_jet_kT->Fill(bkgd_constit_pT_vec[bkgd_constit_pT_vec.size() - 2]); // grab sub-leading track in jet
+              histlesub_bkgd_jet_kT->Fill( bkgd_constit_pT_vec[bkgd_constit_pT_vec.size()-1] - bkgd_constit_pT_vec[bkgd_constit_pT_vec.size() - 2] );
               if(bkgd_constit_pT_vec.size() > 2){
-                histthrdldtr_bkgd_jet->Fill(bkgd_constit_pT_vec[bkgd_constit_pT_vec.size() - 3]); //grad sub-sub leading track in jet
+                histthrdldtr_bkgd_jet_kT->Fill(bkgd_constit_pT_vec[bkgd_constit_pT_vec.size() - 3]); //grad sub-sub leading track in jet
               }
             }
 
@@ -1291,7 +1466,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   
           bkgd_constit_pT_vec.clear();
           X_tru_tree_bkgd = 0; //all backgorund no true
-          tree_bkgd->Fill();
+          tree_bkgd_kt->Fill();
         } //end looping over the background jets
 
         Double_t event_median;
@@ -1310,6 +1485,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         else {
           event_median = 0.;
         }
+
+        event_median_shared = event_median;
         
         cout<<"\n\n\n|||||||||||||The TRUE median rho*area is = "<<event_median<<"||||||||||||||||||"<<endl;
         histmedianrhoebe_bgkd->Fill(event_median/(TMath::Pi()*Jet_Radius*Jet_Radius));
@@ -1317,7 +1494,94 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
       } //end if check for background jets that pass your cuts
 
-       
+
+/////////////////loop over the anti-kT background only jets///////////////////////////////////////////////
+
+      if(selected_jetsBackground_antikT_sorted.size() > 0){
+        for(unsigned j_jet = 0 ; j_jet < selected_jetsBackground_antikT_sorted.size() ; j_jet++ ){ 
+
+          histbackground_antikT_jets->Fill(1.00);
+    
+          histpT_bkgd_jet_antikT -> Fill(selected_jetsBackground_antikT_sorted[j_jet].pt());
+          p_T_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].pt();
+
+          histeta_bkgd_jet_antikT -> Fill(selected_jetsBackground_antikT_sorted[j_jet].eta());
+          Eta_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].eta();
+
+          histphi_bkgd_jet_antikT -> Fill(selected_jetsBackground_antikT_sorted[j_jet].phi());
+          Phi_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].phi();
+
+          Double_t jet_pT_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].pt();
+          Double_t jet_eta_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].eta();
+          Double_t jet_phi_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].phi();
+
+          p_T_corr_tree_antikt_bkgd = jet_pT_antikT_back - event_median_shared; //subtract off the median from kT
+
+          //rho_vec.push_back(selected_jetsBackground_sorted[i_jet].pt()/selected_jetsBackground_sorted[i_jet].area());
+      
+          vector <fastjet::PseudoJet> constituents_antikT_bkgd = selected_jetsBackground_antikT_sorted[j_jet].constituents();
+          vector <Double_t> antikT_bkgd_constit_pT_vec;
+
+          Int_t nPart_antikT_bkgd = constituents_antikT_bkgd.size();
+
+          Double_t angularity_sum_antikT_back =0;
+        
+          for(Int_t np_bkgd_ak = 0; np_bkgd_ak < nPart_antikT_bkgd; np_bkgd_ak++){
+            if(constituents_antikT_bkgd[np_bkgd_ak].perp() > 1e-50){ //don't use ghosts
+              antikT_bkgd_constit_pT_vec.push_back(constituents_antikT_bkgd[np_bkgd_ak].perp());    
+
+              Double_t z = constituents_antikT_bkgd[np_bkgd_ak].perp()/jet_pT_antikT_back;
+              histFF_bkgd_jet_antikT->Fill(z);
+
+              Double_t pphi_antikT_back = constituents_antikT_bkgd[np_bkgd_ak].phi();
+              Double_t peta_antikT_back = constituents_antikT_bkgd[np_bkgd_ak].eta();
+
+              Double_t delri_antikT_back = TMath::Sqrt( (TMath::Abs(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius)))*(TMath::Abs(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius))) + ((TMath::Abs(jet_eta_antikT_back - peta_antikT_back))*(TMath::Abs(jet_eta_antikT_back - peta_antikT_back))) );
+
+              angularity_sum_antikT_back += (delri_antikT_back * z);
+
+              hist_diagnostic_jet_cone_bkgd_jet_antikT->Fill(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius),(jet_eta_antikT_back - peta_antikT_back),constituents_antikT_bkgd[np_bkgd_ak].perp()); 
+            }
+          }
+
+          histnumtr_bkgd_jet_antikT->Fill(antikT_bkgd_constit_pT_vec.size()); //number of consituents
+          N_Trk_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec.size();
+
+          constituents_antikT_bkgd.clear(); 
+          histangularity_bkgd_jet_antikT->Fill(angularity_sum_antikT_back);
+          Angularity_tree_antikt_bkgd = angularity_sum_antikT_back;
+
+          if(antikT_bkgd_constit_pT_vec.size() > 0){
+          
+            histmeanpTtr_bkgd_jet_antikT->Fill( std::accumulate(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), 0.0) / antikT_bkgd_constit_pT_vec.size() ); //mean track pT in the jet
+           Mean_p_T_tree_antikt_bkgd = std::accumulate(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), 0.0) / antikT_bkgd_constit_pT_vec.size();
+
+            std::sort(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end()); //sorts least to greatest
+            histldtr_bkgd_jet_antikT->Fill(antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size()-1]); // grab leading track in jet
+
+            if(antikT_bkgd_constit_pT_vec.size() > 1){
+              histsubldtr_bkgd_jet_antikT->Fill(antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 2]); // grab sub-leading track in jet
+              histlesub_bkgd_jet_antikT->Fill( antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size()-1] - antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 2] );
+              if(antikT_bkgd_constit_pT_vec.size() > 2){
+                histthrdldtr_bkgd_jet_antikT->Fill(antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 3]); //grad sub-sub leading track in jet
+              }
+            }
+
+            p_T_1_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 1]; 
+            p_T_2_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 2]; 
+            p_T_3_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 3]; 
+            p_T_4_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 4]; 
+            p_T_5_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec[antikT_bkgd_constit_pT_vec.size() - 5]; 
+          } //end if check for constits
+  
+          antikT_bkgd_constit_pT_vec.clear();
+          X_tru_tree_antikt_bkgd = 0; //all backgorund no true
+          tree_bkgd_antikt->Fill();
+        } //end looping over the background antikT jets
+
+      } //end if check for antikT background jets that pass your cuts
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
       Double_t event_median_realistic;
 
       if(sortedJets_TOTAL_kT.size()>0){
@@ -1404,6 +1668,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
           Int_t nPart_total = constituents_total.size();
 
+          Double_t jet_eta_tot = selected_jetsTOTAL_sorted[t_jet].eta();
+          Double_t jet_phi_tot = selected_jetsTOTAL_sorted[t_jet].phi();
+
           Double_t angularity_sum =0;
 
           Double_t tru_sum=0;
@@ -1415,9 +1682,14 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
               total_constit_pT_vec.push_back(constituents_total[np_total].perp());    
               histFF_pytha_AND_bkgd_jet->Fill(constituents_total[np_total].perp()/selected_jetsTOTAL_sorted[t_jet].pt() ); //frag func
 
-              
+              Double_t pphi_tot = constituents_total[np_total].phi();
+              Double_t peta_tot = constituents_total[np_total].eta();
 
-              angularity_sum += ( (constituents_total[np_total].perp()/selected_jetsTOTAL_sorted[t_jet].pt())*TMath::Sqrt( (selected_jetsTOTAL_sorted[t_jet].phi() - constituents_total[np_total].phi())*(selected_jetsTOTAL_sorted[t_jet].phi() - constituents_total[np_total].phi()) + (selected_jetsTOTAL_sorted[t_jet].eta() - constituents_total[np_total].eta())*(selected_jetsTOTAL_sorted[t_jet].eta() - constituents_total[np_total].eta()) )); //summing for the angularity
+              Double_t z = constituents_total[np_total].perp()/selected_jetsTOTAL_sorted[t_jet].pt();
+
+              angularity_sum += z*TMath::Sqrt( (TMath::Abs(RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius)))*(TMath::Abs(RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius))) + ((TMath::Abs(jet_eta_tot - peta_tot))*(TMath::Abs(jet_eta_tot - peta_tot))) ); //summing for the angularity
+
+             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->Fill( RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius) , (jet_eta_tot - peta_tot), constituents_total[np_total].perp());
 
               if(constituents_total[np_total].user_index() < 0){
                 fake_sum = fake_sum+constituents_total[np_total].perp();
@@ -1515,16 +1787,18 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   bkgd2->CloseFiles(); //close all the damn files
   //bkgd->~BkgrLoad();
-
-  TFile *ff = new TFile(expression1,"RECREATE"); //make output files and directories
-  TDirectory *pythia_only = ff->mkdir("pythia_only");
-  TDirectory *background_only = ff->mkdir("background_only");
-  TDirectory *background_and_pythia = ff->mkdir("background_and_pythia");
+  Run_Time_Stats->cd();
 
   Int_t Sum_Time = 0;
   Int_t Total_Time = 0;
 
-  for( Int_t i = 0 ; i < nEvents; i++){
+  Int_t *time_interval_array;
+  Int_t *event_array;
+
+  time_interval_array = new Int_t[time_array.size()-1];
+  event_array = new Int_t[time_array.size()-1];
+
+  for( Int_t i = 0 ; i < time_array.size() - 1; i++){
     time_interval_array[i] = time_array[i + 1] - time_array[i];
     Sum_Time = Sum_Time + time_interval_array[i];
     event_array[i] = i + 1;
@@ -1533,12 +1807,12 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   if(RT_Stats){
     TCanvas *c1 = new TCanvas("c1" , "Run Time For 1 Background Event vs Event Number (Events Run in Sequence)", 200, 10,500,300); 
 
-    TH1D *histruntime = new TH1D("histruntime", "Run Times for Background Generator",8,((Sum_Time/nEvents) - 1),((Sum_Time/nEvents) + 1)); //for non-random distribution
+    TH1D *histruntime = new TH1D("histruntime", "Run Times for Background Generator",8,((Sum_Time/(time_array.size() - 1)) - 1),((Sum_Time/(time_array.size() - 1)) + 1)); //for non-random distribution
     histruntime -> Sumw2();
     histruntime->SetXTitle("Run Time For 1 Event (Seconds)");
     histruntime->SetYTitle("Counts");
 
-    TGraph *rtgraph = new TGraph(nEvents , event_array , time_interval_array);
+    TGraph *rtgraph = new TGraph(time_array.size()-1 , event_array , time_interval_array);
     rtgraph->SetTitle("Run Time For 1 Background Event vs Event Number (Events Run in Sequence)");
     rtgraph->GetXaxis()->SetTitle("Event Iteration Number");
     rtgraph->GetYaxis()->SetTitle("Run Time for 1 Event (Seconds)");
@@ -1547,7 +1821,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
     rtgraph->Draw("AC");
     c1->Draw();
     c1->Write("");
-    for( Int_t j = 0 ; j < nEvents; j++){
+    for( Int_t j = 0 ; j < (time_array.size() - 1); j++){
       histruntime->Fill(time_interval_array[j]);
     }
     histruntime->Write();
@@ -1558,7 +1832,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   pythia_only->cd(); 
 
-  tree_pyth->Write();
+  //tree_pyth->Write();
 
   histpythia_events->Write();
   histpythia_jets->Write();
@@ -1581,6 +1855,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histthrdldtr_pyth_jet->Write();
   histFF_pyth_jet->Write();
   histlesub_pyth_jet->Write();
+  hist_diagnostic_jet_cone_pyth_jet->Write();
   
 
 //______________________________________END PYTHIA ONLY STUFF______________________________________________________________//
@@ -1589,29 +1864,44 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   background_only->cd();
 
-  tree_bkgd->Write();
+  //tree_bkgd_kt->Write();
+  //tree_bkgd_antikt->Write();
 
   histbackground_events->Write();
-  histbackground_jets->Write();
+  histbackground_kT_jets->Write();
+  histbackground_antikT_jets->Write();
 
   histpT_bkgd_part->Write();
   histeta_bkgd_part->Write();
   histphi_bkgd_part->Write();
 
-  histpT_bkgd_jet->Write();
-  histeta_bkgd_jet->Write();
-  histphi_bkgd_jet->Write();
+  histpT_bkgd_jet_kT->Write();
+  histpT_bkgd_jet_antikT->Write();
+  histeta_bkgd_jet_kT->Write();
+  histeta_bkgd_jet_antikT->Write();
+  histphi_bkgd_jet_kT->Write();
+  histphi_bkgd_jet_antikT->Write();
 
-  histnumtr_bkgd_jet->Write();
-  histmeanpTtr_bkgd_jet->Write();
-  histangularity_bkgd_jet->Write();
+  histnumtr_bkgd_jet_kT->Write();
+  histnumtr_bkgd_jet_antikT->Write();
+  histmeanpTtr_bkgd_jet_kT->Write();
+  histmeanpTtr_bkgd_jet_antikT->Write();
+  histangularity_bkgd_jet_kT->Write();
+  histangularity_bkgd_jet_antikT->Write();
 
-  histldtr_bkgd_jet->Write();
-  histsubldtr_bkgd_jet->Write();
-  histthrdldtr_bkgd_jet->Write();
+  histldtr_bkgd_jet_kT->Write();
+  histldtr_bkgd_jet_antikT->Write();
+  histsubldtr_bkgd_jet_kT->Write();
+  histsubldtr_bkgd_jet_antikT->Write();
+  histthrdldtr_bkgd_jet_kT->Write();
+  histthrdldtr_bkgd_jet_antikT->Write();
 
-  histFF_bkgd_jet->Write();
-  histlesub_bkgd_jet->Write();
+  histFF_bkgd_jet_kT->Write();
+  histFF_bkgd_jet_antikT->Write();
+  histlesub_bkgd_jet_kT->Write();
+  histlesub_bkgd_jet_antikT->Write();
+  hist_diagnostic_jet_cone_bkgd_jet_kT->Write();
+  hist_diagnostic_jet_cone_bkgd_jet_antikT->Write();
 
   histPsi_1->Write();
   histPsi_2->Write();
@@ -1652,6 +1942,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   histFF_pytha_AND_bkgd_jet->Write();
   histlesub_pytha_AND_bkgd_jet->Write();
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->Write();
 
   histmedianrhoebe_pythia_AND_bkgd->Write();
 
@@ -1668,4 +1959,33 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   ff->Close();
 
 } //end function
+
+Double_t RelativePhi(Double_t Jphi, Double_t constit_phi , Double_t Rparam) 
+{ // function to calculate relative PHI
+
+  Double_t dphi = Jphi - constit_phi;;
+
+  if(  Jphi >= 0. && Jphi <= Rparam  ){ //edge case 1
+
+    if( constit_phi >= (2.*TMath::Pi() - Rparam) && constit_phi <= 2.*TMath::Pi() ){ //your constits were wrapped to the other side
+
+      dphi = Jphi - ( constit_phi - 2.*TMath::Pi()  ); //subtract off 2pi
+
+    }
+
+  }
+
+  else if( Jphi >= (2.*TMath::Pi() - Rparam) && Jphi <= 2.*TMath::Pi() ){ //edge case 2
+
+    if( constit_phi >= 0. && constit_phi <= Rparam ){ //your constits were wrapped to the other side
+
+      dphi = Jphi - ( constit_phi + 2.*TMath::Pi()  ); //add 2pi
+
+    }
+
+  }
+
+
+  return dphi; // dphi in [-0.5Pi, 1.5Pi]                                                                                   
+}
 
