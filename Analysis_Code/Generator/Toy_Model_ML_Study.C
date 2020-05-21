@@ -1175,8 +1175,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   if( !GRID ){
 
-    sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
-    //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
+    //sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
+    sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
 
   }
   else if( GRID ){
@@ -1193,6 +1193,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   
   std::vector <Double_t> rho_vec; //vector of rhos to get median from background only;
   std::vector <Double_t> rho_vec_TOTAL; //vector of rhos to get median from TOTAL while excluding 2 leading jets;
+
+  remove( "pbgOut.csv" ); //if the csv file alread exists, delete it.
 
   //_____________________________________________Starting Event Loop_______________________________________________________________//
 
@@ -1417,11 +1419,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         num_background_events++;
         cout<<"you got the new background event\n\n"<<endl;
       } 
-
+/*
       if( num_background_events == 1){ // you have not yet called the background, therefore not filled the XL file !!!
+        //cout<<"\n\nyou want to remove the pre-existingXL file!!!!"<<endl;
         remove( "pbgOut.csv" );
+        //exit(0);
       }
-
+*/
       histbackground_events->Fill(1.00);
 
       Double_t mass;
@@ -2204,11 +2208,12 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 Double_t RelativePhi(Double_t Jphi, Double_t constit_phi , Double_t Rparam) 
 { // function to calculate relative PHI
 
-  Double_t dphi = Jphi - constit_phi;;
+  Double_t dphi = Jphi - constit_phi;
+  Double_t Jet_R_mult = 2.*Rparam;
 
-  if(  Jphi >= 0. && Jphi <= Rparam  ){ //edge case 1
+  if(  Jphi >= 0. && Jphi <= TMath::Pi()/2 ){ //edge case 1
 
-    if( constit_phi >= (2.*TMath::Pi() - Rparam) && constit_phi <= 2.*TMath::Pi() ){ //your constits were wrapped to the other side
+    if( constit_phi >= (2.*TMath::Pi() - (TMath::Pi()/2)) && constit_phi <= 2.*TMath::Pi() ){ //your constits were wrapped to the other side
 
       dphi = Jphi - ( constit_phi - 2.*TMath::Pi()  ); //subtract off 2pi
 
@@ -2216,9 +2221,9 @@ Double_t RelativePhi(Double_t Jphi, Double_t constit_phi , Double_t Rparam)
 
   }
 
-  else if( Jphi >= (2.*TMath::Pi() - Rparam) && Jphi <= 2.*TMath::Pi() ){ //edge case 2
+  else if( Jphi >= (2.*TMath::Pi() - (TMath::Pi()/2)) && Jphi <= 2.*TMath::Pi() ){ //edge case 2
 
-    if( constit_phi >= 0. && constit_phi <= Rparam ){ //your constits were wrapped to the other side
+    if( constit_phi >= 0. && constit_phi <= (TMath::Pi()/2) ){ //your constits were wrapped to the other side
 
       dphi = Jphi - ( constit_phi + 2.*TMath::Pi()  ); //add 2pi
 
