@@ -271,10 +271,21 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histlesub_pyth_jet->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
   histlesub_pyth_jet->SetYTitle("dN/dLeSub");
 
-  TH2D *hist_diagnostic_jet_cone_pyth_jet = new TH2D("hist_diagnostic_jet_cone_pyth_jet" , "Diagnostic Test of distribution of particles in pythia only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  TH2D *hist_diagnostic_jet_cone_pyth_jet = new TH2D("hist_diagnostic_jet_cone_pyth_jet" , "Diagnostic Test of un-weighted distribution of particles in pythia only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
   hist_diagnostic_jet_cone_pyth_jet -> Sumw2();
   hist_diagnostic_jet_cone_pyth_jet->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
   hist_diagnostic_jet_cone_pyth_jet->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_pyth_jet_pT = new TH2D("hist_diagnostic_jet_cone_pyth_jet_pT" , "Diagnostic Test of p_{T}^{constit.}-weighted distribution of particles in pythia only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_pyth_jet_pT -> Sumw2();
+  hist_diagnostic_jet_cone_pyth_jet_pT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_pyth_jet_pT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_pyth_jet_z = new TH2D("hist_diagnostic_jet_cone_pyth_jet_z" , "Diagnostic Test of z^{constit.}-weighted distribution of particles in pythia only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_pyth_jet_z -> Sumw2();
+  hist_diagnostic_jet_cone_pyth_jet_z->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_pyth_jet_z->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
 
 //___________________________________BACKGROUND ONLY PARTICLES_________________________________//
 
@@ -485,15 +496,38 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histlesub_bkgd_jet_antikT->SetXTitle("LeSub = p_{T}^{ld. tr.} - p_{T}^{sub-ld. tr.} (GeV/c)");
   histlesub_bkgd_jet_antikT->SetYTitle("dN/dLeSub");
 
-  TH2D *hist_diagnostic_jet_cone_bkgd_jet_kT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_kT" , "Diagnostic Test of distribution of particles in background only k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_kT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_kT" , "Diagnostic Test of distribution of un-weighted particles in background only k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
   hist_diagnostic_jet_cone_bkgd_jet_kT -> Sumw2();
   hist_diagnostic_jet_cone_bkgd_jet_kT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
   hist_diagnostic_jet_cone_bkgd_jet_kT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_kT_pT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_kT_pT" , "Diagnostic Test of p_{T}^{constit.}-weighted distribution of particles in background only k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_bkgd_jet_kT_pT -> Sumw2();
+  hist_diagnostic_jet_cone_bkgd_jet_kT_pT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_bkgd_jet_kT_pT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_kT_z = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_kT_z" , "Diagnostic Test of z^{constit.}-weighted distribution of particles in background only k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_bkgd_jet_kT_z -> Sumw2();
+  hist_diagnostic_jet_cone_bkgd_jet_kT_z->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_bkgd_jet_kT_z->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+
+
 
   TH2D *hist_diagnostic_jet_cone_bkgd_jet_antikT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_antikT" , "Diagnostic Test of distribution of particles in background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
   hist_diagnostic_jet_cone_bkgd_jet_antikT -> Sumw2();
   hist_diagnostic_jet_cone_bkgd_jet_antikT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
   hist_diagnostic_jet_cone_bkgd_jet_antikT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_antikT_pT = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_antikT_pT" , "Diagnostic Test of p_{T}^{constit.}-weighted distribution of particles in background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_pT -> Sumw2();
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_pT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_pT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_bkgd_jet_antikT_z = new TH2D("hist_diagnostic_jet_cone_bkgd_jet_antikT_z" , "Diagnostic Test of z^{constit.}-weighted distribution of particles in background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_z -> Sumw2();
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_z->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_z->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
 
 //____________________________EVENT PLANES___________________________________________________________//
 
@@ -667,6 +701,16 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   hist_diagnostic_jet_cone_pythia_AND_bkgd_jet -> Sumw2();
   hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
   hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT = new TH2D("hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT" , "Diagnostic Test of p_{T}^{constit.}-weighted distribution of particles in pythia + background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT -> Sumw2();
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
+
+  TH2D *hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z = new TH2D("hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z" , "Diagnostic Test of z^{constit.}-weighted distribution of particles in pythia + background only anti-k_{T} jets",200,-1.0,1.0,200,-1.0,1.0);
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z -> Sumw2();
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z->SetYTitle("#Delta#eta = #eta^{jet} - #eta^{constit.}");
 
 //______________________________________________________
 
@@ -1176,7 +1220,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
             Double_t delri = TMath::Sqrt( (TMath::Abs(RelativePhi(jet_phi,pphi,Jet_Radius)))*(TMath::Abs(RelativePhi(jet_phi,pphi,Jet_Radius))) + ((TMath::Abs(jet_eta - peta))*(TMath::Abs(jet_eta - peta))) );
 
-            hist_diagnostic_jet_cone_pyth_jet->Fill(RelativePhi(jet_phi,pphi,Jet_Radius),(jet_eta - peta),constituents_part[np_part].perp());
+            hist_diagnostic_jet_cone_pyth_jet->Fill(RelativePhi(jet_phi,pphi,Jet_Radius),(jet_eta - peta));
+            hist_diagnostic_jet_cone_pyth_jet_pT->Fill(RelativePhi(jet_phi,pphi,Jet_Radius),(jet_eta - peta),constituents_part[np_part].perp());
+            hist_diagnostic_jet_cone_pyth_jet_z->Fill(RelativePhi(jet_phi,pphi,Jet_Radius),(jet_eta - peta),z);
    
             histFF_pyth_jet->Fill(z); //frag func
 
@@ -1430,7 +1476,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
               angularity_sum_back += (delri_back * z);
 
-              hist_diagnostic_jet_cone_bkgd_jet_kT->Fill(RelativePhi(jet_phi_back,pphi_back,Jet_Radius),(jet_eta_back - peta_back),constituents_bkgd[np_bkgd].perp()); 
+              hist_diagnostic_jet_cone_bkgd_jet_kT->Fill(RelativePhi(jet_phi_back,pphi_back,Jet_Radius),(jet_eta_back - peta_back)); 
+              hist_diagnostic_jet_cone_bkgd_jet_kT_pT->Fill(RelativePhi(jet_phi_back,pphi_back,Jet_Radius),(jet_eta_back - peta_back),constituents_bkgd[np_bkgd].perp());
+              hist_diagnostic_jet_cone_bkgd_jet_kT_z->Fill(RelativePhi(jet_phi_back,pphi_back,Jet_Radius),(jet_eta_back - peta_back),z);
             }
           }
 
@@ -1540,7 +1588,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
               angularity_sum_antikT_back += (delri_antikT_back * z);
 
-              hist_diagnostic_jet_cone_bkgd_jet_antikT->Fill(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius),(jet_eta_antikT_back - peta_antikT_back),constituents_antikT_bkgd[np_bkgd_ak].perp()); 
+              hist_diagnostic_jet_cone_bkgd_jet_antikT->Fill(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius),(jet_eta_antikT_back - peta_antikT_back)); 
+              hist_diagnostic_jet_cone_bkgd_jet_antikT_pT->Fill(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius),(jet_eta_antikT_back - peta_antikT_back),constituents_antikT_bkgd[np_bkgd_ak].perp()); 
+              hist_diagnostic_jet_cone_bkgd_jet_antikT_z->Fill(RelativePhi(jet_phi_antikT_back,pphi_antikT_back,Jet_Radius),(jet_eta_antikT_back - peta_antikT_back),z); 
             }
           }
 
@@ -1689,7 +1739,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
               angularity_sum += z*TMath::Sqrt( (TMath::Abs(RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius)))*(TMath::Abs(RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius))) + ((TMath::Abs(jet_eta_tot - peta_tot))*(TMath::Abs(jet_eta_tot - peta_tot))) ); //summing for the angularity
 
-             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->Fill( RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius) , (jet_eta_tot - peta_tot), constituents_total[np_total].perp());
+             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->Fill( RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius) , (jet_eta_tot - peta_tot));
+             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT->Fill( RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius) , (jet_eta_tot - peta_tot), constituents_total[np_total].perp());
+             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z->Fill( RelativePhi(jet_phi_tot,pphi_tot,Jet_Radius) , (jet_eta_tot - peta_tot), z);
 
               if(constituents_total[np_total].user_index() < 0){
                 fake_sum = fake_sum+constituents_total[np_total].perp();
@@ -1856,6 +1908,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histFF_pyth_jet->Write();
   histlesub_pyth_jet->Write();
   hist_diagnostic_jet_cone_pyth_jet->Write();
+  hist_diagnostic_jet_cone_pyth_jet_pT->Write();
+  hist_diagnostic_jet_cone_pyth_jet_z->Write();
   
 
 //______________________________________END PYTHIA ONLY STUFF______________________________________________________________//
@@ -1901,7 +1955,11 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histlesub_bkgd_jet_kT->Write();
   histlesub_bkgd_jet_antikT->Write();
   hist_diagnostic_jet_cone_bkgd_jet_kT->Write();
+  hist_diagnostic_jet_cone_bkgd_jet_kT_pT->Write();
+  hist_diagnostic_jet_cone_bkgd_jet_kT_z->Write();
   hist_diagnostic_jet_cone_bkgd_jet_antikT->Write();
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_pT->Write();
+  hist_diagnostic_jet_cone_bkgd_jet_antikT_z->Write();
 
   histPsi_1->Write();
   histPsi_2->Write();
@@ -1943,6 +2001,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   histFF_pytha_AND_bkgd_jet->Write();
   histlesub_pytha_AND_bkgd_jet->Write();
   hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->Write();
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT->Write();
+  hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z->Write();
 
   histmedianrhoebe_pythia_AND_bkgd->Write();
 
