@@ -73,8 +73,7 @@ using namespace fastjet;
 #include "TPythia6.h"
 #endif
 class TPythia6;
-		
-Double_t RelativePhi(Double_t Jphi, Double_t constit_phi, Double_t Rparam) ; //declaring function to calculate azimuthal separation between jet axis phi and jet constit phi
+
 //class BackgroundGenerator;
 
 //#include "TPythia8.h"
@@ -98,6 +97,76 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
  // cent_bin: (0 : 0 - 5 %) , (1 : 5 - 10 % ) , (2 : 10 - 20 % ) , (3 : 20 - 30 % ) , (4 : 30 - 40 %) , (5 : 40 - 50 %) , (6 : 50 - 60 %) , (7: 60 - 70 %)
 
 // corrjet_bin: (1 : 10 - 30 GeV , pT_hard_min_pythia = 9 GeV) , (2 : 30 - 50 GeV , pT_hard_min_pythia = 29 GeV) , (3: 50 - 70 GeV , pT_hard_min_pythia = 49 GeV)
+
+  auto jet_constit_loop = []( fastjet::PseudoJet parent_jet ,  std::vector<fastjet::PseudoJet> all_constits , TH2D *hist_diagnostic_cone , TH2D *hist_diagnostic_cone_pT , TH2D *hist_diagnostic_cone_z , TH1D *histFF )
+  { //parent jet , //vector of constits, // vector to fill with non-ghost pT , histo, histo, histo, first histo, pythia particle index
+
+    Int_t num_all_constits = all_constits.size(); //get all the constituents (including ghosts) to loop over
+    //Intializing variables, need to retrun first 6 (z_sum is for diagnostic purposes)
+    Double_t angularity_sum =0; //return
+    Double_t angularity_sum_nw = 0; //return
+    Int_t num_non_ghosts =0; //return
+    Double_t first_pythia_particle_index = 0; //return
+    Double_t tru_sum=0; //return
+    Double_t fake_sum=0; //return
+    Bool_t got_pythia_particle;
+    Double_t z_sum = 0;
+
+    
+
+    got_pythia_particle = kFALSE;
+    for(Int_t i = 0 ; i < num_all_constits ; i++ ){
+      if( all_constits[i].perp() > 1e-50 ){ //DO NOT GRAB GHOSTS !!!
+
+        if( !got_pythia_particle ){
+          if( all_constits[i].user_index() != -1 ){
+            first_pythia_particle_index = all_constits[i].user_index();
+            got_pythia_particle = kTRUE; //you found the pythia particle
+          }
+        }
+      
+        num_non_ghosts++;
+
+        Double_t z = all_constits[i].perp() / parent_jet.pt();
+        z_sum += z;
+        histFF->Fill( z); //frag func
+
+        Double_t relphi = all_constits[i].delta_phi_to(parent_jet);
+        Double_t releta = parent_jet.eta() - all_constits[i].eta();
+        Double_t rely = parent_jet.rap() - all_constits[i].rap();
+
+        hist_diagnostic_cone->Fill(relphi,rely); //checking jet sub-structure with these diagnostics
+        hist_diagnostic_cone_pT->Fill(relphi,rely,all_constits[i].perp());
+        hist_diagnostic_cone_z->Fill(relphi,rely,z);
+
+        Double_t delri = TMath::Sqrt( (relphi*relphi) + (releta*releta) );
+
+        angularity_sum += (z*delri); //summing for the traditional angularity
+        angularity_sum_nw += (delri); //summing the delri's to divide by the number of consituents (that are not ghosts)       
+
+        if( all_constits[i].user_index() < 0){
+          fake_sum = fake_sum+all_constits[i].perp();
+        }
+        else{
+          tru_sum = tru_sum+all_constits[i].perp();
+        } 
+
+      } 
+    }
+    
+    //cout<<"\n\nz_sum = "<<z_sum<<endl; //diganostic purposes , should always be 1 (or extremely close when excluding ghosts)
+
+    static Double_t return_vals[4];
+    return_vals[0] = angularity_sum; //angularity (traditional)
+    return_vals[1] = angularity_sum_nw; //angularity (number-weighted)
+    return_vals[2] = num_non_ghosts; //number of non-ghosts
+    return_vals[3] = first_pythia_particle_index; //index of first pythia particle
+    return_vals[4] = tru_sum; //sum of pythia particle momentum in jet
+    return_vals[5] = fake_sum; //sum of bkgd particle momentum in jet
+    return return_vals;
+  };
+
+ // exit(0);
 
   char expression1[256];
 
@@ -956,7 +1025,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   cout<< "\n\nStart Time is " << time->GetTime() <<"\n\n\n" <<endl;
   time_array.push_back((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
 
-  Int_t user_index = 0;
+  Int_t user_index = 1; //must start @ 1 (not 0 !)
 
   char run_title_str[256];
   sprintf( run_title_str, "BG_Gen_Cent%d_Harm%d" , cent_bin , HF);
@@ -1038,7 +1107,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
   //___________________kT below______________________//
   char bkgd_kt_treestr[128];
-  sprintf( bkgd_kt_treestr , "TennGen_kT_HF_%d_CB_%d" , HF, cent_bin);
+  sprintf( bkgd_kt_treestr , "TennGen-kT-HF-%d-CB-%d" , HF, cent_bin);
   TTree *tree_bkgd_kt = new TTree(bkgd_kt_treestr,"tree_bkgd_kt");
 
   //making variables for the tree branches (TennGen kT jet properties)
@@ -1081,7 +1150,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
    //_______________antikT below______________________//
   char bkgd_antikt_treestr[128];
-  sprintf( bkgd_antikt_treestr , "TennGen_antikT_HF_%d_CB_%d" , HF, cent_bin);
+  sprintf( bkgd_antikt_treestr , "TennGen-antikT-HF-%d-CB-%d" , HF, cent_bin);
   TTree *tree_bkgd_antikt = new TTree(bkgd_antikt_treestr,"tree_bkgd_antikt");
 
   //making variables for the tree branches (TennGen kT jet properties)
@@ -1127,7 +1196,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 //___________________________________________________________________________________//
   char treestr[128];
-  sprintf( treestr , "Pythia_and_TennGen_HF_%d_CB_%d" , HF, cent_bin);
+  sprintf( treestr , "Pythia-and-TennGen-HF-%d-CB-%d" , HF, cent_bin);
   TTree *tree = new TTree(treestr,"TreeID");
 
   //making variables for the tree branches (jet properties)
@@ -1169,12 +1238,61 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
    tree->Branch("XTru",&X_tru_tree,"XTru/F");
 
 
+//___________________________________________________________________________________//
+  char treestr_pat[128];
+  sprintf( treestr_pat , "PATS-ALT-Pythia-and-TennGen-HF-%d-CB-%d" , HF, cent_bin);
+  TTree *tree_pat = new TTree(treestr_pat,"TreeID");
+
+  //making variables for the tree branches (jet properties)
+  Float_t p_T_tree_pat; //0th
+  Float_t Eta_tree_pat; //1st
+  Float_t Phi_tree_pat; //2nd
+  Float_t Area_tree_pat; //3rd
+  Float_t Rho_tree_pat;  //4th
+  Float_t p_T_corr_tree_pat; //5th
+  Float_t N_Trk_tree_pat; //6th
+  Float_t Angularity_tree_pat; //7th
+  Float_t Angularity_NW_tree_pat; //8th
+  Float_t Mean_p_T_tree_pat; //9th
+  Float_t p_T_1_tree_pat; //10th
+  Float_t p_T_2_tree_pat; //11th
+  Float_t p_T_3_tree_pat; //12th
+  Float_t p_T_4_tree_pat; //13th
+  Float_t p_T_5_tree_pat; //14th
+  Float_t geom_match_tree_pat; //15th
+  Float_t mom_frac_match_tree_pat; //16th
+  Float_t X_tru_tree_pat; //17th
+
+
+  //Now add these branches to the trees
+
+   tree_pat->Branch("pT",&p_T_tree,"pT/F");
+   tree_pat->Branch("Eta",&Eta_tree,"Eta/F");
+   tree_pat->Branch("Phi",&Phi_tree,"Phi/F");
+   tree_pat->Branch("Area",&Area_tree,"Area/F");
+   tree_pat->Branch("Rho",&Rho_tree,"Rho/F");
+   tree_pat->Branch("pTcorr",&p_T_corr_tree,"pTcorr/F");
+   tree_pat->Branch("NTrk",&N_Trk_tree,"NTrk/F");
+   tree_pat->Branch("Angularity",&Angularity_tree,"Angularity/F");
+   tree_pat->Branch("Angularity_NW",&Angularity_NW_tree,"Angularity_NW/F");
+   tree_pat->Branch("MeanpT",&Mean_p_T_tree,"MeanpT/F");
+   tree_pat->Branch("pT1",&p_T_1_tree,"pT1/F");
+   tree_pat->Branch("pT2",&p_T_2_tree,"pT2/F");
+   tree_pat->Branch("pT3",&p_T_3_tree,"pT3/F");
+   tree_pat->Branch("pT4",&p_T_4_tree,"pT4/F");
+   tree_pat->Branch("pT5",&p_T_5_tree,"pT5/F");
+   tree_pat->Branch("distmatch",&geom_match_tree_pat,"distmatch");
+   tree_pat->Branch("XMatch",&mom_frac_match_tree_pat,"XMatch");
+   tree_pat->Branch("XTru",&X_tru_tree,"XTru/F");
+
+
 //____________________________________________________________________________________________________________________//
 
   char filepathstr[512];
 
   if( !GRID ){
 
+    //PUT THE PATH TO THE BKGD_ROOT_FILES directory here !!!!!!!//
     sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
     //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
 
@@ -1217,7 +1335,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         TDatime *time = new TDatime(); //creating new time stamp
         //cout << "\n\n\n\n\nTime at Event # "<< event << " is " << time->GetTime() <<"\n\n\n\n" << endl;
         time_array.push_back((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
-        Int_t user_index = 0; //must reset this each event iteration loop
+        Int_t user_index = 1; //must reset this each event iteration loop
         Int_t N_reco_det_level = 0; //must reset this each event iteration loop
         Int_t N_reco_det_level_bkgd = 0;
       }//end get new time stamp for dianostic purposes
@@ -1284,7 +1402,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,1000); // Selects Jets with transverse momentum between jet_pT_cut_low and jet_pT_cut_high 
+    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,jet_pT_cut_high); // Selects Jets with transverse momentum between jet_pT_cut_low and jet_pT_cut_high 
     /////////////////////////making jet cuts on eta and pT 
     fastjet::Selector select_pt2 = fastjet::SelectorPtRange(constit_cut,1000); // Selects Jets with transverse momentum between constit_cut and 1000 GeV
     /////////////////////////making jet cuts on eta and pT 
@@ -1325,45 +1443,25 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         Double_t jet_pt = selected_jetsPythia_sorted_part[py_jet_ind2].pt();
         p_T_corr_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].pt(); //ALL PYTHIA so no correction (correction = 0)
 
-        vector <fastjet::PseudoJet> constituents_part = selected_jetsPythia_sorted_part[py_jet_ind2].constituents(); //grab the constituents
-        vector <Double_t> pythia_constit_pT_vec;
+        std::vector <fastjet::PseudoJet> constituents_part = selected_jetsPythia_sorted_part[py_jet_ind2].constituents(); //grab the constituents
+        std::vector <Double_t> pythia_constit_pT_vec;
 
         Int_t nPart_part = constituents_part.size();
-
-        Double_t angularity_sum =0;
-        Double_t angularity_sum_nw = 0;
-        Int_t num_const_gt_cut =0;
-        Double_t z_sum = 0;
-
-       // cout<<"__________________________Pythia Jet__________________________"<<endl;
-        for (Int_t np_part = 0; np_part < nPart_part; np_part++){ //loop over the constituents
-          if(constituents_part[np_part].perp() > 1e-50){ //MAKE SURE you have no ghosts
-            num_const_gt_cut++;
-            pythia_constit_pT_vec.push_back(constituents_part[np_part].perp()); 
-
-            Double_t z = constituents_part[np_part].perp()/jet_pt;
-            z_sum += z;
-            Double_t pphi = constituents_part[np_part].phi();
-            Double_t peta = constituents_part[np_part].eta();
-
-
-            Double_t relphi = constituents_part[np_part].delta_phi_to(selected_jetsPythia_sorted_part[py_jet_ind2]);
-            Double_t releta = jet_eta - peta;
-            Double_t rely = selected_jetsPythia_sorted_part[py_jet_ind2].rap() - constituents_part[np_part].rap();
-
-            Double_t delri = TMath::Sqrt( (relphi*relphi) + (releta*releta) );
-
-            hist_diagnostic_jet_cone_pyth_jet->Fill(relphi,rely);
-            hist_diagnostic_jet_cone_pyth_jet_pT->Fill(relphi,rely,constituents_part[np_part].perp());
-            hist_diagnostic_jet_cone_pyth_jet_z->Fill(relphi,rely,z);
-   
-            histFF_pyth_jet->Fill(z); //frag func
-
-            angularity_sum += (z*delri); //summing for the angularity
-            angularity_sum_nw += (delri); //summing the delri's to divide by the number of consituents (that are not ghosts)
+        for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){
+          if( constituents_part[i_pyth].perp() > 1e-50 ){
+            pythia_constit_pT_vec.push_back( constituents_part[i_pyth].perp() );
           }
-	}
+        }
+       
+        Double_t *return_arr_pyth;
 
+        return_arr_pyth = jet_constit_loop( selected_jetsPythia_sorted_part[py_jet_ind2] , constituents_part , hist_diagnostic_jet_cone_pyth_jet , hist_diagnostic_jet_cone_pyth_jet_pT , hist_diagnostic_jet_cone_pyth_jet_z , histFF_pyth_jet ); 
+
+        Double_t angularity_sum = *(return_arr_pyth + 0);
+        Double_t angularity_sum_nw = *(return_arr_pyth + 1);
+        Double_t num_const_gt_cut = *(return_arr_pyth + 2);
+        Int_t first_pythia_particle_index = *(return_arr_pyth + 3);
+        
 /* Debug lines below
        if(angularity_sum > Jet_Radius){
          cout<<"\n\n______________________________________________________________"<<endl;
@@ -1374,10 +1472,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 */
         histangularity_pyth_jet->Fill(angularity_sum); //angularity
         histangularity_nw_pyth_jet->Fill(angularity_sum_nw/num_const_gt_cut); //number weighted angularity
+
         Angularity_tree_pyth = angularity_sum;
         Angularity_NW_tree_pyth = angularity_sum_nw/num_const_gt_cut ;
+
         histnumtr_pyth_jet->Fill(num_const_gt_cut); //number of consituents
         N_Trk_tree_pyth = num_const_gt_cut;
+
         constituents_part.clear();
 
         if(pythia_constit_pT_vec.size() > 0){
@@ -1602,37 +1703,23 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           vector <Double_t> bkgd_constit_pT_vec;
 
           Int_t nPart_bkgd = constituents_bkgd.size();
-
-          Double_t angularity_sum_back =0;
-          Double_t angularity_sum_back_nw =0;
-        
-          for(Int_t np_bkgd = 0; np_bkgd < nPart_bkgd; np_bkgd++){
-            if(constituents_bkgd[np_bkgd].perp() > 1e-50){ //don't use ghosts
-              bkgd_constit_pT_vec.push_back(constituents_bkgd[np_bkgd].perp());    
-
-              Double_t z = constituents_bkgd[np_bkgd].perp()/jet_pT_back;
-              histFF_bkgd_jet_kT->Fill(z);
-
-              Double_t pphi_back = constituents_bkgd[np_bkgd].phi();
-              Double_t peta_back = constituents_bkgd[np_bkgd].eta();
-
-              Double_t relphi_back = constituents_bkgd[np_bkgd].delta_phi_to(selected_jetsBackground_sorted[i_jet]);
-              Double_t releta_back = jet_eta_back - peta_back;
-              Double_t rely_back = selected_jetsBackground_sorted[i_jet].rap() - constituents_bkgd[np_bkgd].rap();
-
-              Double_t delri_back = TMath::Sqrt( (relphi_back*relphi_back) + (releta_back*releta_back) );
-
-              angularity_sum_back += (delri_back * z);
-              angularity_sum_back_nw += delri_back;
-
-              hist_diagnostic_jet_cone_bkgd_jet_kT->Fill(relphi_back,rely_back); 
-              hist_diagnostic_jet_cone_bkgd_jet_kT_pT->Fill(relphi_back,rely_back,constituents_bkgd[np_bkgd].perp());
-              hist_diagnostic_jet_cone_bkgd_jet_kT_z->Fill(relphi_back,rely_back,z);
+          for( Int_t i_bkgd = 0 ; i_bkgd < nPart_bkgd ; i_bkgd++ ){
+            if( constituents_bkgd[i_bkgd].perp() > 1e-50 ){
+              bkgd_constit_pT_vec.push_back( constituents_bkgd[i_bkgd].perp() );
             }
           }
 
-          histnumtr_bkgd_jet_kT->Fill(bkgd_constit_pT_vec.size()); //number of consituents
-          N_Trk_tree_bkgd = bkgd_constit_pT_vec.size();
+          Double_t *return_arr_bkgd;
+
+          return_arr_bkgd = jet_constit_loop( selected_jetsBackground_sorted[i_jet] , constituents_bkgd , hist_diagnostic_jet_cone_bkgd_jet_kT , hist_diagnostic_jet_cone_bkgd_jet_kT_pT , hist_diagnostic_jet_cone_bkgd_jet_kT_z , histFF_bkgd_jet_kT ); 
+
+          Double_t angularity_sum_back = *(return_arr_bkgd + 0);
+          Double_t angularity_sum_back_nw = *(return_arr_bkgd + 1);
+          Double_t bkgd_const_gt_cut = *(return_arr_bkgd + 2);
+          Int_t first_pythia_particle_index_in_bkgd = *(return_arr_bkgd + 3);
+
+          histnumtr_bkgd_jet_kT->Fill(bkgd_const_gt_cut); //number of consituents
+          N_Trk_tree_bkgd = bkgd_const_gt_cut;
 
           histangularity_nw_bkgd_jet_kT->Fill( angularity_sum_back_nw / bkgd_constit_pT_vec.size() );
 
@@ -1729,47 +1816,32 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           vector <Double_t> antikT_bkgd_constit_pT_vec;
 
           Int_t nPart_antikT_bkgd = constituents_antikT_bkgd.size();
-
-          Double_t angularity_sum_antikT_back =0;
-          Double_t angularity_sum_antikT_back_nw =0;
-        
-          for(Int_t np_bkgd_ak = 0; np_bkgd_ak < nPart_antikT_bkgd; np_bkgd_ak++){
-            if(constituents_antikT_bkgd[np_bkgd_ak].perp() > 1e-50){ //don't use ghosts
-              antikT_bkgd_constit_pT_vec.push_back(constituents_antikT_bkgd[np_bkgd_ak].perp());    
-
-              Double_t z = constituents_antikT_bkgd[np_bkgd_ak].perp()/jet_pT_antikT_back;
-              histFF_bkgd_jet_antikT->Fill(z);
-
-              Double_t pphi_antikT_back = constituents_antikT_bkgd[np_bkgd_ak].phi();
-              Double_t peta_antikT_back = constituents_antikT_bkgd[np_bkgd_ak].eta();
-
-
-              Double_t relphi_antikT_back = constituents_antikT_bkgd[np_bkgd_ak].delta_phi_to(selected_jetsBackground_antikT_sorted[j_jet]);
-              Double_t releta_antikT_back = jet_eta_antikT_back - peta_antikT_back;
-              Double_t rely_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].rap() - constituents_antikT_bkgd[np_bkgd_ak].rap();
-
-              Double_t delri_antikT_back = TMath::Sqrt( (relphi_antikT_back*relphi_antikT_back) + (releta_antikT_back*releta_antikT_back) );
-
-              angularity_sum_antikT_back += z*delri_antikT_back; //summing for the angularity
-
-              angularity_sum_antikT_back_nw += delri_antikT_back; //summing for the angularity
-             
-
-              hist_diagnostic_jet_cone_bkgd_jet_antikT->Fill(relphi_antikT_back,rely_antikT_back); 
-              hist_diagnostic_jet_cone_bkgd_jet_antikT_pT->Fill(relphi_antikT_back,rely_antikT_back,constituents_antikT_bkgd[np_bkgd_ak].perp()); 
-              hist_diagnostic_jet_cone_bkgd_jet_antikT_z->Fill(relphi_antikT_back,rely_antikT_back,z); 
+          for( Int_t i_bkgd_antikT = 0 ; i_bkgd_antikT < nPart_antikT_bkgd ; i_bkgd_antikT++ ){
+            if( constituents_antikT_bkgd[i_bkgd_antikT].perp() > 1e-50 ){
+              antikT_bkgd_constit_pT_vec.push_back( constituents_antikT_bkgd[i_bkgd_antikT].perp() );
             }
           }
 
-          histnumtr_bkgd_jet_antikT->Fill(antikT_bkgd_constit_pT_vec.size()); //number of consituents
-          N_Trk_tree_antikt_bkgd = antikT_bkgd_constit_pT_vec.size();
+          Double_t *return_arr_bkgd_antikT;
+
+          return_arr_bkgd_antikT = jet_constit_loop( selected_jetsBackground_antikT_sorted[j_jet] , constituents_antikT_bkgd , hist_diagnostic_jet_cone_bkgd_jet_antikT , hist_diagnostic_jet_cone_bkgd_jet_antikT_pT , hist_diagnostic_jet_cone_bkgd_jet_antikT_z , histFF_bkgd_jet_antikT ); 
+
+          Double_t angularity_sum_antikT_back= *(return_arr_bkgd_antikT + 0);
+          Double_t angularity_sum_antikT_back_nw = *(return_arr_bkgd_antikT + 1);
+          Double_t bkgd_anti_kT_const_gt_cut = *(return_arr_bkgd_antikT + 2);
+          Int_t first_pythia_particle_index_in_antikT_bkgd = *(return_arr_bkgd_antikT + 3);
+        
+
+          histnumtr_bkgd_jet_antikT->Fill(bkgd_anti_kT_const_gt_cut); //number of consituents
+          N_Trk_tree_antikt_bkgd = bkgd_anti_kT_const_gt_cut;
 
           histangularity_nw_bkgd_jet_antikT->Fill( angularity_sum_antikT_back_nw/antikT_bkgd_constit_pT_vec.size() );
-
-          constituents_antikT_bkgd.clear(); 
           histangularity_bkgd_jet_antikT->Fill(angularity_sum_antikT_back);
+
           Angularity_tree_antikt_bkgd = angularity_sum_antikT_back;
           Angularity_NW_tree_antikt_bkgd = angularity_sum_antikT_back_nw/antikT_bkgd_constit_pT_vec.size() ;
+
+          constituents_antikT_bkgd.clear(); 
 
           if(antikT_bkgd_constit_pT_vec.size() > 0){
           
@@ -1856,7 +1928,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         ofstream pbgOut;
         pbgOut.open("pbgOut.csv", fstream::app);
         if(HEADER__){
-          pbgOut<<"p_T, Eta, Phi, Area, Rho, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, X_tru"<<endl;
+          pbgOut<<"p_T, Eta, Phi, Area, Rho, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru"<<endl;
           HEADER__--;
         }
 
@@ -1868,28 +1940,34 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt()<<", ";
           p_T_tree = selected_jetsTOTAL_sorted[t_jet].pt();
+          p_T_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt();
 
           histeta_pytha_AND_bkgd_jet -> Fill(selected_jetsTOTAL_sorted[t_jet].eta());
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].eta()<<", ";
           Eta_tree = selected_jetsTOTAL_sorted[t_jet].eta();
+          Eta_tree_pat = selected_jetsTOTAL_sorted[t_jet].eta();
 
           histphi_pytha_AND_bkgd_jet -> Fill(selected_jetsTOTAL_sorted[t_jet].phi());
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].phi()<<", ";
           Phi_tree = selected_jetsTOTAL_sorted[t_jet].phi();
+          Phi_tree_pat = selected_jetsTOTAL_sorted[t_jet].phi();
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].area()<<", ";
           Area_tree = selected_jetsTOTAL_sorted[t_jet].area() ;
+          Area_tree_pat = selected_jetsTOTAL_sorted[t_jet].area() ;
 
-          /pbgOut<<(selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area())<<", ";
+          pbgOut<<(selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area())<<", ";
           Rho_tree = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
+          Rho_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
 
-          //if( selected_jetsTOTAL_sorted[t_jet].area() > 0.6*TMath::Pi()*Jet_Radius*Jet_Radius ){
+          if( selected_jetsTOTAL_sorted[t_jet].area() > 0.6*TMath::Pi()*Jet_Radius*Jet_Radius ){
             histpT_area_corr_pytha_AND_bkgd_jet->Fill(selected_jetsTOTAL_sorted[t_jet].pt() - event_median_realistic );
-          //}
+          }
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic<<", ";
           p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic;
+          p_T_corr_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic;
 
           histarea_pytha_AND_bkgd_jet->Fill(selected_jetsTOTAL_sorted[t_jet].area());
           histrho_pytha_AND_bkgd_jet->Fill( selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() );
@@ -1898,51 +1976,25 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           vector <Double_t> total_constit_pT_vec;
 
           Int_t nPart_total = constituents_total.size();
-
-          Double_t jet_eta_tot = selected_jetsTOTAL_sorted[t_jet].eta();
-          Double_t jet_phi_tot = selected_jetsTOTAL_sorted[t_jet].phi();
-
-          Double_t angularity_sum =0;
-          Double_t angularity_sum_nw =0;
-
-          Double_t tru_sum=0;
-          Double_t fake_sum=0;
-        
-          for(Int_t np_total = 0; np_total < nPart_total; np_total++){
-            if(constituents_total[np_total].perp() > 1e-50){ //don't grab the ghosts !!!!
-
-              total_constit_pT_vec.push_back(constituents_total[np_total].perp());    
-              histFF_pytha_AND_bkgd_jet->Fill(constituents_total[np_total].perp()/selected_jetsTOTAL_sorted[t_jet].pt() ); //frag func
-
-              Double_t peta_tot = constituents_total[np_total].eta();
-
-              Double_t z = constituents_total[np_total].perp()/selected_jetsTOTAL_sorted[t_jet].pt();
-
-              Double_t relphi_tot = constituents_total[np_total].delta_phi_to(selected_jetsTOTAL_sorted[t_jet]);
-              Double_t releta_tot = jet_eta_tot - peta_tot;
-              Double_t rely_tot = selected_jetsTOTAL_sorted[t_jet].rap() - constituents_total[np_total].rap();
-
-              Double_t delr_tot = TMath::Sqrt( (relphi_tot*relphi_tot) + (releta_tot*releta_tot) );
-
-              angularity_sum += z*delr_tot; //summing for the angularity
-
-              angularity_sum_nw += delr_tot; //summing for the angularity
-
-             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet->Fill( relphi_tot , rely_tot );
-             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT->Fill( relphi_tot , rely_tot , constituents_total[np_total].perp());
-             hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z->Fill( relphi_tot , rely_tot , z);
-
-              if(constituents_total[np_total].user_index() < 0){
-                fake_sum = fake_sum+constituents_total[np_total].perp();
-              }
-              else{
-                tru_sum = tru_sum+constituents_total[np_total].perp();
-              }
+          for( Int_t i_bkgd_total = 0 ; i_bkgd_total < nPart_total ; i_bkgd_total++ ){
+            if( constituents_total[i_bkgd_total].perp() > 1e-50 ){
+              total_constit_pT_vec.push_back( constituents_total[i_bkgd_total].perp() );
             }
           }
 
+          Double_t *return_arr_tot;
+          return_arr_tot = jet_constit_loop( selected_jetsTOTAL_sorted[t_jet] , constituents_total , hist_diagnostic_jet_cone_pythia_AND_bkgd_jet , hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT , hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z , histFF_pytha_AND_bkgd_jet );       
+
+          Double_t angularity_sum= *(return_arr_tot + 0);
+          Double_t angularity_sum_nw = *(return_arr_tot + 1);
+          Double_t tot_const_gt_cut = *(return_arr_tot + 2);
+          Int_t first_pythia_particle_index_in_tot = *(return_arr_tot + 3);
+          Double_t tru_sum = *(return_arr_tot + 4);
+          Double_t fake_sum = *(return_arr_tot + 5);
+
           pbgOut<<total_constit_pT_vec.size()<<", ";
           N_Trk_tree = total_constit_pT_vec.size();
+          N_Trk_tree_pat = total_constit_pT_vec.size();
 
           histangularity_nw_pytha_AND_bkgd_jet->Fill( angularity_sum_nw / total_constit_pT_vec.size() );
 
@@ -1956,17 +2008,31 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
           histX_pythia_tru_pythia_AND_bkgd->Fill((X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt());
 
-/* commenting out debug lines, so Patrick ignore these
-          if( (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt() > 1 ){
-            cout<<"____________________________________________________________________________"<<endl;
-            cout<<"\n\n\n\n\nYou had a real X_tru > 1, THAT SHOULD NOT BE POSSIBLE !!!\n\n\n\n\n"<<endl;
-            cout<<"____________________________________________________________________________"<<endl;
-            break;
+          //___________________DOING PAT AND ANTONIOS MATCHING METIRC_______________________________________________________//
+          Bool_t found_match = kFALSE;
+          Double_t delr_match = 1000000; // 1000000 default for no match (way too big to be realistic !!)
+          Double_t match_momentum_fraction = 0; //no match is the default !!!!!
+          for(Int_t i_pj = 0 ; i_pj < selected_jetsPythia_sorted_part.size() ; i_pj++ ){ //you have the index now loop through all the pythia jets
+            vector <fastjet::PseudoJet> constituents_pyth = selected_jetsPythia_sorted_part[i_pj].constituents();
+            for(Int_t i_pc = 0 ; i_pc < constituents_pyth.size() ; i_pc++ ){
+              if( constituents_pyth[i_pc].user_index() == first_pythia_particle_index_in_tot  ){
+                Double_t delphi_match = selected_jetsPythia_sorted_part[i_pj].delta_phi_to(selected_jetsTOTAL_sorted[t_jet]) ;
+                Double_t deleta_match = selected_jetsTOTAL_sorted[t_jet].eta() - selected_jetsPythia_sorted_part[i_pj].eta() ;
+                delr_match = TMath::Sqrt( (delphi_match*delphi_match) + (deleta_match*deleta_match) );
+                match_momentum_fraction = tru_sum / selected_jetsPythia_sorted_part[i_pj].pt() ;
+                found_match = kTRUE;
+                break; //break out of inner loop
+              }
+            }
+            if( found_match ){
+              break; //break out of outer loop
+            }
           }
-*/
+         geom_match_tree_pat = delr_match;
+         mom_frac_match_tree_pat = match_momentum_fraction;
+         //________________________________________________________________________________________________________________//
+ 
           Int_t label = X_tru<0.1?0:X_tru<0.5?1:X_tru<0.9?2:3;//0-fake, 1-mostly fake, 2-mostly real, 3-real
-
-          
 
           histX_pythia_tru_pythia_AND_bkgd_jet_pT_raw->Fill(X_tru, selected_jetsTOTAL_sorted[t_jet].pt());
 
@@ -1979,12 +2045,16 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           Angularity_tree = angularity_sum;
           Angularity_NW_tree = angularity_sum_nw / total_constit_pT_vec.size() ;
 
+          Angularity_tree_pat = angularity_sum;
+          Angularity_NW_tree_pat = angularity_sum_nw / total_constit_pT_vec.size() ;
+
           if(total_constit_pT_vec.size() > 0){
           
             histmeanpTtr_pytha_AND_bkgd_jet->Fill( std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size() ); //mean track pT in the jet
 
             pbgOut<<std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()<<", ";
             Mean_p_T_tree = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
+            Mean_p_T_tree_pat = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
 
             std::sort(total_constit_pT_vec.begin(), total_constit_pT_vec.end()); //sorts least to greatest
             histldtr_pytha_AND_bkgd_jet->Fill(total_constit_pT_vec[total_constit_pT_vec.size() - 1]); // grab leading track in jet
@@ -1997,6 +2067,12 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
             p_T_5_tree = total_constit_pT_vec[total_constit_pT_vec.size() - 5];
 
 
+            p_T_1_tree_pat = total_constit_pT_vec[total_constit_pT_vec.size() - 1];
+            p_T_2_tree_pat = total_constit_pT_vec[total_constit_pT_vec.size() - 2];
+            p_T_3_tree_pat = total_constit_pT_vec[total_constit_pT_vec.size() - 3];
+            p_T_4_tree_pat = total_constit_pT_vec[total_constit_pT_vec.size() - 4];
+            p_T_5_tree_pat = total_constit_pT_vec[total_constit_pT_vec.size() - 5];
+
             if(total_constit_pT_vec.size() > 1){
               histsubldtr_pytha_AND_bkgd_jet->Fill(total_constit_pT_vec[total_constit_pT_vec.size() - 2]); // grab sub-leading track in jet
               histlesub_pytha_AND_bkgd_jet->Fill( total_constit_pT_vec[total_constit_pT_vec.size() - 1] - total_constit_pT_vec[total_constit_pT_vec.size() - 2] );
@@ -2005,9 +2081,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
               }
             }
           } //end if check for total jet constit
+          pbgOut<<delr_match<<", ";
+          pbgOut<<match_momentum_fraction<<", ";
           pbgOut<<X_tru<<endl;
           X_tru_tree = (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt();
+          X_tru_tree_pat = (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt();
           tree->Fill();
+          tree_pat->Fill();
           total_constit_pT_vec.clear();
           constituents_total.clear();
 
@@ -2228,33 +2308,4 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 } //end function
 
-Double_t RelativePhi(Double_t Jphi, Double_t constit_phi , Double_t Rparam) 
-{ // function to calculate relative PHI
-
-  Double_t dphi = Jphi - constit_phi;
-  Double_t Jet_R_mult = 2.*Rparam;
-
-  if(  Jphi >= 0. && Jphi <= TMath::Pi()/2 ){ //edge case 1
-
-    if( constit_phi >= (2.*TMath::Pi() - (TMath::Pi()/2)) && constit_phi <= 2.*TMath::Pi() ){ //your constits were wrapped to the other side
-
-      dphi = Jphi - ( constit_phi - 2.*TMath::Pi()  ); //subtract off 2pi
-
-    }
-
-  }
-
-  else if( Jphi >= (2.*TMath::Pi() - (TMath::Pi()/2)) && Jphi <= 2.*TMath::Pi() ){ //edge case 2
-
-    if( constit_phi >= 0. && constit_phi <= (TMath::Pi()/2) ){ //your constits were wrapped to the other side
-
-      dphi = Jphi - ( constit_phi + 2.*TMath::Pi()  ); //add 2pi
-
-    }
-
-  }
-
-
-  return dphi; // dphi in [-0.5Pi, 1.5Pi]                                                                                   
-}
 
