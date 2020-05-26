@@ -27,29 +27,44 @@ What does each component actually do? Be as specific as possible while at the sa
 
 This notebook performs all the Machine Learning on data outputted from the Generator. We can break down the activities into steps:
 
-1) Retrieve data from csv.
+<ol>
+<li> Retrieve data from csv.
+    <ol>
     Reads data out from csv into a pandas DataFrame.
-
+    </ol>
+    </li>
+</ol>
+<ol>
 2) Prepare the data for Machine Learning.
-    2a) Ensure each feature is the proper type
-    2b) Add calculated features
-    2c) Label the data for classification
-    2d) Drop ineffective features
-    2e) Split the data into a train and test set
-    2f) Split the train and test sets into training and testing feature sets and label sets
+<ol>
+    <li> Ensure each feature is the proper type</li>
+    <li> Add calculated features</li>
+    <li> Label the data for classification</li>
+    <li> Drop ineffective features</li>
+    <li> Split the data into a train and test set</li>
+    <li> Split the train and test sets into training and testing feature sets and label sets</li>
+</ol>
+</ol>
 
+<ol>
 3) Visualize basic features.
-    3a) Describe feature statistics
-    3b) Visualize distribution of labeling feature
-    3c) Visualize distributions for each class and each feature
-    3d) Visualize corellations between features
+    <ol>
+    <li> Describe feature statistics</li>
+    <li> Visualize distribution of labeling feature</li>
+    <li> Visualize distributions for each class and each feature</li>
+    <li> Visualize corellations between features</li>
+    </ol>
+</ol>
 
+<ol>
 4) Apply Machine Learning Algorithms.
-    4a) Apply basic Decision Tree to data as naive baseline model
-    4b) Display feature importances
-    4c) Apply a GridSearchCV to hyperparameters of Random Forest Classifier to find best hyperparameter configuration
-    4d) Display Feature Importances for the best hyperparameters
-    4e) Visualize Oracle Decision Tree
-    4f) Visualize Decision Boundaries
-    4g) Visualize t-SNE 2d plot
-
+    <ol>
+    <li> Apply basic Decision Tree to data as naive baseline model</li>
+    <li> Display feature importances</li>
+    <li> Apply a GridSearchCV to hyperparameters of Random Forest Classifier to find best hyperparameter configuration</li>
+    <li> Display Feature Importances for the best hyperparameters</li>
+    <li> Visualize Oracle Decision Tree</li>
+    <li> Visualize Decision Boundaries</li>
+    <li> Visualize t-SNE 2d plot</li>
+    </ol>
+</ol>
