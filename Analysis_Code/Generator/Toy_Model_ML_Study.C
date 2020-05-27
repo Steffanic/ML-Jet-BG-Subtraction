@@ -1402,7 +1402,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,jet_pT_cut_high); // Selects Jets with transverse momentum between jet_pT_cut_low and jet_pT_cut_high 
+    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,1000	); // Selects Jets with transverse momentum between jet_pT_cut_low and jet_pT_cut_high 
     /////////////////////////making jet cuts on eta and pT 
     fastjet::Selector select_pt2 = fastjet::SelectorPtRange(constit_cut,1000); // Selects Jets with transverse momentum between constit_cut and 1000 GeV
     /////////////////////////making jet cuts on eta and pT 
