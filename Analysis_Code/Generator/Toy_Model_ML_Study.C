@@ -1402,7 +1402,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,jet_pT_cut_high); // Selects Jets with transverse momentum between jet_pT_cut_low and jet_pT_cut_high 
+    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,1000	); // Selects Jets with transverse momentum between jet_pT_cut_low and jet_pT_cut_high 
     /////////////////////////making jet cuts on eta and pT 
     fastjet::Selector select_pt2 = fastjet::SelectorPtRange(constit_cut,1000); // Selects Jets with transverse momentum between constit_cut and 1000 GeV
     /////////////////////////making jet cuts on eta and pT 
@@ -1805,7 +1805,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           Double_t jet_eta_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].eta();
           Double_t jet_phi_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].phi();
 
-          p_T_corr_tree_antikt_bkgd = jet_pT_antikT_back - event_median_shared; //subtract off the median from kT
+          p_T_corr_tree_antikt_bkgd = jet_pT_antikT_back - ((event_median_shared/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsBackground_antikT_sorted[j_jet].area()); //subtract off the median from kT
 
           histarea_bkgd_jet_antikT->Fill(selected_jetsBackground_antikT_sorted[j_jet].area());
           histrho_bkgd_jet_antikT->Fill(selected_jetsBackground_antikT_sorted[j_jet].pt()/selected_jetsBackground_antikT_sorted[j_jet].area());
@@ -1963,11 +1963,11 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           Rho_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
 
           if( selected_jetsTOTAL_sorted[t_jet].area() > 0.6*TMath::Pi()*Jet_Radius*Jet_Radius ){
-            histpT_area_corr_pytha_AND_bkgd_jet->Fill(selected_jetsTOTAL_sorted[t_jet].pt() - event_median_realistic );
+            histpT_area_corr_pytha_AND_bkgd_jet->Fill(selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area()));
           }
-          pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic<<", ";
-          p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic;
-          p_T_corr_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt()-event_median_realistic;
+          pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/TMath::Pi()*Jet_Radius*Jet_Radius)*selected_jetsTOTAL_sorted[t_jet].area())<<", ";
+          p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
+          p_T_corr_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() - (((event_median_realistic/TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
 
           histarea_pytha_AND_bkgd_jet->Fill(selected_jetsTOTAL_sorted[t_jet].area());
           histrho_pytha_AND_bkgd_jet->Fill( selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() );
