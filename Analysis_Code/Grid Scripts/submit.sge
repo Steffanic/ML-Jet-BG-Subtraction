@@ -1,0 +1,15 @@
+
+#PBS -S /bin/bash
+#PBS -A ACF-UTK0019
+#PBS -o /lustre/haven/user/chughe26
+#PBS -e /lustre/haven/user/chughe26
+#PBS -M chughe26@vols.utk.edu
+#PBS -l nodes=1:ppn=16,walltime=04:00:00
+#PBS -l partition=general:beacon
+
+echo $1
+mkdir $PBS_O_WORKDIR/out
+mkdir $PBS_O_WORKDIR/code
+
+pbsdsh bash -l -c -v '$PBS_O_WORKDIR/job.sh '$1''
+
