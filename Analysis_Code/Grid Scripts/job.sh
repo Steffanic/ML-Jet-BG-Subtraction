@@ -32,7 +32,7 @@ cd $outdir/$JOB_NUMBER
 
 #root -b -l -q "maindriver_newton.C( 100000000, $JOB_NUMBER, 100, 0.4, 0 , 1000 , 0 , 1, 0.,  kTRUE, kFALSE, kTRUE )"
 
-pThardmin_array=(10 20 30 40)
+pThardmin_array=(10.0 20.0 30.0 40.0)
 JetR_array=(0.2 0.3 0.4 0.5 0.6)
 
 for(( i=0; i <=3; i++ ))
