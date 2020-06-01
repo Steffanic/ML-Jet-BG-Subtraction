@@ -57,6 +57,6 @@ echo "CLEANING UP THE EXCESS/INTERMEDIATE FILES NOW !!!"
 rm -rf 3*.csv
 rm -rf 3*.root
 echo "TAR-ING ALL THE REMANING ROOT FILES !"
-tar -zxvf ROOTFILES-LOWSTATS.tar.gz *.root
+tar -czvf ROOTFILES-LOWSTATS.tar.gz *.root
 echo "TAR-ING ALL THE REMAINING CSV FILES !"
-tar -zxvf CSVFILES-LOWSTATS.tar.gz *.csv LOWSTATS/
+tar -czvf CSVFILES-LOWSTATS.tar.gz *.csv LOWSTATS/
