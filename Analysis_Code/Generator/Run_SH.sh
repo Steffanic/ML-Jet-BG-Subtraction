@@ -6,7 +6,7 @@ for(( i=0; i <=3;  i++ ))
     for(( j=0; j <=4; j++ ))
       do  
         echo '________________________________________________________________________________________________'
-        var=$(printf '\npThardmin = %s, Rparam = %s\n' "${JetR_array[$j]}" "${pThardmin_array[$i]}")
+        var=$(printf '\npThardmin = %s, Rparam = %s\n' "${pThardmin_array[$i]}" "${JetR_array[$j]}")
         echo $var
         echo '________________________________________________________________________________________________'
         root -b -l -q "maindriver_newton.C( 100000000, 39034, 100, ${JetR_array[$j]}, 0 , 1000 , 0 , ${pThardmin_array[$i]} , 1 , 0., kTRUE, kFALSE , kFALSE )"
