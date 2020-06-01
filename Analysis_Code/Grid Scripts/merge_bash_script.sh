@@ -38,10 +38,10 @@ for(( r=0; r <=3; r++ ))
       do  
 
         MERGE_ROOTFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.root' "${JetR_array[$s]}" "${pThardmin_array[$r]}")
-        MERGE_CSVFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.csv' "${JetR_array[$s]}" "${pThardmin_array[$r]}")       
+        MERGE_CSVFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.csv' "${JetR_array[$s]}" "${pThardmin_array[$r]}")	       
 
         hadd $MERGE_ROOTFILE_STR /lustre/haven/user/chughe26/scratch/jetbin1/3*${JetR_array[$s]}*${pThardmin_array[$r]}*.root
-        cat $DIR_STR/3*${JetR_array[$s]}*${pThardmin_array[$r]}*.csv > $MERGE_CSVFILE_STR
+        cat /lustre/haven/user/chughe26/scratch/jetbin1/3*${JetR_array[$s]}*${pThardmin_array[$r]}*.csv > $MERGE_CSVFILE_STR
       done
   done
 
