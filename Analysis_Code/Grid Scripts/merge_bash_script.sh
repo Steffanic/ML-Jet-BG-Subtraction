@@ -20,8 +20,8 @@ for(( w=0; w <=3; w++ ))
     for(( x=0; x <=4; x++ ))
       do  
      
-        ROOTFILE_STR=$(printf '%s-Rparam-=-%s-pThardmin-=-%s-.root' "$JOB_NUM" "${JetR_array[$n]}" "${pThardmin_array[$m]}")
-        CSVFILE_STR=$(printf '%s-Rparam-=-%s-pThardmin-=-%s-.csv' "$JOB_NUM" "${JetR_array[$n]}" "${pThardmin_array[$m]}")
+        ROOTFILE_STR=$(printf '%s-Rparam-=-%s-pThardmin-=-%s-.root' "$JOB_NUM" "${JetR_array[$x]}" "${pThardmin_array[$w]}")
+        CSVFILE_STR=$(printf '%s-Rparam-=-%s-pThardmin-=-%s-.csv' "$JOB_NUM" "${JetR_array[$x]}" "${pThardmin_array[$w]}")
 
         hadd $ROOTFILE_STR $DIR_STR/3*/*${JetR_array[$x]}*${pThardmin_array[$w]}*.root
         cat $DIR_STR/3*/*${JetR_array[$x]}*${pThardmin_array[$w]}*.csv > $CSVFILE_STR
@@ -37,11 +37,11 @@ for(( r=0; r <=3; r++ ))
     for(( s=0; s <=4; s++ ))
       do  
 
-        MERGE_ROOTFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.root' "${JetR_array[$r]}" "${pThardmin_array[$s]}")
-        MERGE_CSVFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.csv' "${JetR_array[$r]}" "${pThardmin_array[$s]}")       
+        MERGE_ROOTFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.root' "${JetR_array[$s]}" "${pThardmin_array[$r]}")
+        MERGE_CSVFILE_STR=$(printf 'merged-ML-output-LOWSTATS-Rparam-%s-pThardmin-%s.csv' "${JetR_array[$s]}" "${pThardmin_array[$r]}")       
 
-        hadd $MERGE_ROOTFILE_STR /lustre/haven/user/chughe26/scratch/jetbin1/3*${JetR_array[$r]}*${pThardmin_array[$s]}*.root
-        cat $DIR_STR/3*${JetR_array[$r]}*${pThardmin_array[$s]}*.csv > $MERGE_CSVFILE_STR
+        hadd $MERGE_ROOTFILE_STR /lustre/haven/user/chughe26/scratch/jetbin1/3*${JetR_array[$s]}*${pThardmin_array[$r]}*.root
+        cat $DIR_STR/3*${JetR_array[$s]}*${pThardmin_array[$r]}*.csv > $MERGE_CSVFILE_STR
       done
   done
 
