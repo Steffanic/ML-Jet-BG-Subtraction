@@ -989,11 +989,11 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
 
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt = fastjet::SelectorPtRange(10.,10000); // Selects Jets with transverse momentum between 10. GeV and 10 TeV 
+    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,10000); // Selects Jets with transverse momentum between 10. GeV and 10 TeV 
     /////////////////////////making jet cuts on eta and pT 
     fastjet::Selector select_pt2 = fastjet::SelectorPtRange(constit_cut,10000); // Selects Jets with transverse momentum between constit_cut and 10 TeV
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt3 = fastjet::SelectorPtRange(10.,10000); //Selects Jets with transverse momentum between 10. GeV and 10 TeV 
+    fastjet::Selector select_pt3 = fastjet::SelectorPtRange(jet_pT_cut_low,10000); //Selects Jets with transverse momentum between 10. GeV and 10 TeV 
     fastjet::Selector select_rapidity = fastjet::SelectorEtaRange(-0.9 + Rparam , 0.9 - Rparam); // Selects Jets in the desired eta range
     fastjet::Selector select_both = select_pt && select_rapidity ; //combining the two jet cuts
     fastjet::Selector select_both2 = select_pt2 && select_rapidity ; //combining the two jet cuts for the second pT selector
@@ -1021,6 +1021,9 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
         Double_t jet_pt = selected_jetsPythia_sorted_part[py_jet_ind2].pt();
         p_T_corr_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].pt(); //ALL PYTHIA so no correction (correction = 0)
+
+        Area_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].area();
+        Rho_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].pt() / selected_jetsPythia_sorted_part[py_jet_ind2].area();
 
         std::vector <fastjet::PseudoJet> constituents_part = selected_jetsPythia_sorted_part[py_jet_ind2].constituents(); //grab the constituents
         std::vector <Double_t> pythia_constit_pT_vec;
