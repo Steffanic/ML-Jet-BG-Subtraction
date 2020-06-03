@@ -1503,7 +1503,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
           Rho_tree = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
           Rho_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
 
-          pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/TMath::Pi()*Jet_Radius*Jet_Radius)*selected_jetsTOTAL_sorted[t_jet].area())<<", ";
+          pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area())<<", ";
           p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
           p_T_corr_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() - (((event_median_realistic/TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
       
