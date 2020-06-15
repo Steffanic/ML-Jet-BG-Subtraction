@@ -579,7 +579,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   //cout<<"I made it here = load pythia"<<endl;
   
   pythia -> SetMSTP(5, tune); //Tune A = 100 , Perugia = 326, Perugia 2011C = 356
-  pythia -> SetCKIN(3,(jet_pT_cut_low - 1.)); // pt hard min (jet_pT_cut_low - 1.0 GeV/c)
+  pythia -> SetCKIN(3,((jet_pT_cut_low + 50)/5) - 1.); // pt hard min (jet_pT_cut_low - 1.0 GeV/c)
   //pythia -> SetCKIN(3,49.);
    //pythia -> SetCKIN(4,40.); // pt hard max 40 GeV
 
