@@ -80,6 +80,20 @@ class TPythia6;
 //class TPythia8;
 int HEADER__=1;
 
+Int_t parent_parton( Int_t parent_id , TClonesArray* event_particles ){
+
+  Int_t pparent = parent_id; // parent of the current particle
+   
+  while( pparent > 8 ){
+
+    TMCParticle *PPart = (TMCParticle *) event_particles->At(pparent);
+    pparent = PPart->GetParent();
+    cout<<"Parent ID is = "<<pparent<<endl;
+  }
+
+  return pparent;
+}
+
 // nEvents is how many events we want. This is dynamic user input to be run from the command prompt and user specified
 // jobID is random number for seeding
 // Jet_Radius is desired resolution paramater for jets
@@ -166,11 +180,26 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   };
 
  // exit(0);
+/*
+auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_particles ){ //Pythia Particle as a TMCParticle
+
+    Int_t parent = pyth_part->GetParent();
+    TMCParticle *PPart = (TMCParticle *) event_particles->At(parent);
+
+    if( parent <= 8){
+      cout<<"Ultimate Parent = "<<PPart->GetName()<<" ,Ultimate Parent KS = "<<PPart->GetKS()<<" Ultimate Parent KF = "<<PPart->GetKF()<<" ,Ultimate Parent I = "<<parent<<endl;
+    }
+    else {
+      parent_parton_finder( PPart , event_particles ) ;
+    }
+
+};
+*/
 
   char expression1[256];
 
   Double_t jet_pT_cut_low = pT_hard_min;
-  Double_t jet_pT_cut_high = 10000;
+  Double_t jet_pT_cut_high = pT_hard_min + 10;
   
   sprintf(expression1 , "Background-And-Pythia-cent_bin-%d-RParam-%.1f-pThardmin-%1.1f.root", cent_bin , Jet_Radius , pT_hard_min );
 
@@ -190,12 +219,20 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   char expression14[256];
   char expression15[256];
 
+  char expression15a[256];
+  char expression15b[256];
+  char expression15c[256];
+
   sprintf(expression2, "p_{T} distribution of all Pythia Particles with |#eta| < 0.9" );
   sprintf(expression3, "#eta distribution of all Pythia Particles with |#eta| < 0.9" );
   sprintf(expression4, "#phi distribution of all Pythia Particles with |#eta| < 0.9" );
 
   sprintf(expression14, "Raw Fragmentation Function of all anti-k_{T} Pythia Jets %lf - %lf GeV/c with |#eta| < %lf", jet_pT_cut_low, jet_pT_cut_high , 0.9 - Jet_Radius );
   sprintf(expression15, "LeSub of all anti-k_{T} Pythia Jets %lf - %lf GeV/c with |#eta| < %lf", jet_pT_cut_low, jet_pT_cut_high , 0.9 - Jet_Radius );
+
+  sprintf(expression15a, "Pure Beam Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2 );
+  sprintf(expression15b, "Mixed Orgin Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2);
+  sprintf(expression15c, "Pure Parton Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2);
 
 
   TH1D *histpT_pyth_part = new TH1D("histpT-pyth-part", expression2,100,0.,100.);
@@ -240,6 +277,38 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   hist_diagnostic_jet_cone_pyth_jet_z -> Sumw2();
   hist_diagnostic_jet_cone_pyth_jet_z->SetXTitle("#Delta#phi = #phi^{jet} - #phi^{constit.}");
   hist_diagnostic_jet_cone_pyth_jet_z->SetYTitle("#Deltay = y^{jet} - y^{constit.}");
+
+
+  TH1D *hist_pure_beam = new TH1D( "hist_pure_beam" , expression15a , 3 , 0.5 , 3.5 );
+  hist_pure_beam -> SetMarkerColor( 2 );
+  hist_pure_beam -> SetLineColor( 2 );
+  hist_pure_beam -> SetMarkerStyle( 20 );
+  hist_pure_beam -> SetMarkerSize( 2.0 );
+  hist_pure_beam -> Sumw2();
+  TH1D *hist_mixed_origin = new TH1D( "hist_mixed_origin" , expression15b , 3 , 0.5 , 3.5 );
+  hist_mixed_origin -> SetMarkerColor( 6 );
+  hist_mixed_origin -> SetLineColor( 6 );
+  hist_mixed_origin -> SetMarkerStyle( 21 );
+  hist_mixed_origin -> SetMarkerSize( 2.0 );
+  hist_mixed_origin -> Sumw2();
+  TH1D *hist_pure_parton = new TH1D( "hist_pure_parton" , expression15c , 3 , 0.5 , 3.5 );
+  hist_pure_parton -> SetMarkerColor( 4 );
+  hist_pure_parton -> SetLineColor( 4 );
+  hist_pure_parton -> SetMarkerStyle( 22 );
+  hist_pure_parton -> SetMarkerSize( 2.0 );
+  hist_pure_parton -> Sumw2();
+
+  hist_pure_beam->GetXaxis()->SetBinLabel(1,"PURE BEAM");
+  hist_pure_beam->GetXaxis()->SetBinLabel(2,"MIXED ORIGIN");
+  hist_pure_beam->GetXaxis()->SetBinLabel(3,"PURE PARTON");
+
+  hist_mixed_origin->GetXaxis()->SetBinLabel(1,"PURE BEAM");
+  hist_mixed_origin->GetXaxis()->SetBinLabel(2,"MIXED ORIGIN");
+  hist_mixed_origin->GetXaxis()->SetBinLabel(3,"PURE PARTON");
+
+  hist_pure_parton->GetXaxis()->SetBinLabel(1,"PURE BEAM");
+  hist_pure_parton->GetXaxis()->SetBinLabel(2,"MIXED ORIGIN");
+  hist_pure_parton->GetXaxis()->SetBinLabel(3,"PURE PARTON");
 
 
 //___________________________________BACKGROUND ONLY PARTICLES_________________________________//
@@ -579,9 +648,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   //cout<<"I made it here = load pythia"<<endl;
   
   pythia -> SetMSTP(5, tune); //Tune A = 100 , Perugia = 326, Perugia 2011C = 356
-  pythia -> SetCKIN(3,((jet_pT_cut_low + 50)/5) - 1.); // pt hard min (jet_pT_cut_low - 1.0 GeV/c)
-  //pythia -> SetCKIN(3,49.);
-   //pythia -> SetCKIN(4,40.); // pt hard max 40 GeV
+  pythia -> SetCKIN(3,(jet_pT_cut_low - 2.)); // pt hard min (jet_pT_cut_low - 2.0 GeV/c)
+  pythia -> SetCKIN(4,(jet_pT_cut_high - 2.)); // pt hard max jet_pT_cut_high - 2.0 GeV/c)
 
   
   //The following block needs to be used on Newton Only
@@ -910,9 +978,16 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       break; //break out of the loop if you have used up all the background events
     }
     if (event % 10 == 0) cout << "========================Event # " << event << endl;  
+
     N_counter ++;
     pythia->GenerateEvent();		
     Int_t npart = particles->GetEntries(); //This returns the number of particles in particles
+    if( event == 20){
+      //pythia -> Pylist(1); //show particle listing for 20th
+      //pythia -> Pylist(12); // show particle decay table
+      //cout<<"\n"<<endl;
+      //cout<<" I "<<" "<<"   particle/jet   "<<"          "<<"   KS   "<<"     "<<"   KF   "<<"     "<<"   orig   "<<endl;
+    }
 
     num_pythia_events++;
     histpythia_events->Fill(1.00);
@@ -942,13 +1017,46 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       Float_t DCA_calc = (TMath::Sqrt( (Vx*Vx) + (Vy*Vy) + (Vz*Vz) )) * (1000000/1000) ; //answer in microns
       Double_t p_eta =  0.5*(TMath::Log((p+MPart->GetPz())/(p-MPart->GetPz()))) ;
       Double_t phi = 1.0*(TMath::Pi()+TMath::ATan2(-MPart->GetPy(),-MPart->GetPx()));
-     
+
+      Bool_t break_condition = kFALSE;
+      Int_t Ultimate_Parent;
+      if(event == 20){
+        //cout<<" "<<part<<"         "<<MPart->GetName()<<"                      "<<MPart->GetKS()<<"          "<<MPart->GetKF()<<"           "<<MPart->GetParent()<<endl;
+      }
+      if( MPart->GetKS() == 21 && MPart->GetKF() != 2212 ){
+        //cout<<"\nParticle = "<<MPart->GetName()<<" ,Parent = "<<MPart->GetParent()<<" ,FirstChild = "<<MPart->GetFirstChild()<<" ,LastChild = "<<MPart->GetLastChild()<<endl;
+      }
 //      if(pt > constit_cut && pt < jet_pT_cut_high && (TMath::Abs(p_eta)) < 0.9  ){ //looking for particles in the EMCAL with pT = 0.15 GeV/c (c = 1)   
       if(pt > constit_cut && (TMath::Abs(p_eta)) < 0.9  ){ //looking for particles in the EMCAL with pT = 0.15 GeV/c (c = 1) 
-        if( DCA_calc < DCA ){ //you want primary particles only
+        //if( DCA_calc < DCA ){ //you want primary particles only
+        if( MPart->GetKS() == 1 ){ // you want final state particles only
+            //cout<<"\nCurrent Particle is a "<<MPart->GetName()<<endl;
+            //cout<<"Current Particle Status is = "<<MPart->GetKS()<<"\n"<<endl;
+
+            //cout<<"The Index of the parent parton = "<<parent_parton(MPart->GetParent() , particles )<<endl;
+
+            cout<<"The Index of the current particle = "<<part-1<<" The KF of the current particle = "<<MPart->GetKF()<<endl;
+            //if(event == 20){
+              Int_t pparent;
+              Int_t ancestor_counter = 1;
+              pparent = MPart->GetParent();
+              while( !break_condition ){
+                TMCParticle *PPart = (TMCParticle *) particles->At(pparent-1);
+                ancestor_counter++;
+                pparent = PPart->GetParent();
+                if(pparent <= 8){
+                  break_condition = kTRUE;
+                  Ultimate_Parent = PPart->GetParent();
+                  TMCParticle *UPPart = (TMCParticle *) particles->At(Ultimate_Parent-1);
+                  cout<<"Parent^"<<ancestor_counter<<" ID = "<<PPart->GetParent()-1<<endl;
+                  cout<<"Parent^"<<ancestor_counter<<" KF = "<<UPPart->GetKF()<<endl;
+                }
+              }
+            //}
 
             fastjet::PseudoJet p1( MPart->GetPx(), MPart->GetPy() , MPart->GetPz() , MPart->GetEnergy() );//creating temp pseudojet p1
-            p1.set_user_index(user_index);
+            p1.set_user_index(Ultimate_Parent);
+            //p1.set_user_index(user_index);
             fjInputs_Pythia_Particle.push_back(p1); //store in pseudo-jets to be clustered for PYTHIA only
             fjInputs_TOTAL.push_back(p1); //store in pseudo-jets to be clustered for PYTHIA + bkgd 
             fjInputs_TOTAL_kT.push_back(p1); //meant for a realistic assessment of mixed signal + bkgd
@@ -963,7 +1071,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
             histeta_pytha_AND_bkgd_part->Fill(p_eta);
             histphi_pytha_AND_bkgd_part->Fill(phi);
 
-        } //end if DCA cut
+        } //end if DCA/final state cut
       } //end if pT soft cut and eta acceptance cut
 
 
@@ -1008,6 +1116,8 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
 
     if( selected_jetsPythia_sorted_part_size > 0){ 
 
+      pythia -> Pylist(1);
+
       for(Int_t py_jet_ind2 = 0; py_jet_ind2 < selected_jetsPythia_sorted_part_size ; py_jet_ind2++ ){
         histpythia_jets->Fill(1.00);
         
@@ -1028,12 +1138,35 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         std::vector <fastjet::PseudoJet> constituents_part = selected_jetsPythia_sorted_part[py_jet_ind2].constituents(); //grab the constituents
         std::vector <Double_t> pythia_constit_pT_vec;
 
+        Bool_t has_parton = kFALSE;
+        Bool_t has_beam = kFALSE;
+
         Int_t nPart_part = constituents_part.size();
         for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){
           if( constituents_part[i_pyth].perp() > 1e-50 ){
             pythia_constit_pT_vec.push_back( constituents_part[i_pyth].perp() );
+            cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Point of Origin = "<<constituents_part[i_pyth].user_index()<<endl;
+            if( constituents_part[i_pyth].user_index() == 1 || constituents_part[i_pyth].user_index() == 2 ){
+              has_beam = kTRUE;
+            }
+            else {
+              has_parton = kTRUE;
+            }
           }
         }
+
+       if( has_beam && has_parton ){
+         hist_mixed_origin->Fill(2);
+         cout<<"\nThe Above is a Mixed Origin Jet !\n"<<endl;
+       }
+       else if( has_beam && !has_parton ){
+         hist_pure_beam->Fill(1);
+         cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
+       }
+       else if( !has_beam && has_parton ){
+         hist_pure_parton->Fill(3);
+         cout<<"\nThe Above is a Pure Parton Jet !\n"<<endl;
+       }
        
         Double_t *return_arr_pyth;
 
@@ -1696,6 +1829,13 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   hist_diagnostic_jet_cone_pyth_jet->Write();
   hist_diagnostic_jet_cone_pyth_jet_pT->Write();
   hist_diagnostic_jet_cone_pyth_jet_z->Write();
+
+  hist_pure_beam->Scale( 1 / histpythia_jets->GetBinContent(1) , "width" );
+  hist_pure_beam->Write();
+  hist_mixed_origin->Scale( 1 / histpythia_jets->GetBinContent(1) , "width" );
+  hist_mixed_origin->Write();
+  hist_pure_parton->Scale( 1 / histpythia_jets->GetBinContent(1) , "width" );
+  hist_pure_parton->Write();
   
 
 //______________________________________END PYTHIA ONLY STUFF______________________________________________________________//
@@ -1770,5 +1910,3 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
   ff->Close();
 
 } //end function
-
-
