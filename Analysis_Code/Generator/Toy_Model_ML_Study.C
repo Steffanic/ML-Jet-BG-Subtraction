@@ -132,7 +132,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       if( all_constits[i].perp() > 1e-50 ){ //DO NOT GRAB GHOSTS !!!
 
         if( !got_pythia_particle ){
-          if( all_constits[i].user_index() != -1 ){
+          if( all_constits[i].user_index() != 0 ){
             first_pythia_particle_index = all_constits[i].user_index();
             got_pythia_particle = kTRUE; //you found the pythia particle
           }
@@ -223,6 +223,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   char expression15b[256];
   char expression15c[256];
 
+  char expression15d[256];
+  char expression15e[256];
+
   sprintf(expression2, "p_{T} distribution of all Pythia Particles with |#eta| < 0.9" );
   sprintf(expression3, "#eta distribution of all Pythia Particles with |#eta| < 0.9" );
   sprintf(expression4, "#phi distribution of all Pythia Particles with |#eta| < 0.9" );
@@ -233,6 +236,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   sprintf(expression15a, "Pure Beam Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2 );
   sprintf(expression15b, "Mixed Orgin Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2);
   sprintf(expression15c, "Pure Parton Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2);
+
+  sprintf(expression15d, "100 Percent Quark Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2);
+  sprintf(expression15e, "100 Percent Gluon Jets for R = %f anti-k_{T} jets | p_{T}^{jet} > %f | %f < p_{T}^{hard} < %f |", Jet_Radius, jet_pT_cut_low , jet_pT_cut_low - 2 , jet_pT_cut_high - 2);
 
 
   TH1D *histpT_pyth_part = new TH1D("histpT-pyth-part", expression2,100,0.,100.);
@@ -309,6 +315,16 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   hist_pure_parton->GetXaxis()->SetBinLabel(1,"PURE BEAM");
   hist_pure_parton->GetXaxis()->SetBinLabel(2,"MIXED ORIGIN");
   hist_pure_parton->GetXaxis()->SetBinLabel(3,"PURE PARTON");
+
+  TH1D *histpT_pyth_quark_jet = new TH1D( "histpT_pyth_quark_jet" , expression15d , 500 , 0 , 500 );
+  histpT_pyth_quark_jet->Sumw2();
+  histpT_pyth_quark_jet->SetXTitle("p_{T}^{jet}");
+  histpT_pyth_quark_jet->SetYTitle("dN/dp_{T}^{jet}");
+
+  TH1D *histpT_pyth_gluon_jet = new TH1D( "histpT_pyth_gluon_jet" , expression15e , 500 , 0 , 500 );
+  histpT_pyth_gluon_jet->Sumw2();
+  histpT_pyth_gluon_jet->SetXTitle("p_{T}^{jet}");
+  histpT_pyth_gluon_jet->SetYTitle("dN/dp_{T}^{jet}");
 
 
 //___________________________________BACKGROUND ONLY PARTICLES_________________________________//
@@ -718,7 +734,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Eta_tree_pyth; //1st
   Float_t Phi_tree_pyth; //2nd
   Float_t Area_tree_pyth; //3rd
-  Float_t Rho_tree_pyth; //4th
+  Float_t Eps_tree_pyth; //4th
   Float_t p_T_corr_tree_pyth; //5th
   Float_t N_Trk_tree_pyth; //6th
   Float_t Angularity_tree_pyth; //7th
@@ -730,6 +746,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t p_T_4_tree_pyth; //13th
   Float_t p_T_5_tree_pyth; //14th
   Float_t X_tru_tree_pyth; //15th
+  Float_t Y_quark_tree_pyth; //16th
+  Float_t Y_gluon_tree_pyth; //17th
+  Float_t Y_beam_tree_pyth; //18th
 
 
   //Now add these branches to the trees
@@ -738,7 +757,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_pyth->Branch("Eta",&Eta_tree_pyth,"Eta/F");
    tree_pyth->Branch("Phi",&Phi_tree_pyth,"Phi/F");
    tree_pyth->Branch("Area",&Area_tree_pyth,"Area/F");
-   tree_pyth->Branch("Rho",&Rho_tree_pyth,"Rho/F");
+   tree_pyth->Branch("Eps",&Eps_tree_pyth,"Eps/F");
    tree_pyth->Branch("pTcorr",&p_T_corr_tree_pyth,"pTcorr/F");
    tree_pyth->Branch("NTrk",&N_Trk_tree_pyth,"NTrk/F");
    tree_pyth->Branch("Angularity",&Angularity_tree_pyth,"Angularity/F");
@@ -750,6 +769,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_pyth->Branch("pT4",&p_T_4_tree_pyth,"pT4/F");
    tree_pyth->Branch("pT5",&p_T_5_tree_pyth,"pT5/F");
    tree_pyth->Branch("XTru",&X_tru_tree_pyth,"XTru/F");
+   tree_pyth->Branch("Y_quark",&Y_quark_tree_pyth,"Y_quark/F");
+   tree_pyth->Branch("Y_gluon",&Y_gluon_tree_pyth,"Y_gluon/F");
+   tree_pyth->Branch("Y_beam",&Y_beam_tree_pyth,"Y_beam/F");
 
 
 
@@ -767,7 +789,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Eta_tree_bkgd; //1st
   Float_t Phi_tree_bkgd; //2nd
   Float_t Area_tree_bkgd; //3rd
-  Float_t Rho_tree_bkgd;  //4th
+  Float_t Eps_tree_bkgd;  //4th
   Float_t p_T_corr_tree_bkgd; //5th
   Float_t N_Trk_tree_bkgd; //6th
   Float_t Angularity_tree_bkgd; //7th
@@ -787,7 +809,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_bkgd_kt->Branch("Eta",&Eta_tree_bkgd,"Eta/F");
    tree_bkgd_kt->Branch("Phi",&Phi_tree_bkgd,"Phi/F");
    tree_bkgd_kt->Branch("Area",&Area_tree_bkgd,"Area/F");
-   tree_bkgd_kt->Branch("Rho",&Rho_tree_bkgd,"Rho/F");
+   tree_bkgd_kt->Branch("Eps",&Eps_tree_bkgd,"Eps/F");
    tree_bkgd_kt->Branch("pTcorr",&p_T_corr_tree_bkgd,"pTcorr/F");
    tree_bkgd_kt->Branch("NTrk",&N_Trk_tree_bkgd,"NTrk/F");
    tree_bkgd_kt->Branch("Angularity",&Angularity_tree_bkgd,"Angularity/F");
@@ -810,7 +832,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Eta_tree_antikt_bkgd; //1st
   Float_t Phi_tree_antikt_bkgd; //2nd
   Float_t Area_tree_antikt_bkgd; //3rd
-  Float_t Rho_tree_antikt_bkgd;  //4th
+  Float_t Eps_tree_antikt_bkgd;  //4th
   Float_t p_T_corr_tree_antikt_bkgd; //5th
   Float_t N_Trk_tree_antikt_bkgd; //6th
   Float_t Angularity_tree_antikt_bkgd; //7th
@@ -824,13 +846,14 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t X_tru_tree_antikt_bkgd; //15th
 
 
+
   //Now add these branches to the trees
 
    tree_bkgd_antikt->Branch("pT",&p_T_tree_antikt_bkgd,"pT/F");
    tree_bkgd_antikt->Branch("Eta",&Eta_tree_antikt_bkgd,"Eta/F");
    tree_bkgd_antikt->Branch("Phi",&Phi_tree_antikt_bkgd,"Phi/F");
    tree_bkgd_antikt->Branch("Area",&Area_tree_antikt_bkgd,"Area/F");
-   tree_bkgd_antikt->Branch("Rho",&Rho_tree_antikt_bkgd,"Rho/F");
+   tree_bkgd_antikt->Branch("Eps",&Eps_tree_antikt_bkgd,"Eps/F");
    tree_bkgd_antikt->Branch("pTcorr",&p_T_corr_tree_antikt_bkgd,"pTcorr/F");
    tree_bkgd_antikt->Branch("NTrk",&N_Trk_tree_antikt_bkgd,"NTrk/F");
    tree_bkgd_antikt->Branch("Angularity",&Angularity_tree_antikt_bkgd,"Angularity/F");
@@ -856,7 +879,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Eta_tree; //1st
   Float_t Phi_tree; //2nd
   Float_t Area_tree; //3rd
-  Float_t Rho_tree;  //4th
+  Float_t Eps_tree;  //4th
   Float_t p_T_corr_tree; //5th
   Float_t N_Trk_tree; //6th
   Float_t Angularity_tree; //7th
@@ -868,6 +891,10 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t p_T_4_tree; //13th
   Float_t p_T_5_tree; //14th
   Float_t X_tru_tree; //15th
+  Float_t Y_quark_tree; //16th
+  Float_t Y_gluon_tree; //17th
+  Float_t Y_beam_tree; //18th
+  Float_t Y_bkgd_tree; //18th
 
 
   //Now add these branches to the trees
@@ -876,7 +903,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree->Branch("Eta",&Eta_tree,"Eta/F");
    tree->Branch("Phi",&Phi_tree,"Phi/F");
    tree->Branch("Area",&Area_tree,"Area/F");
-   tree->Branch("Rho",&Rho_tree,"Rho/F");
+   tree->Branch("Eps",&Eps_tree,"Eps/F");
    tree->Branch("pTcorr",&p_T_corr_tree,"pTcorr/F");
    tree->Branch("NTrk",&N_Trk_tree,"NTrk/F");
    tree->Branch("Angularity",&Angularity_tree,"Angularity/F");
@@ -888,6 +915,10 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree->Branch("pT4",&p_T_4_tree,"pT4/F");
    tree->Branch("pT5",&p_T_5_tree,"pT5/F");
    tree->Branch("XTru",&X_tru_tree,"XTru/F");
+   tree->Branch("Y_quark",&Y_quark_tree,"Y_quark/F");
+   tree->Branch("Y_gluon",&Y_gluon_tree,"Y_gluon/F");
+   tree->Branch("Y_beam",&Y_beam_tree,"Y_beam/F");
+   tree->Branch("Y_bkgd",&Y_bkgd_tree,"Y_bkgd/F");
 
 
 //___________________________________________________________________________________//
@@ -900,7 +931,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Eta_tree_pat; //1st
   Float_t Phi_tree_pat; //2nd
   Float_t Area_tree_pat; //3rd
-  Float_t Rho_tree_pat;  //4th
+  Float_t Eps_tree_pat;  //4th
   Float_t p_T_corr_tree_pat; //5th
   Float_t N_Trk_tree_pat; //6th
   Float_t Angularity_tree_pat; //7th
@@ -914,28 +945,36 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t geom_match_tree_pat; //15th
   Float_t mom_frac_match_tree_pat; //16th
   Float_t X_tru_tree_pat; //17th
+  Float_t Y_quark_tree_pat; //18th
+  Float_t Y_gluon_tree_pat; //19th
+  Float_t Y_beam_tree_pat; //20th
+  Float_t Y_bkgd_tree_pat; //21st
 
 
   //Now add these branches to the trees
 
-   tree_pat->Branch("pT",&p_T_tree,"pT/F");
-   tree_pat->Branch("Eta",&Eta_tree,"Eta/F");
-   tree_pat->Branch("Phi",&Phi_tree,"Phi/F");
-   tree_pat->Branch("Area",&Area_tree,"Area/F");
-   tree_pat->Branch("Rho",&Rho_tree,"Rho/F");
-   tree_pat->Branch("pTcorr",&p_T_corr_tree,"pTcorr/F");
-   tree_pat->Branch("NTrk",&N_Trk_tree,"NTrk/F");
-   tree_pat->Branch("Angularity",&Angularity_tree,"Angularity/F");
-   tree_pat->Branch("Angularity_NW",&Angularity_NW_tree,"Angularity_NW/F");
-   tree_pat->Branch("MeanpT",&Mean_p_T_tree,"MeanpT/F");
-   tree_pat->Branch("pT1",&p_T_1_tree,"pT1/F");
-   tree_pat->Branch("pT2",&p_T_2_tree,"pT2/F");
-   tree_pat->Branch("pT3",&p_T_3_tree,"pT3/F");
-   tree_pat->Branch("pT4",&p_T_4_tree,"pT4/F");
-   tree_pat->Branch("pT5",&p_T_5_tree,"pT5/F");
+   tree_pat->Branch("pT",&p_T_tree_pat,"pT/F");
+   tree_pat->Branch("Eta",&Eta_tree_pat,"Eta/F");
+   tree_pat->Branch("Phi",&Phi_tree_pat,"Phi/F");
+   tree_pat->Branch("Area",&Area_tree_pat,"Area/F");
+   tree_pat->Branch("Eps",&Eps_tree_pat,"Eps/F");
+   tree_pat->Branch("pTcorr",&p_T_corr_tree_pat,"pTcorr/F");
+   tree_pat->Branch("NTrk",&N_Trk_tree_pat,"NTrk/F");
+   tree_pat->Branch("Angularity",&Angularity_tree_pat,"Angularity/F");
+   tree_pat->Branch("Angularity_NW",&Angularity_NW_tree_pat,"Angularity_NW/F");
+   tree_pat->Branch("MeanpT",&Mean_p_T_tree_pat,"MeanpT/F");
+   tree_pat->Branch("pT1",&p_T_1_tree_pat,"pT1/F");
+   tree_pat->Branch("pT2",&p_T_2_tree_pat,"pT2/F");
+   tree_pat->Branch("pT3",&p_T_3_tree_pat,"pT3/F");
+   tree_pat->Branch("pT4",&p_T_4_tree_pat,"pT4/F");
+   tree_pat->Branch("pT5",&p_T_5_tree_pat,"pT5/F");
    tree_pat->Branch("distmatch",&geom_match_tree_pat,"distmatch");
    tree_pat->Branch("XMatch",&mom_frac_match_tree_pat,"XMatch");
-   tree_pat->Branch("XTru",&X_tru_tree,"XTru/F");
+   tree_pat->Branch("XTru",&X_tru_tree_pat,"XTru/F");
+   tree->Branch("Y_quark",&Y_quark_tree_pat,"Y_quark/F");
+   tree->Branch("Y_gluon",&Y_gluon_tree_pat,"Y_gluon/F");
+   tree->Branch("Y_beam",&Y_beam_tree_pat,"Y_beam/F");
+   tree->Branch("Y_bkgd",&Y_bkgd_tree_pat,"Y_bkgd/F");
 
 
 //____________________________________________________________________________________________________________________//
@@ -968,7 +1007,6 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   sprintf(csv_out_file_str,"pbgOut-RParam-%.1f-pThardmin-%1.1f.csv",Jet_Radius,pT_hard_min);
 
   remove( csv_out_file_str ); //if the csv file alread exists, delete it.
-
   //_____________________________________________Starting Event Loop_______________________________________________________________//
 
   for(Int_t event = 0; event < nEvents; event++) {
@@ -980,8 +1018,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     if (event % 10 == 0) cout << "========================Event # " << event << endl;  
 
     N_counter ++;
-    pythia->GenerateEvent();		
-    Int_t npart = particles->GetEntries(); //This returns the number of particles in particles
+    pythia->GenerateEvent();	
+    Int_t npart = particles->GetEntries(); //This returns the number of particles in particles	
+
     if( event == 20){
       //pythia -> Pylist(1); //show particle listing for 20th
       //pythia -> Pylist(12); // show particle decay table
@@ -1004,7 +1043,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
 //___________________________________Starting Pythia Particle Loop___________________________________________//
     for (Int_t part=0; part<npart; part++) {
-    
+      //cout<<"\nParticle Index = "<<part-1<<"\n"<<endl;
       TMCParticle *MPart = (TMCParticle *) particles->At(part); //indexing the particles array for the current member in loop
      
       Double_t pt =  TMath::Sqrt(MPart->GetPx() * MPart->GetPx() + MPart->GetPy() * MPart->GetPy() );
@@ -1020,6 +1059,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
       Bool_t break_condition = kFALSE;
       Int_t Ultimate_Parent;
+      Int_t UP_I;
       if(event == 20){
         //cout<<" "<<part<<"         "<<MPart->GetName()<<"                      "<<MPart->GetKS()<<"          "<<MPart->GetKF()<<"           "<<MPart->GetParent()<<endl;
       }
@@ -1035,21 +1075,52 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
             //cout<<"The Index of the parent parton = "<<parent_parton(MPart->GetParent() , particles )<<endl;
 
-            cout<<"The Index of the current particle = "<<part-1<<" The KF of the current particle = "<<MPart->GetKF()<<endl;
+            //cout<<"The Index of the current particle = "<<part-1<<" The KF of the current particle = "<<MPart->GetKF()<<endl;
             //if(event == 20){
               Int_t pparent;
               Int_t ancestor_counter = 1;
               pparent = MPart->GetParent();
               while( !break_condition ){
+                if( (pparent>=1&&pparent<=8) && ancestor_counter == 1  ){
+                  cout<<"You had a prompt photon/particle !!"<<endl;
+                  cout<<"The Index of the prompt photon/particle = "<<part+1<<" The KF of the the prompt photon/particle particle = "<<MPart->GetKF()<<endl;
+                  Ultimate_Parent = pparent;
+                  break_condition = kTRUE;
+                  continue;
+                }
+                if( (pparent-1) < 0){
+                  cout<<"pparent went to 0"<<endl;
+                  cout<<"The Index of the trouble particle = "<<part+1<<" The KF of the trouble particle = "<<MPart->GetKF()<<endl;
+                  pythia -> Pylist(1);
+                  cout<<" I "<<" "<<"   particle/jet   "<<"          "<<"   KS   "<<"     "<<"   KF   "<<"     "<<"   orig   "<<endl;
+                  for (Int_t tpart=0; tpart<npart; tpart++) {
+                   TMCParticle *TPart = (TMCParticle *) particles->At(tpart);
+                   cout<<" "<<tpart<<"         "<<TPart->GetName()<<"                      "<<TPart->GetKS()<<"          "<<TPart->GetKF()<<"           "<<TPart->GetParent()<<endl;
+                  }
+                  exit(3);
+                }
                 TMCParticle *PPart = (TMCParticle *) particles->At(pparent-1);
                 ancestor_counter++;
                 pparent = PPart->GetParent();
                 if(pparent <= 8){
                   break_condition = kTRUE;
+                  UP_I = pparent;
+                  if( (UP_I-1) < 0){
+                    cout<<"UP_I went to 0"<<endl;
+                    cout<<"The Index of the trouble particle = "<<part+1<<" The KF of the trouble particle = "<<MPart->GetKF()<<endl;
+                    pythia -> Pylist(1);
+                    cout<<" I "<<" "<<"   particle/jet   "<<"          "<<"   KS   "<<"     "<<"   KF   "<<"     "<<"   orig   "<<endl;
+                    for (Int_t tpart=0; tpart<npart; tpart++) {
+                     TMCParticle *TPart = (TMCParticle *) particles->At(tpart);
+                     cout<<" "<<tpart<<"         "<<TPart->GetName()<<"                      "<<TPart->GetKS()<<"          "<<TPart->GetKF()<<"           "<<TPart->GetParent()<<endl;
+                    }
+                    exit(3);
+                  }
+                  TMCParticle *UPPart = (TMCParticle *) particles->At(UP_I-1);
                   Ultimate_Parent = PPart->GetParent();
-                  TMCParticle *UPPart = (TMCParticle *) particles->At(Ultimate_Parent-1);
-                  cout<<"Parent^"<<ancestor_counter<<" ID = "<<PPart->GetParent()-1<<endl;
-                  cout<<"Parent^"<<ancestor_counter<<" KF = "<<UPPart->GetKF()<<endl;
+                  //cout<<"Parent^"<<ancestor_counter<<" ID = "<<PPart->GetParent()<<endl;
+                  //cout<<"Parent^"<<ancestor_counter<<" KF = "<<UPPart->GetKF()<<endl;
+                  //Ultimate_Parent = UPPart->GetKF();
                 }
               }
             //}
@@ -1076,7 +1147,6 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
 
     }//end Pythia Particle Loop
-
 
    //apply jet definitions 
     vector <fastjet::PseudoJet> inclusiveJetsPythia_part, sortedJetsPythia_part; // 
@@ -1116,7 +1186,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
     if( selected_jetsPythia_sorted_part_size > 0){ 
 
-      pythia -> Pylist(1);
+      //pythia -> Pylist(1);
 
       for(Int_t py_jet_ind2 = 0; py_jet_ind2 < selected_jetsPythia_sorted_part_size ; py_jet_ind2++ ){
         histpythia_jets->Fill(1.00);
@@ -1133,7 +1203,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         p_T_corr_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].pt(); //ALL PYTHIA so no correction (correction = 0)
 
         Area_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].area();
-        Rho_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].pt() / selected_jetsPythia_sorted_part[py_jet_ind2].area();
+        Eps_tree_pyth = selected_jetsPythia_sorted_part[py_jet_ind2].pt() / selected_jetsPythia_sorted_part[py_jet_ind2].area();
 
         std::vector <fastjet::PseudoJet> constituents_part = selected_jetsPythia_sorted_part[py_jet_ind2].constituents(); //grab the constituents
         std::vector <Double_t> pythia_constit_pT_vec;
@@ -1141,31 +1211,60 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         Bool_t has_parton = kFALSE;
         Bool_t has_beam = kFALSE;
 
+        Double_t pT_quark_pyth=0;
+        Double_t pT_gluon_pyth=0;
+        Double_t pT_beam_pyth=0;
+
+        Int_t UPKF;
+
         Int_t nPart_part = constituents_part.size();
         for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){
           if( constituents_part[i_pyth].perp() > 1e-50 ){
             pythia_constit_pT_vec.push_back( constituents_part[i_pyth].perp() );
-            cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Point of Origin = "<<constituents_part[i_pyth].user_index()<<endl;
-            if( constituents_part[i_pyth].user_index() == 1 || constituents_part[i_pyth].user_index() == 2 ){
+            //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Point of Origin = "<<constituents_part[i_pyth].user_index()<<endl;
+            //if( constituents_part[i_pyth].user_index() == 1 || constituents_part[i_pyth].user_index() == 2 ){ //1 and 2 are beam particles
+            TMCParticle *UPPart2 = (TMCParticle *) particles->At(constituents_part[i_pyth].user_index()-1);
+            UPKF = UPPart2->GetKF();
+            //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , KF Origin = "<<UPKF<<endl;
+            if( UPKF == 2212  ){ //proton beams
               has_beam = kTRUE;
+              pT_beam_pyth+=constituents_part[i_pyth].perp();
             }
             else {
               has_parton = kTRUE;
+              if( UPKF == 21 || UPKF == 9 ){
+                pT_gluon_pyth+=constituents_part[i_pyth].perp();
+              }
+              else {
+                pT_quark_pyth+=constituents_part[i_pyth].perp(); 
+              }
             }
           }
         }
 
+       Y_quark_tree_pyth = pT_quark_pyth/selected_jetsPythia_sorted_part[py_jet_ind2].pt(); //quark origin momentum fraction
+       Y_gluon_tree_pyth = pT_gluon_pyth/selected_jetsPythia_sorted_part[py_jet_ind2].pt();    //gluon origin momentum fraction
+       Y_beam_tree_pyth = pT_beam_pyth/selected_jetsPythia_sorted_part[py_jet_ind2].pt(); //beam origin momentum fraction
+
+       if( Y_quark_tree_pyth > 0.99 ){
+         histpT_pyth_quark_jet->Fill( selected_jetsPythia_sorted_part[py_jet_ind2].pt() );
+       }
+
+       if( Y_gluon_tree_pyth > 0.99 ){
+         histpT_pyth_gluon_jet->Fill( selected_jetsPythia_sorted_part[py_jet_ind2].pt() );
+       }
+
        if( has_beam && has_parton ){
          hist_mixed_origin->Fill(2);
-         cout<<"\nThe Above is a Mixed Origin Jet !\n"<<endl;
+         //cout<<"\nThe Above is a Mixed Origin Jet !\n"<<endl;
        }
        else if( has_beam && !has_parton ){
          hist_pure_beam->Fill(1);
-         cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
+         //cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
        }
        else if( !has_beam && has_parton ){
          hist_pure_parton->Fill(3);
-         cout<<"\nThe Above is a Pure Parton Jet !\n"<<endl;
+         //cout<<"\nThe Above is a Pure Parton Jet !\n"<<endl;
        }
        
         Double_t *return_arr_pyth;
@@ -1276,7 +1375,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         Double_t phi = 1.0*(TMath::Pi()+TMath::ATan2(-bob->GetPy(),-bob->GetPx()));
       
         fastjet::PseudoJet pa( bob->GetPx(), bob->GetPy() , bob->GetPz() , Energy );//creating temp pseudojet pa
-        pa.set_user_index(-1); //we want all the *Fake* particles to have negative 1 as 
+        pa.set_user_index(0); //we want all the *Fake* particles to have negative 1 as 
 
         if( pT > constit_cut ){
 
@@ -1391,7 +1490,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           Phi_tree_bkgd = selected_jetsBackground_sorted[i_jet].phi();
 
           Area_tree_bkgd = selected_jetsBackground_sorted[i_jet].area();
-          Rho_tree_bkgd = selected_jetsBackground_sorted[i_jet].pt()/selected_jetsBackground_sorted[i_jet].area() ;
+          Eps_tree_bkgd = selected_jetsBackground_sorted[i_jet].pt()/selected_jetsBackground_sorted[i_jet].area() ;
 
           Double_t jet_pT_back = selected_jetsBackground_sorted[i_jet].pt();
           Double_t jet_eta_back = selected_jetsBackground_sorted[i_jet].eta();
@@ -1491,7 +1590,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           Phi_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].phi();
 
           Area_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].area();
-          Rho_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].pt()/selected_jetsBackground_antikT_sorted[j_jet].area();
+          Eps_tree_antikt_bkgd = selected_jetsBackground_antikT_sorted[j_jet].pt()/selected_jetsBackground_antikT_sorted[j_jet].area();
 
           Double_t jet_pT_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].pt();
           Double_t jet_eta_antikT_back = selected_jetsBackground_antikT_sorted[j_jet].eta();
@@ -1608,7 +1707,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         ofstream pbgOut;
         pbgOut.open(csv_out_file_str, fstream::app);
         if(HEADER__){
-          pbgOut<<"p_T, Eta, Phi, Area, Rho, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru"<<endl;
+          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd"<<endl;
           HEADER__--;
         }
 
@@ -1633,8 +1732,8 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           Area_tree_pat = selected_jetsTOTAL_sorted[t_jet].area() ;
 
           pbgOut<<(selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area())<<", ";
-          Rho_tree = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
-          Rho_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
+          Eps_tree = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
+          Eps_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() / selected_jetsTOTAL_sorted[t_jet].area() ;
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area())<<", ";
           p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
@@ -1643,12 +1742,56 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           vector <fastjet::PseudoJet> constituents_total = selected_jetsTOTAL_sorted[t_jet].constituents();
           vector <Double_t> total_constit_pT_vec;
 
+
+          Double_t pT_quark_tot=0;
+          Double_t pT_gluon_tot=0;
+          Double_t pT_beam_tot=0;
+          Double_t pT_bkgd_tot=0;
+
+          Int_t UPTKF;
+
           Int_t nPart_total = constituents_total.size();
           for( Int_t i_bkgd_total = 0 ; i_bkgd_total < nPart_total ; i_bkgd_total++ ){
             if( constituents_total[i_bkgd_total].perp() > 1e-50 ){
               total_constit_pT_vec.push_back( constituents_total[i_bkgd_total].perp() );
+              if( constituents_total[i_bkgd_total].user_index() != 0 ){
+                TMCParticle *UPTPart2 = (TMCParticle *) particles->At(constituents_total[i_bkgd_total].user_index()-1);
+                UPTKF = UPTPart2->GetKF();
+                //cout<<"Jet Number "<<t_jet+1<<" , Jet Constit "<<i_bkgd_total<<" , Mass = "<<constituents_total[i_bkgd_total].m()<<" , Point of Origin = "<<constituents_total[i_bkgd_total].user_index()<<endl;
+                //cout<<"Jet Number "<<t_jet+1<<" , Jet Constit "<<i_bkgd_total+1<<" , Mass = "<<constituents_total[i_bkgd_total].m()<<" , KF Origin = "<<UPTKF<<endl;
+
+
+                if( UPTKF == 2212  ){ //proton beams
+                  pT_beam_tot+=constituents_total[i_bkgd_total].perp();
+                }
+                else {
+                  if( UPTKF == 21 || UPTKF == 9 ){
+                    pT_gluon_tot+=constituents_total[i_bkgd_total].perp();
+                  }
+                  else {
+                    pT_quark_tot+=constituents_total[i_bkgd_total].perp(); 
+                  }
+                }
+
+
+              }
+              else {
+                pT_bkgd_tot+=constituents_total[i_bkgd_total].perp();
+              }
+
             }
           }
+
+         Y_quark_tree = pT_quark_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //quark origin momentum fraction
+         Y_gluon_tree = pT_gluon_tot/selected_jetsTOTAL_sorted[t_jet].pt();    //gluon origin momentum fraction
+         Y_beam_tree = pT_beam_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //beam origin momentum fraction
+         Y_bkgd_tree = pT_bkgd_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //bkgd origin momentum fraction
+
+         Y_quark_tree_pat = pT_quark_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //quark origin momentum fraction
+         Y_gluon_tree_pat = pT_gluon_tot/selected_jetsTOTAL_sorted[t_jet].pt();    //gluon origin momentum fraction
+         Y_beam_tree_pat = pT_beam_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //beam origin momentum fraction
+         Y_bkgd_tree_pat = pT_bkgd_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //bkgd origin momentum fraction
+
 
           Double_t *return_arr_tot;
           return_arr_tot = jet_constit_loop( selected_jetsTOTAL_sorted[t_jet] , constituents_total , hist_diagnostic_jet_cone_pythia_AND_bkgd_jet , hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_pT , hist_diagnostic_jet_cone_pythia_AND_bkgd_jet_z , histFF_pytha_AND_bkgd_jet );       
@@ -1740,7 +1883,11 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           } //end if check for total jet constit
           pbgOut<<delr_match<<", ";
           pbgOut<<match_momentum_fraction<<", ";
-          pbgOut<<X_tru<<endl;
+          pbgOut<<X_tru<<", ";;
+          pbgOut<<pT_quark_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", ";
+          pbgOut<<pT_gluon_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", "; 
+          pbgOut<<pT_beam_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", ";    
+          pbgOut<<pT_bkgd_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<endl;
           X_tru_tree = (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt();
           X_tru_tree_pat = (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt();
           tree->Fill();
@@ -1836,6 +1983,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   hist_mixed_origin->Write();
   hist_pure_parton->Scale( 1 / histpythia_jets->GetBinContent(1) , "width" );
   hist_pure_parton->Write();
+
+  histpT_pyth_quark_jet->Write();
+  histpT_pyth_gluon_jet->Write();
   
 
 //______________________________________END PYTHIA ONLY STUFF______________________________________________________________//
