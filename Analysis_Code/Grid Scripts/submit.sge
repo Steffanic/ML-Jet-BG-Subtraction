@@ -4,7 +4,7 @@
 #PBS -o /lustre/haven/user/chughe26
 #PBS -e /lustre/haven/user/chughe26
 #PBS -M chughe26@vols.utk.edu
-#PBS -l nodes=1:ppn=16,walltime=04:00:00
+#PBS -l nodes=1:ppn=16,walltime=08:00:00
 #PBS -l partition=general:beacon
 
 echo $1
