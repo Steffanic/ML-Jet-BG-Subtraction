@@ -132,7 +132,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
       if( all_constits[i].perp() > 1e-50 ){ //DO NOT GRAB GHOSTS !!!
 
         if( !got_pythia_particle ){
-          if( all_constits[i].user_index() != 0 ){
+          if( all_constits[i].user_index() > 0 ){
             first_pythia_particle_index = all_constits[i].user_index();
             got_pythia_particle = kTRUE; //you found the pythia particle
           }
@@ -157,7 +157,7 @@ void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Ra
         angularity_sum += (z*delri); //summing for the traditional angularity
         angularity_sum_nw += (delri); //summing the delri's to divide by the number of consituents (that are not ghosts)       
 
-        if( all_constits[i].user_index() < 0){
+        if( all_constits[i].user_index() == 0){
           fake_sum = fake_sum+all_constits[i].perp();
         }
         else{
@@ -1222,7 +1222,10 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           if( constituents_part[i_pyth].perp() > 1e-50 ){
             pythia_constit_pT_vec.push_back( constituents_part[i_pyth].perp() );
             //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Point of Origin = "<<constituents_part[i_pyth].user_index()<<endl;
-            //if( constituents_part[i_pyth].user_index() == 1 || constituents_part[i_pyth].user_index() == 2 ){ //1 and 2 are beam particles
+            if( constituents_part[i_pyth].user_index() == 0){
+              cout<<"You fucked up ! no pythia particle should have an index of 0"<<endl;
+              exit(3);
+            } 
             TMCParticle *UPPart2 = (TMCParticle *) particles->At(constituents_part[i_pyth].user_index()-1);
             UPKF = UPPart2->GetKF();
             //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , KF Origin = "<<UPKF<<endl;
