@@ -13,7 +13,6 @@ pythia6/makePythia6.solaris
 pythia6/makePythia6.win
 pythia6/makePythia6.wingcc
 pythia6/tarPythia6
-<<<<<<< HEAD
 Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-0.2-pThardmin-10.0.csv
 Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-0.2-pThardmin-20.0.csv
 Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-0.2-pThardmin-30.0.csv
@@ -3063,5 +3062,3 @@ Analysis_Code/ML/Plots/R=0.6/tree_pTmin20.png
 Analysis_Code/ML/Plots/R=0.6/tree_pTmin30.png
 Analysis_Code/ML/Plots/R=0.6/tree_pTmin40.png
 Analysis_Code/ML/ML Working Doc.ipynb
-=======
->>>>>>> 1a046155a33d46044064c4994dc049b4f00cf704
