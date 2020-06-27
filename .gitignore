@@ -1066,7 +1066,6 @@ Analysis_Code/ML/Exp1_all_feat/Plots/R=0.6/tree_pTmin10.png
 Analysis_Code/ML/Exp1_all_feat/Plots/R=0.6/tree_pTmin20.png
 Analysis_Code/ML/Exp1_all_feat/Plots/R=0.6/tree_pTmin30.png
 Analysis_Code/ML/Exp1_all_feat/Plots/R=0.6/tree_pTmin40.png
-Analysis_Code/ML/Exp2_drop_p_T_1/jeb.py
 Analysis_Code/ML/Exp2_drop_p_T_1/Objects/best_params.pickle
 Analysis_Code/ML/Exp2_drop_p_T_1/Objects/R=0.2/feat_imp.pickle
 Analysis_Code/ML/Exp2_drop_p_T_1/Objects/R=0.2/perf_metric_pthard=10
@@ -1093,14 +1092,10 @@ Analysis_Code/ML/Exp2_drop_p_T_1/Objects/R=0.6/perf_metric_pthard=10
 Analysis_Code/ML/Exp2_drop_p_T_1/Objects/R=0.6/perf_metric_pthard=20
 Analysis_Code/ML/Exp2_drop_p_T_1/Objects/R=0.6/perf_metric_pthard=30
 Analysis_Code/ML/Exp2_drop_p_T_1/Objects/R=0.6/perf_metric_pthard=40
-Analysis_Code/ML/Exp2_drop_p_T_1/Plots/makePlots.py
-Analysis_Code/ML/Exp2_drop_p_T_1/Plots/plotFeatImp.py
-Analysis_Code/ML/Exp2_drop_p_T_1/Plots/plotPerfMetric.py
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/pthard=10.png
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/pthard=20.png
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/pthard=30.png
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/pthard=40.png
-Analysis_Code/ML/Exp2_drop_p_T_1/Plots/VariableCompare.C
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/Feature_plots/R=0.2/Angularity_pTmin10.pickle
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/Feature_plots/R=0.2/Angularity_pTmin20.pickle
 Analysis_Code/ML/Exp2_drop_p_T_1/Plots/Feature_plots/R=0.2/Angularity_pTmin30.pickle
