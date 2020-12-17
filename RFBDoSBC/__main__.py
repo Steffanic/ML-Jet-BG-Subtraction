@@ -14,7 +14,6 @@ from sklearn import tree
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import  RandomForestClassifier
 from sklearn.datasets import make_classification
-from sklearn.inspection import permutation_importance
 from GetAndPrepareData import *
 from modelPreparation import *
 from modelEvaluation import *
