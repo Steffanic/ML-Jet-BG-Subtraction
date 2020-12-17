@@ -9,7 +9,6 @@ import sys
 from threading import Thread
 from multiprocessing import Pool
 from matplotlib import cm, colors
-from pandas_profiling import ProfileReport
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 from sklearn.model_selection import train_test_split, GridSearchCV
