@@ -112,25 +112,17 @@ def factor_scatter_matrix(df, factor, rad, ptm,palette=None):
     plt.rc('font', family = "Liberation Serif")
     
 
-    if isinstance(factor, str):
-        factor_name = factor #save off the name
-        factor = df[factor] #extract column
-        df = df.drop(factor_name,axis=1) # remove from df, so it 
-        # doesn't get a row and col in the plot.
+    factor_name = factor #save off the name
+    factor = df[factor] #extract column
+    df = df.drop(factor_name,axis=1) # remove from df, so it 
+    # doesn't get a row and col in the plot.
 
-    classes = list(set(factor))
+    classes = [1,2,3]
 
-    if palette is None:
-        palette = ['#e41a1c', '#377eb8', '#4eae4b', 
-                '#994fa1', '#ff8101', '#fdfc33', 
-                '#a8572c', '#f482be', '#999999']
+    palette = ['blue', 'orange', 'red']
 
     color_map = dict(zip(classes,palette))
 
-    if len(classes) > len(palette):
-        raise ValueError('''Too many groups for the number of colors provided.
-        We only have {} colors in the palette, but you have {}
-        groups.'''.format(len(palette), len(classes)))
     colors = factor.apply(lambda group: color_map[group])
     axarr = scatter_matrix(df, ax = plt.gca(),grid=True,marker='o',s=4,c=colors,diagonal='hist', hist_kwds={'bins':30, 'histtype':u'step'})
     plt.suptitle("2-D Feature Scatter Matrix", fontsize=24)
