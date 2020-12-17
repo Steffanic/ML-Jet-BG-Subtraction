@@ -11,6 +11,10 @@ The machine learning requires python3 and a couple of libraries that can be inst
 
 `pip3 install pandas matplotlib numpy sklearn`
 
+There is also a requirement for drawing the trees
+
+`sudo apt-get install graphviz`
+
 # Results
 Here is a sample result, we will add more in the future.
 
