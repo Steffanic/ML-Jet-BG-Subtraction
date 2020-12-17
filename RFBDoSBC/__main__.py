@@ -6,6 +6,8 @@ import matplotlib
 import gc
 import os
 import sys
+from threading import Thread
+from multiprocessing import Pool
 from matplotlib import cm, colors
 from pandas_profiling import ProfileReport
 from sklearn.tree import DecisionTreeClassifier
@@ -18,6 +20,7 @@ from GetAndPrepareData import *
 from modelPreparation import *
 from modelEvaluation import *
 from plotData import *
+from utility import msg
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -25,9 +28,6 @@ warnings.filterwarnings("ignore")
 
 matplotlib.rcParams.update({'font.size': 16})
 matplotlib.rcParams.update({'font.family':'DejaVu Sans'})
-
-def msg(_msg):
-    print("JEB: %s"%_msg)
 
 if __name__=='__main__':
 
@@ -45,11 +45,19 @@ if __name__=='__main__':
     else:
         rows=1000000000000000000
 
-    
+    #Multithreading for the Gridsearch?
+    #Thread(traget=GridSearchHandler, args=(X, Y, rad, ptm))
+
 
     # Select the jet radii and pthardmin that correspond to the data file you wish to look at
     R = [0.2, 0.3, 0.4, 0.5, 0.6]
     pThardmin = [10,20,30,40]
+    Rpt = [(0.2, 10), (0.2, 20), (0.2, 30), (0.2, 40), (0.5, 10), (0.5, 20), (0.5, 30), (0.5, 40), (0.3, 10), (0.3, 20), (0.3, 30), (0.3, 40), (0.4, 10), (0.4, 20), (0.4, 30), (0.4, 40), (0.6, 10), (0.6, 20), (0.6, 30), (0.6, 40)]
+
+    '''
+    with Pool(8) as p:
+        p.starmap(GridSearchHandler, [(X, Y, r, pt) for r, pt in Rpt])
+    '''
 
     feat_imp = {}
     train = None
@@ -73,9 +81,9 @@ if __name__=='__main__':
 
             #===============INFO============
             msg("Number of Features: %d"%len(train.columns))
-            msg("Number of Fake Jets: %d"%len(train.loc[train['Label']==0]))
-            msg("Number of Squishy Jets: %d"%len(train.loc[train['Label']==1]))
-            msg("Number of Real Jets: %d"%len(train.loc[train['Label']==2]))
+            msg("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
+            msg("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
+            msg("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
             msg(train.describe())
             #===============================
 
@@ -105,36 +113,11 @@ if __name__=='__main__':
             msg("Feature rankings:")
             print_feature_importances(X, importances, indices)
 
-            plt.figure()
-            plt.title("Feature importances")
-            plt.bar(range(X.shape[1]), importances[indices],
-                    color="r", yerr=std[indices], align="center")
-            plt.xticks(range(X.shape[1]), X.columns[indices])
-            plt.xlim([-1, X.shape[1]])
-            plt.show()
+            msg("Plotting feature importances.")
+            plot_feature_importances(X, importances, indices, std, rad, ptm)
 
-            #Plot distribution of importances
-            plt.figure(figsize=(10,10))
-            feat_imp_dist = [tree.feature_importances_ for tree in clf.estimators_]
-            
-            phi = np.array(list(zip(*feat_imp_dist)))[1]*3.1415
-
-            rgb_cycle = np.vstack((            # Three sinusoids
-                .5*(1.+np.cos(phi          )), # scaled to [0,1]
-                .5*(1.+np.cos(phi+2*np.pi/3)), # 120° phase shifted.
-                .5*(1.+np.cos(phi-2*np.pi/3)))).T 
-            i=0
-            for feats in zip(*feat_imp_dist):
-                plt.scatter(np.ones(len(feats))*i+(np.random.randn(len(feats))*0.05), feats, c=rgb_cycle, s=50, alpha=0.2)
-                i+=1
-            plt.xticks(np.linspace(0, len(X.columns)-1, len(X.columns)), X.columns)
-            plt.title("Distribution of Feature Importances in Random Forest", fontsize=16)
-            plt.xlabel("Features", fontsize=14)
-            plt.ylabel("Feature Importance", fontsize=14)
-            plt.xlim(-0.5, len(X.columns)+0.5)
-            plt.ylim(-0.01, 1.01)
-            plt.savefig("Plots/R=%1.1f/FeatureImportancesDistribution_pthard=%d.png"%(rad, ptm))
-            #plt.show()
+            msg("Plot distribution of importances.")
+            plot_feature_importance_distributions(clf, X, rad, ptm)
 
             feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
 
@@ -146,94 +129,10 @@ if __name__=='__main__':
                 i+=1
             '''
             
-            #msg(gcv.best_estimator_.get_params())
-            # Extract single tree
-            estimator = clf.estimators_[3]
-            #estimator.fit(X, Y)
+            #display_single_tree(clf, X, Y, rad, ptm)
+            msg("Computing performance metrics")
+            compute_performance_metrics(clf, X, Y, Xtest, Ytest, rad, ptm)
 
-            from sklearn.tree import export_graphviz
-            # Export as dot file
-            export_graphviz(estimator, out_file='tree.dot', 
-                            feature_names = X.columns,
-                            class_names = list(map(lambda x:str(x), train['Label'].unique())),
-                            rounded = True, proportion = False, 
-                            precision = 2, filled = True)
-
-            # Convert to png using system command (requires Graphviz)
-            from subprocess import call
-            call(['dot', '-Tpng', 'tree.dot', '-o', 'Plots/R=%1.1f/tree_pTmin%d.png'%(rad, ptm), '-Gdpi=600'])
-
-
-            #Plot performance metrics for each radius and pthard
-
-            perf_metrics = {}
-
-            y_pred_train = np.array(clf.predict(X))
-            msg(y_pred_train)
-            msg(len(np.array(Y==2).nonzero()[0]))
-            real_jet_ind_train = np.array(Y==2).nonzero()[0]
-            fake_jet_ind_train = np.array(Y==0).nonzero()[0]
-            squish_jet_ind_train = np.asarray(Y==1).nonzero()[0]
-            pred_for_real_jets_train = y_pred_train[real_jet_ind_train]
-            pred_for_fake_jets_train = y_pred_train[fake_jet_ind_train]
-            pred_for_squish_jets_train = y_pred_train[squish_jet_ind_train] 
-
-            msg(len(real_jet_ind_train),  np.asarray(pred_for_real_jets_train==2).nonzero()[0])
-
-            real_jet_rate_train = float(len(np.asarray(pred_for_real_jets_train==2).nonzero()[0]))/float(len(real_jet_ind_train))
-            fake_jet_rate_train = float(len(np.asarray(pred_for_fake_jets_train==0).nonzero()[0]))/float(len(fake_jet_ind_train))
-            squish_jet_rate_train = float(len(np.asarray(pred_for_squish_jets_train==1).nonzero()[0]))/float(len(squish_jet_ind_train))
-
-            fall_out_train = float(len(np.asarray(pred_for_fake_jets_train==2).nonzero()[0]))/float(len(fake_jet_ind_train))
-            fall_in_train = float(len(np.asarray(pred_for_real_jets_train==0).nonzero()[0]))/float(len(real_jet_ind_train))
-
-            perf_metrics['real_jet_rate_train'] = real_jet_rate_train
-            perf_metrics['fake_jet_rate_train'] = fake_jet_rate_train
-            perf_metrics['squish_jet_rate_train'] = squish_jet_rate_train
-            perf_metrics['fall_out_train'] = fall_out_train
-            perf_metrics['fall_in_train'] = fall_in_train
-
-            msg("Real Jet Rate train: ", real_jet_rate_train, "\nFake Jet Rate train: ", fake_jet_rate_train, "\nSquish Jet Rate train: ", squish_jet_rate_train, "\nFake predicted real train: ", fall_out_train, "\nReal predicted fake train: ", fall_in_train)
-
-            X_test, Y_test = split_feat_label(test)
-
-            #Real Jet rate = real jets pred/real jets
-            y_pred_test = np.array(clf.predict(X_test))
-            msg(y_pred_test)
-            real_jet_ind_test = np.asarray(Y_test==2).nonzero()[0]
-            fake_jet_ind_test = np.asarray(Y_test==0).nonzero()[0]
-            squish_jet_ind_test = np.asarray(Y_test==1).nonzero()[0]
-            pred_for_real_jets_test = y_pred_test[real_jet_ind_test]
-            pred_for_fake_jets_test = y_pred_test[fake_jet_ind_test]
-            pred_for_squish_jets_test = y_pred_test[squish_jet_ind_test] 
-
-            msg(len(real_jet_ind_test), len(np.asarray(pred_for_real_jets_test==2).nonzero()[0]))
-
-            real_jet_rate_test = float(len(np.asarray(pred_for_real_jets_test==2).nonzero()[0]))/float(len(real_jet_ind_test))
-            fake_jet_rate_test = float(len(np.asarray(pred_for_fake_jets_test==0).nonzero()[0]))/float(len(fake_jet_ind_test))
-            squish_jet_rate_test = float(len(np.asarray(pred_for_squish_jets_test==1).nonzero()[0]))/float(len(squish_jet_ind_test))
-
-            fall_out_test = float(len(np.asarray(pred_for_fake_jets_test==2).nonzero()[0]))/float(len(fake_jet_ind_test))
-            fall_in_test = float(len(np.asarray(pred_for_real_jets_test==0).nonzero()[0]))/float(len(real_jet_ind_test))
-
-
-            perf_metrics['real_jet_rate_test'] = real_jet_rate_test
-            perf_metrics['fake_jet_rate_test'] = fake_jet_rate_test
-            perf_metrics['squish_jet_rate_test'] = squish_jet_rate_test
-            perf_metrics['fall_out_test'] = fall_out_test
-            perf_metrics['fall_in_test'] = fall_in_test
-
-
-            msg("Real Jet Rate test: ", real_jet_rate_test, "\nFake Jet Rate test: ", fake_jet_rate_test, "\nSquish Jet Rate test: ", squish_jet_rate_test, "\nFake predicted real test: ", fall_out_test, "\nReal predicted fake test: ", fall_in_test)
-
-
-            if(not os.path.isdir("Objects/R=%1.1f"%rad)):
-                os.mkdir("Objects/R=%1.1f"%rad)
-            with open("Objects/R=%1.1f/perf_metric_pthard=%d"%(rad, ptm), 'wb') as perffile:
-                pickle.dump(perf_metrics, perffile)
-
-            #plt.show()
-        
         with open("Objects/R=%1.1f/feat_imp.pickle"%rad, 'wb') as fil:
             pickle.dump(feat_imp, fil)
 
