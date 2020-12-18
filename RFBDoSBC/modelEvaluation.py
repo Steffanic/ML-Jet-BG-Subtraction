@@ -2,7 +2,7 @@
 import numpy as np
 from sklearn import tree
 import matplotlib.pyplot as plt
-from utility import msg
+from utility import msg, log
 import os
 import pickle
 
@@ -51,23 +51,23 @@ def plot_feature_importance_distributions(clf, X, rad, ptm):
     plt.savefig("Plots/R=%1.1f/FeatureImportancesDistribution_pthard=%d.png"%(rad, ptm))
 
 
-def display_single_tree(clf, X, Y, rad, ptm):
+def display_single_tree(_tree, X, Y, name):
     #msg(gcv.best_estimator_.get_params())
     # Extract single tree
-    estimator = clf.estimators_[3]
+    estimator = _tree
     #estimator.fit(X, Y)
-
+    classes = np.array(["", "Fake", "Squish", "Real"])
     from sklearn.tree import export_graphviz
     # Export as dot file
-    export_graphviz(estimator, out_file='tree.dot', 
+    export_graphviz(estimator, out_file='Oracles/'+name+'.dot', 
                     feature_names = X.columns,
-                    class_names = list(map(lambda x:str(x), Y.unique())),
+                    class_names=classes[Y.unique()],
                     rounded = True, proportion = False, 
                     precision = 2, filled = True)
 
     # Convert to png using system command (requires Graphviz)
     from subprocess import call
-    call(['dot', '-Tpng', 'tree.dot', '-o', 'Plots/R=%1.1f/tree_pTmin%d.png'%(rad, ptm), '-Gdpi=600'])
+    call(['dot', '-Tpng', 'Oracles/'+name+'.dot', '-o', 'Oracles/'+name+'.png', '-Gdpi=600'])
 
 
 def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
@@ -99,6 +99,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     perf_metrics['fall_in_train'] = fall_in_train
 
     msg("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
+    log("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
 
     #Real Jet rate = real jets pred/real jets
     y_pred_test = np.array(clf.predict(X_test))
@@ -128,6 +129,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
 
 
     msg("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
+    log("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
 
 
     if(not os.path.isdir("Objects/R=%1.1f"%rad)):

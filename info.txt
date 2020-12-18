@@ -1,0 +1,1783 @@
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Feature importances: [('Area', 0.29054501178936254), ('Epsilon', 0.19546969635881312), ('p_T-corr', 0.20096081289442772), ('Angularity', 0.07749378798100556), ('Mean-p_T', 0.23553069097639096)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=20
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 4601
+Number of Squishy Jets: 4637
+Number of Real Jets: 4658
+Feature importances: [('Area', 0.2064345522349187), ('Epsilon', 0.21111968203054984), ('p_T-corr', 0.2323627550438731), ('Angularity', 0.08937956289398111), ('Mean-p_T', 0.2607034477966772)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=30
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 4940
+Number of Squishy Jets: 4966
+Number of Real Jets: 5002
+Feature importances: [('Area', 0.18605955211282876), ('Epsilon', 0.1923916632485789), ('p_T-corr', 0.2015041434183628), ('Angularity', 0.19506121465580611), ('Mean-p_T', 0.22498342656442333)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=40
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5192
+Number of Squishy Jets: 5158
+Number of Real Jets: 5151
+Feature importances: [('Area', 0.16525848877347843), ('Epsilon', 0.20252154579219156), ('p_T-corr', 0.17072503276153708), ('Angularity', 0.23580266534597624), ('Mean-p_T', 0.22569226732681674)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=10
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5342
+Number of Squishy Jets: 5343
+Number of Real Jets: 5354
+Feature importances: [('Area', 0.2625647946741162), ('Epsilon', 0.17222487630175926), ('p_T-corr', 0.1998627625928947), ('Angularity', 0.18515861960530566), ('Mean-p_T', 0.18018894682592418)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=20
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5612
+Number of Squishy Jets: 5564
+Number of Real Jets: 5528
+Feature importances: [('Area', 0.29175756325402746), ('Epsilon', 0.20042251249729162), ('p_T-corr', 0.21668490731006285), ('Angularity', 0.06048639299814708), ('Mean-p_T', 0.23064862394047103)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.46044191019244474
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.5395580898075553
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.4540059347181009
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.5459940652818991
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=30
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5631
+Number of Squishy Jets: 5658
+Number of Real Jets: 5679
+Feature importances: [('Area', 0.2352711754581091), ('Epsilon', 0.2055362532448325), ('p_T-corr', 0.1859824712913541), ('Angularity', 0.12372970270158808), ('Mean-p_T', 0.2494803973041162)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=40
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5775
+Number of Squishy Jets: 5752
+Number of Real Jets: 5774
+Feature importances: [('Area', 0.1837516363173018), ('Epsilon', 0.20551239647537778), ('p_T-corr', 0.22037077259735643), ('Angularity', 0.14410158547134472), ('Mean-p_T', 0.24626360913861933)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.5 and p_T hardmin=10
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5844
+Number of Squishy Jets: 5814
+Number of Real Jets: 5794
+Feature importances: [('Area', 0.3156140570834007), ('Epsilon', 0.12388116136247188), ('p_T-corr', 0.1801122052731727), ('Angularity', 0.2504984679979622), ('Mean-p_T', 0.12989410828299247)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.5 and p_T hardmin=20
+Number of Features: 8
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T', 'X_tru',
+       'pythia-mom', 'Label'],
+      dtype='object')
+Number of Fake Jets: 5861
+Number of Squishy Jets: 5885
+Number of Real Jets: 5910
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Feature importances: [('Area', 0.29054501178936254), ('Epsilon', 0.19546969635881312), ('p_T-corr', 0.20096081289442772), ('Angularity', 0.07749378798100556), ('Mean-p_T', 0.23553069097639096)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4601
+Number of Squishy Jets: 4637
+Number of Real Jets: 4658
+Feature importances: [('Area', 0.2064345522349187), ('Epsilon', 0.21111968203054984), ('p_T-corr', 0.2323627550438731), ('Angularity', 0.08937956289398111), ('Mean-p_T', 0.2607034477966772)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4940
+Number of Squishy Jets: 4966
+Number of Real Jets: 5002
+Feature importances: [('Area', 0.18605955211282876), ('Epsilon', 0.1923916632485789), ('p_T-corr', 0.2015041434183628), ('Angularity', 0.19506121465580611), ('Mean-p_T', 0.22498342656442333)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5192
+Number of Squishy Jets: 5158
+Number of Real Jets: 5151
+Feature importances: [('Area', 0.16525848877347843), ('Epsilon', 0.20252154579219156), ('p_T-corr', 0.17072503276153708), ('Angularity', 0.23580266534597624), ('Mean-p_T', 0.22569226732681674)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5342
+Number of Squishy Jets: 5343
+Number of Real Jets: 5354
+Feature importances: [('Area', 0.2625647946741162), ('Epsilon', 0.17222487630175926), ('p_T-corr', 0.1998627625928947), ('Angularity', 0.18515861960530566), ('Mean-p_T', 0.18018894682592418)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5612
+Number of Squishy Jets: 5564
+Number of Real Jets: 5528
+Feature importances: [('Area', 0.29175756325402746), ('Epsilon', 0.20042251249729162), ('p_T-corr', 0.21668490731006285), ('Angularity', 0.06048639299814708), ('Mean-p_T', 0.23064862394047103)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.46044191019244474
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.5395580898075553
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.4540059347181009
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.5459940652818991
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5631
+Number of Squishy Jets: 5658
+Number of Real Jets: 5679
+Feature importances: [('Area', 0.2352711754581091), ('Epsilon', 0.2055362532448325), ('p_T-corr', 0.1859824712913541), ('Angularity', 0.12372970270158808), ('Mean-p_T', 0.2494803973041162)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5775
+Number of Squishy Jets: 5752
+Number of Real Jets: 5774
+Feature importances: [('Area', 0.1837516363173018), ('Epsilon', 0.20551239647537778), ('p_T-corr', 0.22037077259735643), ('Angularity', 0.14410158547134472), ('Mean-p_T', 0.24626360913861933)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.5 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5844
+Number of Squishy Jets: 5814
+Number of Real Jets: 5794
+Feature importances: [('Area', 0.3156140570834007), ('Epsilon', 0.12388116136247188), ('p_T-corr', 0.1801122052731727), ('Angularity', 0.2504984679979622), ('Mean-p_T', 0.12989410828299247)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.5 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5861
+Number of Squishy Jets: 5885
+Number of Real Jets: 5910
+Feature importances: [('Area', 0.500047794383396), ('Epsilon', 0.15265709959877297), ('p_T-corr', 0.2231443494306564), ('Angularity', 0.024843699659271648), ('Mean-p_T', 0.09930705692790295)]
+Real Jet Rate train: 0.9969543147208122
+Fake Jet Rate train: 0.6227606210544275
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3772393789455724
+Real predicted fake train: 0.003045685279187817
+Real Jet Rate test: 0.995162404975812
+Fake Jet Rate test: 0.6524064171122995
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.34759358288770054
+Real predicted fake test: 0.0048375950241879755
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.5 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5954
+Number of Squishy Jets: 5927
+Number of Real Jets: 5946
+Feature importances: [('Area', 0.2610721216651793), ('Epsilon', 0.20499572496208557), ('p_T-corr', 0.20308371911928944), ('Angularity', 0.07322329511622015), ('Mean-p_T', 0.2576251391372257)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.5 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 6020
+Number of Squishy Jets: 5979
+Number of Real Jets: 6005
+Feature importances: [('Area', 0.2414424393547746), ('Epsilon', 0.2065828713112594), ('p_T-corr', 0.21190419771214059), ('Angularity', 0.07787323781851309), ('Mean-p_T', 0.2621972538033124)]
+Real Jet Rate train: 0.9993338884263114
+Fake Jet Rate train: 0.7877076411960133
+Squish Jet Rate train: 0.14216424151195853
+Fake predicted real train: 0.1362126245847176
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.7941970310391363
+Squish Jet Rate test: 0.15495732107682206
+Fake predicted real test: 0.1282051282051282
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.6 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 6057
+Number of Squishy Jets: 6053
+Number of Real Jets: 6067
+Feature importances: [('Area', 0.30776949325737146), ('Epsilon', 0.10520017107723831), ('p_T-corr', 0.20598036493010877), ('Angularity', 0.2620715532654975), ('Mean-p_T', 0.11897841746978396)]
+Real Jet Rate train: 0.9986813911323553
+Fake Jet Rate train: 0.763744427934621
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.2362555720653789
+Real predicted fake train: 0.001318608867644635
+Real Jet Rate test: 0.9993364299933643
+Fake Jet Rate test: 0.7495056031641397
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.2504943968358603
+Real predicted fake test: 0.0006635700066357001
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.6 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5831
+Number of Squishy Jets: 5855
+Number of Real Jets: 5848
+Feature importances: [('Area', 0.31979793609238405), ('Epsilon', 0.15177864504762512), ('p_T-corr', 0.15664431094871425), ('Angularity', 0.21457998119140598), ('Mean-p_T', 0.15719912671987055)]
+Real Jet Rate train: 0.9989740082079344
+Fake Jet Rate train: 0.5366146458583433
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.46338535414165666
+Real predicted fake train: 0.0010259917920656635
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.5335593220338983
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.46644067796610167
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.6 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5851
+Number of Squishy Jets: 5820
+Number of Real Jets: 5844
+Feature importances: [('Area', 0.3019679338866783), ('Epsilon', 0.187221875307343), ('p_T-corr', 0.15898045426192572), ('Angularity', 0.11984407642972149), ('Mean-p_T', 0.2319856601143314)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6433088360963938
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3566911639036062
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6364892881824464
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.36351071181755357
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.6 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5803
+Number of Squishy Jets: 5807
+Number of Real Jets: 5804
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Feature importances: [('Area', 0.29054501178936254), ('Epsilon', 0.19546969635881312), ('p_T-corr', 0.20096081289442772), ('Angularity', 0.07749378798100556), ('Mean-p_T', 0.23553069097639096)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4601
+Number of Squishy Jets: 4637
+Number of Real Jets: 4658
+Feature importances: [('Area', 0.2064345522349187), ('Epsilon', 0.21111968203054984), ('p_T-corr', 0.2323627550438731), ('Angularity', 0.08937956289398111), ('Mean-p_T', 0.2607034477966772)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4940
+Number of Squishy Jets: 4966
+Number of Real Jets: 5002
+Feature importances: [('Area', 0.18605955211282876), ('Epsilon', 0.1923916632485789), ('p_T-corr', 0.2015041434183628), ('Angularity', 0.19506121465580611), ('Mean-p_T', 0.22498342656442333)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5192
+Number of Squishy Jets: 5158
+Number of Real Jets: 5151
+Feature importances: [('Area', 0.16525848877347843), ('Epsilon', 0.20252154579219156), ('p_T-corr', 0.17072503276153708), ('Angularity', 0.23580266534597624), ('Mean-p_T', 0.22569226732681674)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5342
+Number of Squishy Jets: 5343
+Number of Real Jets: 5354
+Feature importances: [('Area', 0.2625647946741162), ('Epsilon', 0.17222487630175926), ('p_T-corr', 0.1998627625928947), ('Angularity', 0.18515861960530566), ('Mean-p_T', 0.18018894682592418)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5612
+Number of Squishy Jets: 5564
+Number of Real Jets: 5528
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Feature importances: [('Area', 0.29054501178936254), ('Epsilon', 0.19546969635881312), ('p_T-corr', 0.20096081289442772), ('Angularity', 0.07749378798100556), ('Mean-p_T', 0.23553069097639096)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4601
+Number of Squishy Jets: 4637
+Number of Real Jets: 4658
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Feature importances: [('Area', 0.29054501178936254), ('Epsilon', 0.19546969635881312), ('p_T-corr', 0.20096081289442772), ('Angularity', 0.07749378798100556), ('Mean-p_T', 0.23553069097639096)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4601
+Number of Squishy Jets: 4637
+Number of Real Jets: 4658
+Feature importances: [('Area', 0.2064345522349187), ('Epsilon', 0.21111968203054984), ('p_T-corr', 0.2323627550438731), ('Angularity', 0.08937956289398111), ('Mean-p_T', 0.2607034477966772)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4940
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705
+Feature importances: [('Area', 0.0), ('Epsilon', 0.34999974046190546), ('p_T-corr', 0.5149973250050273), ('Angularity', 4.888554050984235e-06), ('Mean-p_T', 0.1349980459790163)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2786
+Number of Squishy Jets: 2791
+Number of Real Jets: 2820
+Feature importances: [('Area', 0.02482486319633794), ('Epsilon', 0.22318561933040085), ('p_T-corr', 0.25717762442692965), ('Angularity', 0.2413673985419997), ('Mean-p_T', 0.25344449450433193)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4247
+Number of Squishy Jets: 4305
+Number of Real Jets: 4304
+Feature importances: [('Area', 0.29054501178936254), ('Epsilon', 0.19546969635881312), ('p_T-corr', 0.20096081289442772), ('Angularity', 0.07749378798100556), ('Mean-p_T', 0.23553069097639096)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4601
+Number of Squishy Jets: 4637
+Number of Real Jets: 4658
+Feature importances: [('Area', 0.2064345522349187), ('Epsilon', 0.21111968203054984), ('p_T-corr', 0.2323627550438731), ('Angularity', 0.08937956289398111), ('Mean-p_T', 0.2607034477966772)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 4940
+Number of Squishy Jets: 4966
+Number of Real Jets: 5002
+Feature importances: [('Area', 0.18605955211282876), ('Epsilon', 0.1923916632485789), ('p_T-corr', 0.2015041434183628), ('Angularity', 0.19506121465580611), ('Mean-p_T', 0.22498342656442333)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.3 and p_T hardmin=40
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5192
+Number of Squishy Jets: 5158
+Number of Real Jets: 5151
+Feature importances: [('Area', 0.16525848877347843), ('Epsilon', 0.20252154579219156), ('p_T-corr', 0.17072503276153708), ('Angularity', 0.23580266534597624), ('Mean-p_T', 0.22569226732681674)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.4 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 5342
+Number of Squishy Jets: 5343
+Number of Real Jets: 5354
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Number of rows read: 10000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Feature importances: [('Area', 0.09072656299287937), ('Epsilon', 0.21347546595301548), ('p_T-corr', 0.42598539932100515), ('Angularity', 0.005010151103247869), ('Mean-p_T', 0.26480242062985215)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.6852575488454707
+Squish Jet Rate train: 0.0
+Fake predicted real train: 0.3147424511545293
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.6891334250343879
+Squish Jet Rate test: 0.0
+Fake predicted real test: 0.3108665749656121
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=20
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3185
+Number of Squishy Jets: 3174
+Number of Real Jets: 3217
+Feature importances: [('Area', 0.12835911985017015), ('Epsilon', 0.209128005124465), ('p_T-corr', 0.22936384268829177), ('Angularity', 0.1875963254362121), ('Mean-p_T', 0.2455527069008608)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.8204081632653061
+Squish Jet Rate train: 0.08790170132325142
+Fake predicted real train: 0.09733124018838304
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.8173913043478261
+Squish Jet Rate test: 0.08088235294117647
+Fake predicted real test: 0.0968944099378882
+Real predicted fake test: 0.0
+ 
+ 
+ 
+ 
+Analyzing jets with R=0.2 and p_T hardmin=30
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 3657
+Number of Squishy Jets: 3642
+Number of Real Jets: 3705

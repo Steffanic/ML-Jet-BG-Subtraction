@@ -18,7 +18,7 @@ from GetAndPrepareData import *
 from modelPreparation import *
 from modelEvaluation import *
 from plotData import *
-from utility import msg
+from utility import msg, log
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -43,6 +43,8 @@ if __name__=='__main__':
     else:
         rows=1000000000000000000
 
+    log("Number of rows read: %d"%rows)
+
     #Multithreading for the Gridsearch?
     #Thread(traget=GridSearchHandler, args=(X, Y, rad, ptm))
 
@@ -56,7 +58,7 @@ if __name__=='__main__':
     with Pool(8) as p:
         p.starmap(GridSearchHandler, [(X, Y, r, pt) for r, pt in Rpt])
     '''
-
+    
     feat_imp = {}
     train = None
     test = None
@@ -73,22 +75,35 @@ if __name__=='__main__':
             gc.collect()
 
             msg("Analyzing jets with R=%1.1f and p_T hardmin=%d"%(rad, ptm))
+            log("Analyzing jets with R=%1.1f and p_T hardmin=%d"%(rad, ptm))
 
             #Load data files into train, test
             train, test = DataPipeline("Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-%1.1f-pThardmin-%d.0.csv"%(rad, ptm), ptm, rows)
 
+
+            # In order to use the sklearn random forest we need a feature vector X
+            # and a label vector Y
+            X, Y = split_feat_label(train)
+            Xtest, Ytest = split_feat_label(test)
+
+
+            #===============Logging Results============
+            log("Number of Features: %d"%len(X.columns))
+            log("Features: "+str(X.columns))
+            log("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
+            log("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
+            log("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
+            #==========================================
+
             #===============INFO============
-            msg("Number of Features: %d"%len(train.columns))
+            msg("Number of Features: %d"%len(X.columns))
             msg("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
             msg("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
             msg("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
             msg(train.describe())
             #===============================
 
-            # In order to use the sklearn random forest we need a feature vector X
-            # and a label vector Y
-            X, Y = split_feat_label(train)
-            Xtest, Ytest = split_feat_label(test)
+            
 
             msg("Saving out plots to ./Plots")
             plot_everything(train, rad, ptm)
@@ -104,9 +119,18 @@ if __name__=='__main__':
             msg("Initializing model and fitting to data.")
             clf = RandomForestClassifier(**best_params)
             clf.fit(X,Y)
+
+            msg("Initializing Oracle and fitting to clf's predictions")
+            oracle = DecisionTreeClassifier()
+            clf_guess = pd.Series(clf.predict(X))
+            print(clf_guess.unique())
+            oracle.fit(X, clf_guess)
+            display_single_tree(oracle, X, clf_guess, "Oracle_%1.1f_%d"%(rad, ptm))
             
             msg("Computing feature importances and other model statistics.")
             importances, indices, std, quant_75 = compute_model_statistics(clf)
+
+            log("Feature importances: "+str(list(zip(X.columns, importances))))
 
             msg("Feature rankings:")
             print_feature_importances(X, importances, indices)
@@ -131,6 +155,11 @@ if __name__=='__main__':
             msg("Computing performance metrics")
             compute_performance_metrics(clf, X, Y, Xtest, Ytest, rad, ptm)
 
+
+            log(" ")
+            log(" ")
+            log(" ")
+            log(" ")
         with open("Objects/R=%1.1f/feat_imp.pickle"%rad, 'wb') as fil:
             pickle.dump(feat_imp, fil)
 
