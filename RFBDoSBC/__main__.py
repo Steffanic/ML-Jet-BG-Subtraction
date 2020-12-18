@@ -26,6 +26,7 @@ warnings.filterwarnings("ignore")
 
 matplotlib.rcParams.update({'font.size': 16})
 matplotlib.rcParams.update({'font.family':'DejaVu Sans'})
+matplotlib.use('Agg')
 
 if __name__=='__main__':
 
@@ -121,9 +122,8 @@ if __name__=='__main__':
             clf.fit(X,Y)
 
             msg("Initializing Oracle and fitting to clf's predictions")
-            oracle = DecisionTreeClassifier()
+            oracle = DecisionTreeClassifier(max_depth=3)
             clf_guess = pd.Series(clf.predict(X))
-            print(clf_guess.unique())
             oracle.fit(X, clf_guess)
             display_single_tree(oracle, X, clf_guess, "Oracle_%1.1f_%d"%(rad, ptm))
             

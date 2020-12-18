@@ -57,11 +57,13 @@ def display_single_tree(_tree, X, Y, name):
     estimator = _tree
     #estimator.fit(X, Y)
     classes = np.array(["", "Fake", "Squish", "Real"])
+    print(np.sort(Y.unique()))
+
     from sklearn.tree import export_graphviz
     # Export as dot file
     export_graphviz(estimator, out_file='Oracles/'+name+'.dot', 
                     feature_names = X.columns,
-                    class_names=classes[Y.unique()],
+                    class_names=classes[np.sort(Y.unique())],
                     rounded = True, proportion = False, 
                     precision = 2, filled = True)
 
