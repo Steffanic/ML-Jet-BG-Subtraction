@@ -81,6 +81,7 @@ def plot_corr_mat(train, rad, ptm):
     fig,ax = plt.subplots(1,figsize=(15,15))
     ax.matshow(train.corr())
     cbar = fig.colorbar(cm.ScalarMappable(norm=colors.Normalize(vmin=-1, vmax=1)), ax=ax)
+    cbar.set_array([])
     cols = train.columns
     cbar.ax.tick_params(labelsize=16)
     plt.xticks(np.linspace(0, len(cols)-2, len(cols)-1), cols.drop('Label'), rotation=30, fontsize=16)
