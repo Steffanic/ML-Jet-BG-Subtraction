@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from sklearn import tree
 import matplotlib.pyplot as plt
