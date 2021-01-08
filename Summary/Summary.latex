@@ -1,0 +1,404 @@
+\documentclass{article} 
+\usepackage[utf8]{inputenc} 
+\begin{document} 
+
+Best Parameters for R=0.2 and pTmin=10
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & entropy \\ 
+Class Weight & {1: 1, 2: 1, 3: 1000} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.2 and pTmin=20
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 10} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.2 and pTmin=30
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & entropy \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.2 and pTmin=40
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 10} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.3 and pTmin=10
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 1000} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.3 and pTmin=20
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & entropy \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.3 and pTmin=30
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.3 and pTmin=40
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.4 and pTmin=10
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 10} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.4 and pTmin=20
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 10} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.4 and pTmin=30
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.4 and pTmin=40
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 1000} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.5 and pTmin=10
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 1000} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.5 and pTmin=20
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 2 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.5 and pTmin=30
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.5 and pTmin=40
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 2 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 10} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.6 and pTmin=10
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 2 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 1000} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.6 and pTmin=20
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 2 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 100} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.6 and pTmin=30
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 4 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 1000} \\ 
+\end{tabular}
+
+
+Best Parameters for R=0.6 and pTmin=40
+\begin{tabular}{c  c}\hline
+Parameter Name & Value \\ \hline 
+Random State & 42 \\ 
+OOB Score & True \\ 
+Number of Jobs & -1 \\ 
+Number of Estimators & 200 \\ 
+Minimum Weight Fraction Leaf & 0.1 \\ 
+Minimum Samples Split & 2 \\ 
+Minimum Samples Leaf & 100 \\ 
+Minimum Impurity Decrease & 0.0 \\ 
+Max Samples & 0.9 \\ 
+Max Leaf Nodes & 1000 \\ 
+Max Features & 1 \\ 
+Max Depth & 3 \\ 
+Criterion & gini \\ 
+Class Weight & {1: 1, 2: 1, 3: 10} \\ 
+\end{tabular}
+
+

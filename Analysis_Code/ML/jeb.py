@@ -4,13 +4,14 @@ import numpy as np
 import pickle
 import matplotlib
 import gc
+import os
 from pandas_profiling import ProfileReport
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import  RandomForestClassifier
 from sklearn.datasets import make_classification
-from GetAndPrepareData import get_data, add_feats, label_data, type_data, split_data, drop_feat, balance_classes
+from GetAndPrepareData import *
 
 matplotlib.rcParams.update({'font.size': 14})
 matplotlib.rcParams.update({'font.family':'Liberation Serif'})
@@ -20,15 +21,10 @@ def DataPipeline(filepath, ptm):
     dat_typed = type_data(dat)
     dat_feat_added = add_feats(dat_typed)
     dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [0,1,2])
-    dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch'])
+    dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
     dat_bal = balance_classes(dat_drop)
     train, test = split_data(dat_bal)
     return train, test
-
-def split_feat_label(data, drop_labels=['X_tru', 'pythia-mom', 'Label'], label_='Label'):
-    X = data.drop(drop_labels, 1)
-    Y=data[label_]
-    return X, Y
 
 def plot_population(feat, rad, ptm):
     plt.rc('xtick',labelsize=14)
@@ -37,6 +33,7 @@ def plot_population(feat, rad, ptm):
     fig=plt.figure()
     minx = train[feat].min()
     maxx = train[feat].max()
+    print(feat, train.dtypes)
     train.hist(feat,bins=25, density=True,ax=plt.gca(), label="Total",histtype=u'step', linewidth=2, color='black', linestyle='dashed')
     train.loc[train['Label']==0].hist(feat,bins=25, density=True,ax=plt.gca(), label="Fake",histtype=u'step', linewidth=2, color='blue')
     train.loc[train['Label']==1].hist(feat,bins=25, density=True,ax=plt.gca(), label="0-10GeV Pythia",histtype=u'step', linewidth=2, color='orange')
@@ -49,10 +46,13 @@ def plot_population(feat, rad, ptm):
     plt.legend(loc='best', fontsize=14)
     plt.grid(0)
     #plt.semilogy()
+    if(not os.path.isdir("Plots/Feature_plots")):
+        os.mkdir("Plots/Feature_plots")
+    if(not os.path.isdir("Plots/Feature_plots/R=%1.1f"%rad)):
+        os.mkdir("Plots/Feature_plots/R=%1.1f"%rad)
     with open("Plots/Feature_plots/R=%1.1f/%s_pTmin%d.pickle"%(rad, feat, ptm), 'wb') as fil:
         pickle.dump(fig, fil)
     plt.close()
-
 
 def plot_population_log(feat):
     plt.rc('xtick',labelsize=14)
@@ -136,6 +136,8 @@ groups.'''.format(len(palette), len(classes)))
     
     #plt.show()
     plt.tight_layout()
+    if(not os.path.isdir("Plots/R=%1.1f"%rad)):
+        os.mkdir("Plots/R=%1.1f"%rad)
     plt.savefig("Plots/R=%1.1f/scatter_mat_pTmin%d.png"%(rad, ptm))
     with open("Plots/Feature_plots/R=%1.1f/scatter_mat_pTmin%d.pickle"%(rad, ptm), 'wb') as fil:
         pickle.dump(axarr, fil)
@@ -182,7 +184,7 @@ def DoGridSearch(X, Y):
 
     min_weight_fraction_leaf = (0.1, 0.2, 0.3, 0.45) # ??
 
-    max_features = (1,2,3,4, 5, 6)
+    max_features = (1,2,3,4, 5)
 
     max_leaf_nodes = (10, 100, 1000)
 
@@ -218,11 +220,8 @@ def DoGridSearch(X, Y):
     
     return best_params, cv_results
 
-
-
-
 if __name__=='__main__':
-    doGridSearch=False
+    doGridSearch=True
 
     R = [0.2, 0.3, 0.4, 0.5, 0.6]
     pThardmin = [10,20,30,40]
@@ -272,11 +271,10 @@ if __name__=='__main__':
 
                 best_params['random_state']=42
                 best_params['n_jobs']=-1
-                with open("Objects/best_params.pickle", 'wb') as fil:
+                with open("Objects/best_params_%1.1f_%d.pickle"%(rad, ptm), 'wb') as fil:
                     pickle.dump(best_params, fil)
-                doGridSearch=False
             else:
-                with open("Objects/best_params.pickle", 'rb') as f:
+                with open("Objects/best_params_%1.1f_%d.pickle"%(rad, ptm), 'rb') as f:
                     best_params = pickle.load(f)
 
 
@@ -420,6 +418,8 @@ if __name__=='__main__':
             print("Real Jet Rate test: ", real_jet_rate_test, "\nFake Jet Rate test: ", fake_jet_rate_test, "\nSquish Jet Rate test: ", squish_jet_rate_test, "\nFake predicted real test: ", fall_out_test, "\nReal predicted fake test: ", fall_in_test)
 
 
+            if(not os.path.isdir("Objects/R=%1.1f"%rad)):
+                os.mkdir("Objects/R=%1.1f"%rad)
             with open("Objects/R=%1.1f/perf_metric_pthard=%d"%(rad, ptm), 'wb') as perffile:
                 pickle.dump(perf_metrics, perffile)
 

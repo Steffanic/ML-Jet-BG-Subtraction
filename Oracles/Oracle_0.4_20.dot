@@ -1,0 +1,25 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="Mean-p_T <= 0.54\ngini = 0.39\nsamples = 164781\nvalue = [43223, 121558]\nclass = Real", fillcolor="#7fc0ee"] ;
+1 [label="Area <= 0.48\ngini = 0.46\nsamples = 64402\nvalue = [41790, 22612]\nclass = Fake", fillcolor="#f3c5a4"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Epsilon <= 221.56\ngini = 0.32\nsamples = 52096\nvalue = [41790, 10306]\nclass = Fake", fillcolor="#eba06a"] ;
+1 -> 2 ;
+3 [label="gini = 0.05\nsamples = 41037\nvalue = [39896, 1141]\nclass = Fake", fillcolor="#e6853f"] ;
+2 -> 3 ;
+4 [label="gini = 0.28\nsamples = 11059\nvalue = [1894, 9165]\nclass = Real", fillcolor="#62b1ea"] ;
+2 -> 4 ;
+5 [label="gini = 0.0\nsamples = 12306\nvalue = [0, 12306]\nclass = Real", fillcolor="#399de5"] ;
+1 -> 5 ;
+6 [label="Mean-p_T <= 0.54\ngini = 0.03\nsamples = 100379\nvalue = [1433, 98946]\nclass = Real", fillcolor="#3c9ee5"] ;
+0 -> 6 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+7 [label="Epsilon <= 217.48\ngini = 0.34\nsamples = 6726\nvalue = [1433, 5293]\nclass = Real", fillcolor="#6fb8ec"] ;
+6 -> 7 ;
+8 [label="gini = 0.5\nsamples = 3062\nvalue = [1423, 1639]\nclass = Real", fillcolor="#e5f2fc"] ;
+7 -> 8 ;
+9 [label="gini = 0.01\nsamples = 3664\nvalue = [10, 3654]\nclass = Real", fillcolor="#3a9de5"] ;
+7 -> 9 ;
+10 [label="gini = 0.0\nsamples = 93653\nvalue = [0, 93653]\nclass = Real", fillcolor="#399de5"] ;
+6 -> 10 ;
+}
