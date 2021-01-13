@@ -14,6 +14,7 @@ from sklearn import tree
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import  RandomForestClassifier
 from sklearn.datasets import make_classification
+from sklearn.metrics import silhouette_score
 from GetAndPrepareData import *
 from modelPreparation import *
 from modelEvaluation import *
@@ -88,12 +89,18 @@ if __name__=='__main__':
             Xtest, Ytest = split_feat_label(test)
 
 
+
             #===============Logging Results============
             log("Number of Features: %d"%len(X.columns))
             log("Features: "+str(X.columns))
             log("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
             log("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
             log("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
+            log("Silhouette Scores:")
+            log(f"Overall Score: {silhouette_score(X, Y)}")
+            log(f"Per Column Scores: ")
+            for col in X.columns:
+                log(f"Column: {col}  Score: {silhouette_score(np.array(X[col]).reshape((-1,1)), Y)}")
             #==========================================
 
             #===============INFO============

@@ -5,6 +5,8 @@ import pickle
 from matplotlib import cm, colors
 from pandas.plotting import scatter_matrix
 from scipy.stats import gaussian_kde
+from GetAndPrepareData import split_feat_label
+from sklearn.metrics import silhouette_samples
 
 def msg(_msg):
     print("JEB: %s"%_msg)
@@ -20,6 +22,11 @@ def plot_everything(train, rad, ptm):
     plt.style.use("classic")
     msg("Plotting correlation matrix.")
     plot_corr_mat(train, rad, ptm)
+
+    plt.style.use("seaborn-dark")
+    X, y = split_feat_label(train)
+    msg("Plotting silhouette distributions.")
+    plot_silhouette_score_distributions(X, y, rad, ptm)
 
 def plot_all_columns(train, rad, ptm):
     for cols in train.columns:
@@ -159,3 +166,27 @@ def factor_scatter_matrix(df, factor, rad, ptm,palette=None):
     plt.close()
     return axarr, color_map
 
+
+
+def plot_silhouette_score_distributions(X, y, rad, ptm):
+    for col in X.columns:
+        fig=plt.figure(figsize=(15,15))
+        plt.rc('xtick',labelsize=24)
+        plt.rc('ytick',labelsize=24)
+        plt.rc('font', family = "Liberation Serif")
+        plt.hist(silhouette_samples(np.array(X[col]).reshape((-1,1)), y))
+        plt.title(f"Silhouette Score Distribution for {col}", fontsize=24)
+        plt.xlabel("Silhouette Score", fontsize=24)
+        plt.ylabel("Frequency", fontsize=24)    
+        plt.tight_layout()
+
+        
+        if(not os.path.isdir("Plots")):
+            os.mkdir("Plots")
+        if(not os.path.isdir("Plots/Feature_Plots")):
+            os.mkdir("Plots/Feature_Plots")
+        if(not os.path.isdir("Plots/Feature_Plots/R=%1.1f"%rad)):
+            os.mkdir("Plots/Feature_Plots/R=%1.1f"%rad)
+        with open("Plots/Feature_Plots/R=%1.1f/Silhouette_Score_%s_pTmin%d.pickle"%(rad,col, ptm), 'wb') as fil:
+            pickle.dump(fig, fil)
+        plt.close()

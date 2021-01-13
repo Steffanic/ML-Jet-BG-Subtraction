@@ -553,3 +553,65 @@ Real predicted fake test: 6.906077348066299e-05
  
  
  
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Silhouette Scores:
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Silhouette Scores:
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Silhouette Scores:
+Number of rows read: 100000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
+Number of rows read: 100000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
+Number of rows read: 100000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
