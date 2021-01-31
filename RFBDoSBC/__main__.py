@@ -1,3 +1,5 @@
+# ~~~~~~~~~~~ Patrick Steffanic ~~~~~~~~~~~~~~~~~~
+# =================IMPORTS and FRONT MATTER=======
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -29,16 +31,18 @@ matplotlib.rcParams.update({'font.size': 16})
 matplotlib.rcParams.update({'font.family':'DejaVu Sans'})
 matplotlib.use('Agg')
 
+#====================================================
+
 if __name__=='__main__':
 
-    #*************************Setting Grid Search****************************
+    # *************************Setting Grid Search****************************
     GridArg=0
     if(len(sys.argv)>=2):
         GridArg = int(sys.argv[1])
         msg("Doing Grid Search" if GridArg else "Not Doing Grid Search")
     doGridSearch=True if GridArg else False
 
-    #*************************Setting number of Rows**************************
+    # *************************Setting number of Rows**************************
     if(len(sys.argv)>=3):
         rows = int(sys.argv[2])
         msg("Only reading %d rows from file."%rows)
@@ -47,19 +51,11 @@ if __name__=='__main__':
 
     log("Number of rows read: %d"%rows)
 
-    #Multithreading for the Gridsearch?
-    #Thread(traget=GridSearchHandler, args=(X, Y, rad, ptm))
-
 
     # Select the jet radii and pthardmin that correspond to the data file you wish to look at
     R = [0.2, 0.3, 0.4, 0.5, 0.6]
     pThardmin = [10,20,30,40]
     Rpt = [(0.2, 10), (0.2, 20), (0.2, 30), (0.2, 40), (0.5, 10), (0.5, 20), (0.5, 30), (0.5, 40), (0.3, 10), (0.3, 20), (0.3, 30), (0.3, 40), (0.4, 10), (0.4, 20), (0.4, 30), (0.4, 40), (0.6, 10), (0.6, 20), (0.6, 30), (0.6, 40)]
-
-    '''
-    with Pool(8) as p:
-        p.starmap(GridSearchHandler, [(X, Y, r, pt) for r, pt in Rpt])
-    '''
     
     feat_imp = {}
     train = None
@@ -149,14 +145,6 @@ if __name__=='__main__':
             plot_feature_importance_distributions(clf, X, rad, ptm)
 
             feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
-
-            '''
-            i=0
-            for col in X.columns:
-                msg("Feature Importances:")
-                msg(col, clf.estimators_[3].feature_importances_[i])
-                i+=1
-            '''
             
             #display_single_tree(clf, X, Y, rad, ptm)
             msg("Computing performance metrics")
