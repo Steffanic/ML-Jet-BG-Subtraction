@@ -1,5 +1,33 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 170049\nvalue = 170049.0", fillcolor="#ffffff"] ;
+0 [label="p_T-corr <= 13.12\ngini = 0.56\nsamples = 16968\nvalue = [7540, 1075, 8353]\nclass = Real", fillcolor="#f4eefd"] ;
+1 [label="Area <= 0.49\ngini = 0.31\nsamples = 9045\nvalue = [7422, 929, 694]\nclass = Fake", fillcolor="#ea9a61"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Epsilon <= 234.98\ngini = 0.08\nsamples = 7537\nvalue = [7222, 0, 315]\nclass = Fake", fillcolor="#e68642"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 6803\nvalue = [6800, 0, 3]\nclass = Fake", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.49\nsamples = 734\nvalue = [422, 0, 312]\nclass = Fake", fillcolor="#f8decb"] ;
+2 -> 4 ;
+5 [label="Mean-p_T <= 0.56\ngini = 0.54\nsamples = 1508\nvalue = [200, 929, 379]\nclass = Squish", fillcolor="#9ff2c2"] ;
+1 -> 5 ;
+6 [label="gini = 0.33\nsamples = 1162\nvalue = [200, 929, 33]\nclass = Squish", fillcolor="#69eba0"] ;
+5 -> 6 ;
+7 [label="gini = 0.0\nsamples = 346\nvalue = [0, 0, 346]\nclass = Real", fillcolor="#8139e5"] ;
+5 -> 7 ;
+8 [label="Epsilon <= 234.34\ngini = 0.06\nsamples = 7923\nvalue = [118, 146, 7659]\nclass = Real", fillcolor="#8540e6"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Area <= 0.49\ngini = 0.5\nsamples = 740\nvalue = [115, 130, 495]\nclass = Real", fillcolor="#b489ef"] ;
+8 -> 9 ;
+10 [label="gini = 0.66\nsamples = 339\nvalue = [115, 130, 94]\nclass = Squish", fillcolor="#f2fdf7"] ;
+9 -> 10 ;
+11 [label="gini = 0.0\nsamples = 401\nvalue = [0, 0, 401]\nclass = Real", fillcolor="#8139e5"] ;
+9 -> 11 ;
+12 [label="Epsilon <= 237.54\ngini = 0.01\nsamples = 7183\nvalue = [3, 16, 7164]\nclass = Real", fillcolor="#813ae5"] ;
+8 -> 12 ;
+13 [label="gini = 0.17\nsamples = 195\nvalue = [2, 16, 177]\nclass = Real", fillcolor="#8e4de8"] ;
+12 -> 13 ;
+14 [label="gini = 0.0\nsamples = 6988\nvalue = [1, 0, 6987]\nclass = Real", fillcolor="#8139e5"] ;
+12 -> 14 ;
 }
