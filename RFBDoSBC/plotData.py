@@ -5,7 +5,6 @@ import pickle
 from matplotlib import cm, colors
 from pandas.plotting import scatter_matrix
 from scipy.stats import gaussian_kde
-from GetAndPrepareData import split_feat_label
 from sklearn.metrics import silhouette_samples
 
 def msg(_msg):
@@ -22,6 +21,8 @@ def plot_everything(train, rad, ptm):
     plt.style.use("classic")
     msg("Plotting correlation matrix.")
     plot_corr_mat(train, rad, ptm)
+
+    from GetAndPrepareData import split_feat_label
 
     plt.style.use("seaborn-dark")
     X, y = split_feat_label(train)
