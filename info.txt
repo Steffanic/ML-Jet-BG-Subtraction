@@ -13,3 +13,48 @@ Column: Epsilon  Score: 0.06621050089597702
 Column: p_T-corr  Score: 0.08599205315113068
 Column: Angularity  Score: -0.029428573325276375
 Column: Mean-p_T  Score: 0.0588272362947464
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Silhouette Scores:
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of rows read: 1000000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 277791
+Number of Squishy Jets: 277501
+Number of Real Jets: 277716
+Silhouette Scores:
+Number of rows read: 100000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
+Number of rows read: 100000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of rows read: 100000
+Analyzing jets with R=0.2 and p_T hardmin=10
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
+Overall Score: 0.07685425132513046
+Per Column Scores: 
+Column: Area  Score: 0.05003075301647186
+Column: Epsilon  Score: 0.07634511590003967
+Column: p_T-corr  Score: 0.08949829638004303
+Column: Angularity  Score: -0.03178023174405098
+Column: Mean-p_T  Score: 0.07424354553222656
