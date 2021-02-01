@@ -1,10 +1,9 @@
-<<<<<<< HEAD
-import modin.pandas as pd
-=======
+
+
 # ~~~~~~~~~~~ Patrick Steffanic ~~~~~~~~~~~~~~~~~~
 # =================IMPORTS and FRONT MATTER=======
 import pandas as pd
->>>>>>> 94a2bf86acd0a430638ec17528ce60d6351b6c1c
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pickle
