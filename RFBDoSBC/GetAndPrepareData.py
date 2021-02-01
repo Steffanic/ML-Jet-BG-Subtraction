@@ -3,17 +3,33 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 def DataPipeline(filepath, ptm, rows=10000000000):
-    '''
-    Get and Prepare the data from `filepath` 
-    '''
-    dat = get_data(filepath, rows) #Get data from `filepath`; also cleans repeated headers and renames Eps to Epsilon
-    dat_typed = type_data(dat) #Types every column to either an integer or float
-    dat_feat_added = add_feats(dat_typed) 
-    dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3])
-    dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
-    dat_bal = balance_classes(dat_drop)
-    train, test = split_data(dat_bal)
-    return train, test
+       '''
+       Get and Prepare the data from `filepath` 
+       '''
+       dat = get_data(filepath, rows) #Get data from `filepath`; also cleans repeated headers and renames Eps to Epsilon
+       dat_typed = type_data(dat) #Types every column to either an integer or float
+       dat_feat_added = add_feats(dat_typed) 
+       dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3])
+       dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
+       dat_bal = balance_classes(dat_drop)
+       train, test = split_data(dat_bal)
+       return train, test
+
+def DataPipelineBatch(filepath, ptm):
+       '''
+       Get and Prepare a batch of the data from `filepath` 
+       '''
+       dat_it = get_data_from_iterator(filepath) #Get data from `filepath`; also cleans repeated headers and renames Eps to Epsilon
+       for data_batch in dat_it:
+              dat = data_batch.drop(data_batch[data_batch.Eps==' Eps'].index)
+              dat = dat.rename(columns={'Eps': 'Epsilon'})     
+              dat_typed = type_data(dat) #Types every column to either an integer or float
+              dat_feat_added = add_feats(dat_typed) 
+              dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3])
+              dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
+              dat_bal = balance_classes(dat_drop)
+              train, test = split_data(dat_bal)
+              yield train, test
 
 def get_data(filename, rows_=10000000000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
        '''
@@ -22,6 +38,13 @@ def get_data(filename, rows_=10000000000, names_=['p_T', 'Eta', 'Phi', 'Area', '
        dat = pd.read_csv(filename, names=names_,nrows=rows_, low_memory=False)
        dat = dat.drop(dat[dat.Eps==' Eps'].index)
        dat = dat.rename(columns={'Eps': 'Epsilon'})
+       return dat
+
+def get_data_from_iterator(filename, chunksize_=100000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
+       '''
+       Takes a filename and the names of the columns in the CSV file. Returns a DataFrame.
+       '''
+       dat = pd.read_csv(filename, names=names_,chunksize=chunksize_, low_memory=False)
        return dat
 
 def add_feats(dat):

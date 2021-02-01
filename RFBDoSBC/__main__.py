@@ -21,7 +21,7 @@ from GetAndPrepareData import *
 from modelPreparation import *
 from modelEvaluation import *
 from plotData import *
-from utility import msg, log
+from utility import msg, logs
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -33,6 +33,8 @@ matplotlib.use('Agg')
 
 #====================================================
 
+doGridSearch=False
+
 if __name__=='__main__':
 
     # *************************Setting Grid Search****************************
@@ -40,11 +42,18 @@ if __name__=='__main__':
     if(len(sys.argv)>=2):
         GridArg = int(sys.argv[1])
         msg("Doing Grid Search" if GridArg else "Not Doing Grid Search")
-    doGridSearch=True if GridArg else False
+    global doGridSearch=True if GridArg else False
+
+    # *************************Setting batch***********************************
+    doBatch = 0
+    if(sys.argv[2]=='-b'){
+        doBatch=1
+        msg("Processing data in batches!")
+    }
 
     # *************************Setting number of Rows**************************
-    if(len(sys.argv)>=3):
-        rows = int(sys.argv[2])
+    if(len(sys.argv)>=4):
+        rows = int(sys.argv[3])
         msg("Only reading %d rows from file."%rows)
     else:
         rows=1000000000000000000
@@ -60,6 +69,7 @@ if __name__=='__main__':
     feat_imp = {}
     train = None
     test = None
+    batch_num=0
 
     #*************************Main Loop through Jet Radii and pT hardmin*************************
 
@@ -85,70 +95,15 @@ if __name__=='__main__':
             Xtest, Ytest = split_feat_label(test)
 
 
-
-            #===============Logging Results============
-            log("Number of Features: %d"%len(X.columns))
-            log("Features: "+str(X.columns))
-            log("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
-            log("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
-            log("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
-            log("Silhouette Scores:")
-            log(f"Overall Score: {silhouette_score(X, Y)}")
-            log(f"Per Column Scores: ")
-            for col in X.columns:
-                log(f"Column: {col}  Score: {silhouette_score(np.array(X[col]).reshape((-1,1)), Y)}")
-            #==========================================
-
-            #===============INFO============
-            msg("Number of Features: %d"%len(X.columns))
-            msg("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
-            msg("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
-            msg("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
-            msg(train.describe())
-            #===============================
-
+            doDataExploration(X, Y, train, rad, ptm)
             
+            best_params = doGridSearchOrLoadBestParams(X, Y, rad, ptm)
 
-            msg("Saving out plots to ./Plots")
-            plot_everything(train, rad, ptm)
+            rfModel = doRandomForestFit(X, Y, best_params)
 
-            if doGridSearch:
-                msg("Doing GridSearch")
-                best_params = GridSearchHandler(X, Y, rad, ptm)
-            else:
-                msg("Loading pre-built parameters")
-                best_params = loadBestParameters(rad, ptm)
-
-
-            msg("Initializing model and fitting to data.")
-            clf = RandomForestClassifier(**best_params)
-            clf.fit(X,Y)
-
-            msg("Initializing Oracle and fitting to clf's predictions")
-            oracle = DecisionTreeClassifier(max_depth=3)
-            clf_guess = pd.Series(clf.predict(X))
-            oracle.fit(X, clf_guess)
-            display_single_tree(oracle, X, clf_guess, "Oracle_%1.1f_%d"%(rad, ptm))
+            oracle = doOracleFit(X, rfModel, rad, ptm)
             
-            msg("Computing feature importances and other model statistics.")
-            importances, indices, std, quant_75 = compute_model_statistics(clf)
-
-            log("Feature importances: "+str(list(zip(X.columns, importances))))
-
-            msg("Feature rankings:")
-            print_feature_importances(X, importances, indices)
-
-            msg("Plotting feature importances.")
-            plot_feature_importances(X, importances, indices, std, rad, ptm)
-
-            msg("Plot distribution of importances.")
-            plot_feature_importance_distributions(clf, X, rad, ptm)
-
-            feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
-            
-            #display_single_tree(clf, X, Y, rad, ptm)
-            msg("Computing performance metrics")
-            compute_performance_metrics(clf, X, Y, Xtest, Ytest, rad, ptm)
+            doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm)
 
 
             log(" ")
@@ -159,3 +114,75 @@ if __name__=='__main__':
             pickle.dump(feat_imp, fil)
 
         plt.close('all')
+
+
+
+def doDataExploration(X, Y, train, rad, ptm, batch_num):
+    #===============Logging Results============
+    log(f"Batch Number: {batch_num}")
+    log("Number of Features: %d"%len(X.columns))
+    log("Features: "+str(X.columns))
+    log("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
+    log("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
+    log("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
+    log("Silhouette Scores:")
+    log(f"Overall Score: {silhouette_score(X, Y)}")
+    log(f"Per Column Scores: ")
+    for col in X.columns:
+        log(f"Column: {col}  Score: {silhouette_score(np.array(X[col]).reshape((-1,1)), Y)}")
+    #==========================================
+
+    #===============INFO============
+    msg("Number of Features: %d"%len(X.columns))
+    msg("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
+    msg("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
+    msg("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
+    msg(train.describe())
+    #===============================
+
+    msg("Saving out plots to ./Plots")
+    plot_everything(train, rad, ptm)
+
+def doGridSearchOrLoadBestParams(X, Y, rad, ptm):
+    if global doGridSearch:
+        msg("Doing GridSearch")
+        best_params = GridSearchHandler(X, Y, rad, ptm)
+    else:
+        msg("Loading pre-built parameters")
+        best_params = loadBestParameters(rad, ptm)
+    return best_params
+
+def doRandomForestFit(X, Y, best_params):
+    msg("Initializing model and fitting to data.")
+    rfModel = RandomForestClassifier(**best_params)
+    rfModel.fit(X,Y)
+    return rfModel
+
+def doOracleFit(X, rfModel, rad, ptm):
+    msg("Initializing Oracle and fitting to rfModel's predictions")
+    oracle = DecisionTreeClassifier(max_depth=3)
+    rfModel_guess = pd.Series(rfModel.predict(X))
+    oracle.fit(X, rfModel_guess)
+    display_single_tree(oracle, X, rfModel_guess, "Oracle_%1.1f_%d"%(rad, ptm))
+    return oracle
+
+def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm):
+    msg("Computing feature importances and other model statistics.")
+    importances, indices, std, quant_75 = compute_model_statistics(rfModel)
+
+    log("Feature importances: "+str(list(zip(X.columns, importances))))
+
+    msg("Feature rankings:")
+    print_feature_importances(X, importances, indices)
+
+    msg("Plotting feature importances.")
+    plot_feature_importances(X, importances, indices, std, rad, ptm)
+
+    msg("Plot distribution of importances.")
+    plot_feature_importance_distributions(rfModel, X, rad, ptm)
+
+    feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
+    
+    #display_single_tree(rfModel, X, Y, rad, ptm)
+    msg("Computing performance metrics")
+    compute_performance_metrics(rfModel, X, Y, Xtest, Ytest, rad, ptm)
