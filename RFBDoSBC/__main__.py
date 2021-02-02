@@ -37,6 +37,7 @@ matplotlib.use('Agg')
 #====================================================
 
 doGridSearch=False
+feat_imp={}
 
 if __name__=='__main__':
 
@@ -69,7 +70,6 @@ if __name__=='__main__':
     pThardmin = [10,20,30,40]
     Rpt = [(0.2, 10), (0.2, 20), (0.2, 30), (0.2, 40), (0.5, 10), (0.5, 20), (0.5, 30), (0.5, 40), (0.3, 10), (0.3, 20), (0.3, 30), (0.3, 40), (0.4, 10), (0.4, 20), (0.4, 30), (0.4, 40), (0.6, 10), (0.6, 20), (0.6, 30), (0.6, 40)]
     
-    feat_imp = {}
     train = None
     test = None
     batch_num=0
@@ -78,41 +78,49 @@ if __name__=='__main__':
 
     for rad in R:
         for ptm in pThardmin:
-
+            makeNewModel=True
             # Clean up from the previous data file
-            if(train is not None):
-                del train, test
-                msg("Deleting train, test from the previous run.")
-            gc.collect()
 
             msg("Analyzing jets with R=%1.1f and p_T hardmin=%d"%(rad, ptm))
             log("Analyzing jets with R=%1.1f and p_T hardmin=%d"%(rad, ptm))
 
-            #Load data files into train, test
-            train, test = DataPipeline("Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-%1.1f-pThardmin-%d.0.csv"%(rad, ptm), ptm, rows)
+            best_params = loadBestParameters(rad, ptm)
+            rfModel = makeRandomForest(best_params)
+
+            # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Batch loop~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            while True: # This while loop emulates a do...while ;;;; Matches if(not doBatch)
+                #Load data files into train, test
+                if(doBatch):
+                    batch_num+=1
+                    dataGen = DataPipelineBatch(f"Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-{rad}-pThardmin-{ptm}.0.csv", ptm)
+                    train, test = next(dataGen)
+                else:
+                    train, test = DataPipeline("Analysis_Code/Generator Output/merged-ML-output-LOWSTATS-Rparam-%1.1f-pThardmin-%d.0.csv"%(rad, ptm), ptm, rows)
+                    best_params = doGridSearchOrLoadBestParams(X, Y, rad, ptm)
+                # In order to use the sklearn random forest we need a feature vector X
+                # and a label vector Y
+                X, Y = split_feat_label(train)
+                Xtest, Ytest = split_feat_label(test)
+
+                doDataExploration(X, Y, train, rad, ptm, batch_num)
+                               
+                rfModel = doRandomForestFit(X, Y, rfModel, batch_num)
+
+                oracle = doOracleFit(X, rfModel, rad, ptm)
+                
+                doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm)
 
 
-            # In order to use the sklearn random forest we need a feature vector X
-            # and a label vector Y
-            X, Y = split_feat_label(train)
-            Xtest, Ytest = split_feat_label(test)
+                log(" ")
+                log(" ")
+                log(" ")
+                log(" ")
+                if(not doBatch):
+                    break
 
+            # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Batch loop~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            
 
-            doDataExploration(X, Y, train, rad, ptm)
-            
-            best_params = doGridSearchOrLoadBestParams(X, Y, rad, ptm)
-
-            rfModel = doRandomForestFit(X, Y, best_params)
-
-            oracle = doOracleFit(X, rfModel, rad, ptm)
-            
-            doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm)
-
-
-            log(" ")
-            log(" ")
-            log(" ")
-            log(" ")
         with open("Objects/R=%1.1f/feat_imp.pickle"%rad, 'wb') as fil:
             pickle.dump(feat_imp, fil)
 
@@ -144,9 +152,11 @@ def doDataExploration(X, Y, train, rad, ptm, batch_num):
     #===============================
 
     msg("Saving out plots to ./Plots")
-    plot_everything(train, rad, ptm)
+    plot_everything(train, rad, ptm, batch_num)
+    #Ready for batch
 
 def doGridSearchOrLoadBestParams(X, Y, rad, ptm):
+    #This was written to find the best parameters for the randomforest. In batch mode it will find the "best parameters" for each batch.
     if global doGridSearch:
         msg("Doing GridSearch")
         best_params = GridSearchHandler(X, Y, rad, ptm)
@@ -154,10 +164,14 @@ def doGridSearchOrLoadBestParams(X, Y, rad, ptm):
         msg("Loading pre-built parameters")
         best_params = loadBestParameters(rad, ptm)
     return best_params
+    #Ready for batch
 
-def doRandomForestFit(X, Y, best_params):
-    msg("Initializing model and fitting to data.")
-    rfModel = RandomForestClassifier(**best_params)
+def makeRandomForest(best_params):
+    rfModel = RandomForestClassifier(**best_params, warm_start=True)
+    return rfModel
+
+def doRandomForestFit(X, Y, rfModel, batch_num):
+    msg(f"Fitting to data for batch {batch_num}.")
     rfModel.fit(X,Y)
     return rfModel
 
@@ -184,7 +198,7 @@ def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm):
     msg("Plot distribution of importances.")
     plot_feature_importance_distributions(rfModel, X, rad, ptm)
 
-    feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
+    global feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
     
     #display_single_tree(rfModel, X, Y, rad, ptm)
     msg("Computing performance metrics")

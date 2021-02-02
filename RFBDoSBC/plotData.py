@@ -10,31 +10,31 @@ from sklearn.metrics import silhouette_samples
 def msg(_msg):
     print("JEB: %s"%_msg)
 
-def plot_everything(train, rad, ptm):
+def plot_everything(train, rad, ptm, batch_num):
     msg("Plotting feature distributions.")
     plt.style.use("seaborn-dark")
-    plot_all_columns(train, rad, ptm)
+    plot_all_columns(train, rad, ptm, batch_num)
 
     msg("Plotting scatter matrix.")
-    _, _ = factor_scatter_matrix(train,'Label', rad, ptm, ['blue', 'orange', 'red'])
+    _, _ = factor_scatter_matrix(train,'Label', rad, ptm, ['blue', 'orange', 'red'], batch_num)
     
     plt.style.use("classic")
     msg("Plotting correlation matrix.")
-    plot_corr_mat(train, rad, ptm)
+    plot_corr_mat(train, rad, ptm, batch_num)
 
     from GetAndPrepareData import split_feat_label
 
     plt.style.use("seaborn-dark")
     X, y = split_feat_label(train)
     msg("Plotting silhouette distributions.")
-    plot_silhouette_score_distributions(X, y, rad, ptm)
+    plot_silhouette_score_distributions(X, y, rad, ptm, batch_num)
 
-def plot_all_columns(train, rad, ptm):
+def plot_all_columns(train, rad, ptm, batch_num):
     for cols in train.columns:
-        plot_population(train, cols, rad, ptm)
+        plot_population(train, cols, rad, ptm, batch_num)
         #plot_population_log(cols)
 
-def plot_population(train, feat, rad, ptm):
+def plot_population(train, feat, rad, ptm, batch_num):
     with np.errstate(divide='ignore', invalid='ignore'):
         plt.rc('xtick',labelsize=14)
         plt.rc('ytick',labelsize=14)
@@ -60,11 +60,11 @@ def plot_population(train, feat, rad, ptm):
             os.mkdir("Plots/Feature_Plots")
         if(not os.path.isdir("Plots/Feature_Plots/R=%1.1f"%rad)):
             os.mkdir("Plots/Feature_Plots/R=%1.1f"%rad)
-        with open("Plots/Feature_Plots/R=%1.1f/%s_pTmin%d.pickle"%(rad, feat, ptm), 'wb') as fil:
+        with open(f"Plots/Feature_Plots/R={rad}/{feat}_pTmin{ptm}_batch{batch_num}.pickle", 'wb') as fil:
             pickle.dump(fig, fil)
         plt.close()
 
-def plot_population_log(train, feat):
+def plot_population_log(train, feat, batch_num):
     plt.rc('xtick',labelsize=14)
     plt.rc('ytick',labelsize=14)
     plt.rc('font', family = "Liberation Serif")
@@ -82,7 +82,7 @@ def plot_population_log(train, feat):
     plt.semilogy()
     plt.close()
 
-def plot_corr_mat(train, rad, ptm):
+def plot_corr_mat(train, rad, ptm, batch_num):
     plt.rc('xtick',labelsize=14)
     plt.rc('ytick',labelsize=14)
     plt.rc('font', family = "Liberation Serif")
@@ -100,11 +100,11 @@ def plot_corr_mat(train, rad, ptm):
     plt.title("Feature Correlations", pad=50, fontsize=20)
     #plt.tight_layout()
     
-    with open("Plots/Feature_Plots/R=%1.1f/corr_mat_pTmin%d.pickle"%(rad, ptm), 'wb') as fil:
+    with open(f"Plots/Feature_Plots/R={rad}/corr_mat_pTmin{ptm}_batch{batch_num}.pickle", 'wb') as fil:
         pickle.dump(fig, fil)
     plt.close(fig)
 
-def factor_scatter_matrix(df, factor, rad, ptm,palette=None):
+def factor_scatter_matrix(df, factor, rad, ptm,palette=None, batch_num):
     '''Create a scatter matrix of the variables in df, with differently colored
     points depending on the value of df[factor].
     inputs:
@@ -162,14 +162,14 @@ def factor_scatter_matrix(df, factor, rad, ptm,palette=None):
     if(not os.path.isdir("Plots/Feature_Plots")):
         os.mkdir("Plots/Feature_Plots")
     plt.savefig("Plots/R=%1.1f/scatter_mat_pTmin%d.png"%(rad, ptm))
-    with open("Plots/Feature_Plots/R=%1.1f/scatter_mat_pTmin%d.pickle"%(rad, ptm), 'wb') as fil:
+    with open(f"Plots/Feature_Plots/R={rad}/scatter_mat_pTmin{ptm}_batch{batch_num}.pickle", 'wb') as fil:
         pickle.dump(axarr, fil)
     plt.close()
     return axarr, color_map
 
 
 
-def plot_silhouette_score_distributions(X, y, rad, ptm):
+def plot_silhouette_score_distributions(X, y, rad, ptm, batch_num):
     for col in X.columns:
         fig=plt.figure(figsize=(15,15))
         plt.rc('xtick',labelsize=24)
@@ -188,6 +188,6 @@ def plot_silhouette_score_distributions(X, y, rad, ptm):
             os.mkdir("Plots/Feature_Plots")
         if(not os.path.isdir("Plots/Feature_Plots/R=%1.1f"%rad)):
             os.mkdir("Plots/Feature_Plots/R=%1.1f"%rad)
-        with open("Plots/Feature_Plots/R=%1.1f/Silhouette_Score_%s_pTmin%d.pickle"%(rad,col, ptm), 'wb') as fil:
+        with open(f"Plots/Feature_Plots/R={rad}/Silhouette_Score_{col}_pTmin{ptm}_batch{batch_num}.pickle"%(rad,col, ptm), 'wb') as fil:
             pickle.dump(fig, fil)
         plt.close()
