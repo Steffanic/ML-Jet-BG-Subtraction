@@ -6373,11 +6373,8 @@ Plots/Feature_Plots/R=0.6/X_tru_pTmin10.pickle
 Plots/Feature_Plots/R=0.6/X_tru_pTmin20.pickle
 Plots/Feature_Plots/R=0.6/X_tru_pTmin30.pickle
 Plots/Feature_Plots/R=0.6/X_tru_pTmin40.pickle
->>>>>>> a92e737711fc36b7b351eff5a19e3e685a6fd664
-<<<<<<< HEAD
 DockerContainer/.syncDocker
 DockerContainer/Dockerfile
-DockerContainer/requirements.txt
 DockerContainer/Data/merged-ML-output-LOWSTATS-Rparam-0.2-pThardmin-10.0.csv
 DockerContainer/Data/merged-ML-output-LOWSTATS-Rparam-0.2-pThardmin-20.0.csv
 DockerContainer/Data/merged-ML-output-LOWSTATS-Rparam-0.2-pThardmin-30.0.csv
