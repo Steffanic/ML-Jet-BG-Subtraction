@@ -6487,3 +6487,4 @@ DockerContainer/RFBDoSBC/__pycache__/utility.cpython-38.pyc
 DockerContainer/RFBDoSBC/__pycache__/utility.cpython-39.pyc
 DockerContainer/RFBDoSBC/dist/RFBDoSBC_Steffanic-0.0.1-py3-none-any.whl
 DockerContainer/RFBDoSBC/dist/RFBDoSBC_Steffanic-0.0.1.tar.gz
+**/*batch*.pickle
