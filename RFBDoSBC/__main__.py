@@ -46,7 +46,7 @@ if __name__=='__main__':
     if(len(sys.argv)>=2):
         GridArg = int(sys.argv[1])
         msg("Doing Grid Search" if GridArg else "Not Doing Grid Search")
-    global doGridSearch=True if GridArg else False
+    doGridSearch=True if GridArg else False
 
     # *************************Setting batch***********************************
     doBatch = 0
@@ -157,7 +157,7 @@ def doDataExploration(X, Y, train, rad, ptm, batch_num):
 
 def doGridSearchOrLoadBestParams(X, Y, rad, ptm):
     #This was written to find the best parameters for the randomforest. In batch mode it will find the "best parameters" for each batch.
-    if global doGridSearch:
+    if doGridSearch:
         msg("Doing GridSearch")
         best_params = GridSearchHandler(X, Y, rad, ptm)
     else:
@@ -198,7 +198,7 @@ def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm):
     msg("Plot distribution of importances.")
     plot_feature_importance_distributions(rfModel, X, rad, ptm)
 
-    global feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
+    feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
     
     #display_single_tree(rfModel, X, Y, rad, ptm)
     msg("Computing performance metrics")
