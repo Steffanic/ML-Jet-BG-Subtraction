@@ -50,10 +50,10 @@ if __name__=='__main__':
 
     # *************************Setting batch***********************************
     doBatch = 0
-    if(sys.argv[2]=='-b'){
+    if(sys.argv[2]=='-b'):
         doBatch=1
         msg("Processing data in batches!")
-    }
+    
 
     # *************************Setting number of Rows**************************
     if(len(sys.argv)>=4):
