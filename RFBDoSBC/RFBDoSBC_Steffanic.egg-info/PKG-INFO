@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: RFBDoSBC-Steffanic
+Version: 0.0.1
+Summary: A package for exploring jet data from PYTHIA+TennGen using machine learning.
+Home-page: https://github.com/Steffanic/ML-Jet-BG-Subtraction
+Author: Patrick Steffanic
+Author-email: steffaniccodes@gmail.com
+License: UNKNOWN
+Description: # RFBDoSBC
+        
+        This package explores the distinction between real and combinatorial jets in order to determine the best practices in reducing the background contribution to jet measurements.
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

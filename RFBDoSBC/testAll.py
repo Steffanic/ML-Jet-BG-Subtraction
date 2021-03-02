@@ -1,7 +1,7 @@
 from GetAndPrepareData import *
 from modelPreparation import *
 from plotData import *
-import  modin.pandas as pd
+import  pandas as pd
 import unittest
 from numpy import dtype
 

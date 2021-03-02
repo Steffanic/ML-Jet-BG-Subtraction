@@ -16,13 +16,13 @@ def plot_everything(train, rad, ptm, batch_num):
     plot_all_columns(train, rad, ptm, batch_num)
 
     msg("Plotting scatter matrix.")
-    _, _ = factor_scatter_matrix(train,'Label', rad, ptm, ['blue', 'orange', 'red'], batch_num)
+    _, _ = factor_scatter_matrix(train,'Label', rad, ptm, batch_num, ['blue', 'orange', 'red'])
     
     plt.style.use("classic")
     msg("Plotting correlation matrix.")
     plot_corr_mat(train, rad, ptm, batch_num)
 
-    from GetAndPrepareData import split_feat_label
+    from RFBDoSBC.GetAndPrepareData import split_feat_label
 
     plt.style.use("seaborn-dark")
     X, y = split_feat_label(train)
@@ -104,7 +104,7 @@ def plot_corr_mat(train, rad, ptm, batch_num):
         pickle.dump(fig, fil)
     plt.close(fig)
 
-def factor_scatter_matrix(df, factor, rad, ptm,palette=None, batch_num):
+def factor_scatter_matrix(df, factor, rad, ptm, batch_num, palette=None):
     '''Create a scatter matrix of the variables in df, with differently colored
     points depending on the value of df[factor].
     inputs:
@@ -188,6 +188,6 @@ def plot_silhouette_score_distributions(X, y, rad, ptm, batch_num):
             os.mkdir("Plots/Feature_Plots")
         if(not os.path.isdir("Plots/Feature_Plots/R=%1.1f"%rad)):
             os.mkdir("Plots/Feature_Plots/R=%1.1f"%rad)
-        with open(f"Plots/Feature_Plots/R={rad}/Silhouette_Score_{col}_pTmin{ptm}_batch{batch_num}.pickle"%(rad,col, ptm), 'wb') as fil:
+        with open(f"Plots/Feature_Plots/R={rad}/Silhouette_Score_{col}_pTmin{ptm}_batch{batch_num}.pickle", 'wb') as fil:
             pickle.dump(fig, fil)
         plt.close()

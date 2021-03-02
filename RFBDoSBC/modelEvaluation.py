@@ -2,7 +2,7 @@
 import numpy as np
 from sklearn import tree
 import matplotlib.pyplot as plt
-from utility import msg, log
+from RFBDoSBC.utility import msg, log
 import os
 import pickle
 
