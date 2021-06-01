@@ -24,7 +24,7 @@ from GetAndPrepareData import *
 from modelPreparation import *
 from modelEvaluation import *
 from plotData import *
-from utility import msg, logs
+from utility import msg, log
 
 import warnings
 warnings.filterwarnings("ignore")
