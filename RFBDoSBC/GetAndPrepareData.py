@@ -40,7 +40,7 @@ def get_data(filename, rows_=10000000000, names_=['p_T', 'Eta', 'Phi', 'Area', '
        dat = dat.rename(columns={'Eps': 'Epsilon'})
        return dat
 
-def get_data_from_iterator(filename, chunksize_=100000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
+def get_data_from_iterator(filename, chunksize_=10000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
        '''
        Takes a filename and the names of the columns in the CSV file. Returns a DataFrame.
        '''

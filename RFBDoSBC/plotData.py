@@ -188,6 +188,6 @@ def plot_silhouette_score_distributions(X, y, rad, ptm, batch_num):
             os.mkdir("Plots/Feature_Plots")
         if(not os.path.isdir("Plots/Feature_Plots/R=%1.1f"%rad)):
             os.mkdir("Plots/Feature_Plots/R=%1.1f"%rad)
-        with open(f"Plots/Feature_Plots/R={rad}/Silhouette_Score_{col}_pTmin{ptm}_batch{batch_num}.pickle"%(rad,col, ptm), 'wb') as fil:
+        with open(f"Plots/Feature_Plots/R={rad}/Silhouette_Score_{col}_pTmin{ptm}_batch{batch_num}.pickle", 'wb') as fil:
             pickle.dump(fig, fil)
         plt.close()

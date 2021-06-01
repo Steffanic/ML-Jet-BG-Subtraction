@@ -2,10 +2,13 @@
 import numpy as np
 from sklearn import tree
 import matplotlib.pyplot as plt
-from RFBDoSBC.utility import msg, log
+
 import os
 import pickle
 
+def log(_msg, filename="info.txt"):
+    with open(filename, "a") as f:
+        f.write(_msg+'\n')
 
 def compute_model_statistics(clf):
     importances = clf.feature_importances_
@@ -76,8 +79,8 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     perf_metrics = {}
 
     y_pred_train = np.array(clf.predict(X))
-    msg(y_pred_train)
-    msg(len(np.array(Y==3).nonzero()[0]))
+    print(y_pred_train)
+    print(len(np.array(Y==3).nonzero()[0]))
     real_jet_ind_train = np.array(Y==3).nonzero()[0]
     fake_jet_ind_train = np.array(Y==1).nonzero()[0]
     squish_jet_ind_train = np.asarray(Y==2).nonzero()[0]
@@ -85,7 +88,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     pred_for_fake_jets_train = y_pred_train[fake_jet_ind_train]
     pred_for_squish_jets_train = y_pred_train[squish_jet_ind_train] 
 
-    msg(str(len(real_jet_ind_train))+' '+str(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))
+    print(str(len(real_jet_ind_train))+' '+str(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))
 
     real_jet_rate_train = float(len(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))/float(len(real_jet_ind_train))
     fake_jet_rate_train = float(len(np.asarray(pred_for_fake_jets_train==1).nonzero()[0]))/float(len(fake_jet_ind_train))
@@ -100,12 +103,12 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     perf_metrics['fall_out_train'] = fall_out_train
     perf_metrics['fall_in_train'] = fall_in_train
 
-    msg("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
+    print("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
     log("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
 
     #Real Jet rate = real jets pred/real jets
     y_pred_test = np.array(clf.predict(X_test))
-    msg(y_pred_test)
+    print(y_pred_test)
     real_jet_ind_test = np.asarray(Y_test==3).nonzero()[0]
     fake_jet_ind_test = np.asarray(Y_test==1).nonzero()[0]
     squish_jet_ind_test = np.asarray(Y_test==2).nonzero()[0]
@@ -113,7 +116,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     pred_for_fake_jets_test = y_pred_test[fake_jet_ind_test]
     pred_for_squish_jets_test = y_pred_test[squish_jet_ind_test] 
 
-    msg(str(len(real_jet_ind_test))+' '+str(len(np.asarray(pred_for_real_jets_test==3).nonzero()[0])))
+    print(str(len(real_jet_ind_test))+' '+str(len(np.asarray(pred_for_real_jets_test==3).nonzero()[0])))
 
     real_jet_rate_test = float(len(np.asarray(pred_for_real_jets_test==3).nonzero()[0]))/float(len(real_jet_ind_test))
     fake_jet_rate_test = float(len(np.asarray(pred_for_fake_jets_test==1).nonzero()[0]))/float(len(fake_jet_ind_test))
@@ -130,7 +133,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     perf_metrics['fall_in_test'] = fall_in_test
 
 
-    msg("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
+    print("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
     log("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
 
 
