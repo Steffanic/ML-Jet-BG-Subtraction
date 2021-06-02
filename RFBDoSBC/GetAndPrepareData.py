@@ -15,7 +15,7 @@ def DataPipeline(filepath, ptm, rows=10000000000):
        train, test = split_data(dat_bal)
        return train, test
 
-def DataPipelineBatch(filepath, ptm):
+def DataPipelineBatch(filepath, ptm, keep_pT=False):
        '''
        Get and Prepare a batch of the data from `filepath` 
        '''
@@ -26,7 +26,9 @@ def DataPipelineBatch(filepath, ptm):
               dat_typed = type_data(dat) #Types every column to either an integer or float
               dat_feat_added = add_feats(dat_typed) 
               dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3])
-              dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
+              drop_list = ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'] \
+                     if not keep_pT else ['Eta', 'Phi', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']
+              dat_drop = drop_feat(dat_labeled, drop_list)
               dat_bal = balance_classes(dat_drop)
               train, test = split_data(dat_bal)
               yield train, test
@@ -40,7 +42,7 @@ def get_data(filename, rows_=10000000000, names_=['p_T', 'Eta', 'Phi', 'Area', '
        dat = dat.rename(columns={'Eps': 'Epsilon'})
        return dat
 
-def get_data_from_iterator(filename, chunksize_=10000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
+def get_data_from_iterator(filename, chunksize_=100000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
        '''
        Takes a filename and the names of the columns in the CSV file. Returns a DataFrame.
        '''
