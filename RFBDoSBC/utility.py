@@ -27,7 +27,7 @@ def log(_msg, filename="info.txt"):
     with open(filename, "a") as f:
         f.write(_msg+'\n')
 
-def doDataExploration(X, Y, train, rad, ptm, batch_num):
+def doDataExploration(X, Y, train, rad, ptm, batch_num, do_silhouette_score=False):
     #===============Logging Results============
     log(f"Batch Number: {batch_num}")
     log("Number of Features: %d"%len(X.columns))
@@ -35,11 +35,12 @@ def doDataExploration(X, Y, train, rad, ptm, batch_num):
     log("Number of Fake Jets: %d"%len(train.loc[train['Label']==1]))
     log("Number of Squishy Jets: %d"%len(train.loc[train['Label']==2]))
     log("Number of Real Jets: %d"%len(train.loc[train['Label']==3]))
-    log("Silhouette Scores:")
-    log(f"Overall Score: {silhouette_score(X, Y)}")
-    log(f"Per Column Scores: ")
-    for col in X.columns:
-        log(f"Column: {col}  Score: {silhouette_score(np.array(X[col]).reshape((-1,1)), Y)}")
+    if do_silhouette_score:
+        log("Silhouette Scores:")
+        log(f"Overall Score: {silhouette_score(X, Y)}")
+        log(f"Per Column Scores: ")
+        for col in X.columns:
+            log(f"Column: {col}  Score: {silhouette_score(np.array(X[col]).reshape((-1,1)), Y)}")
     #==========================================
 
     #===============INFO============
@@ -74,12 +75,12 @@ def doRandomForestFit(X, Y, rfModel, batch_num):
     rfModel.fit(X,Y)
     return rfModel
 
-def doOracleFit(X, rfModel, rad, ptm):
+def doOracleFit(X, rfModel, rad, ptm, low_pT=False):
     msg("Initializing Oracle and fitting to rfModel's predictions")
     oracle = DecisionTreeClassifier(max_depth=3)
     rfModel_guess = pd.Series(rfModel.predict(X))
     oracle.fit(X, rfModel_guess)
-    display_single_tree(oracle, X, rfModel_guess, "Oracle_%1.1f_%d"%(rad, ptm))
+    display_single_tree(oracle, X, rfModel_guess, "Oracle%s_%1.1f_%d"%( "" if not low_pT else "Lowpt",rad, ptm))
     return oracle
 
 def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm, feat_imp):

@@ -25,7 +25,7 @@ def DataPipelineBatch(filepath, ptm, keep_pT=False):
               dat = dat.rename(columns={'Eps': 'Epsilon'})     
               dat_typed = type_data(dat) #Types every column to either an integer or float
               dat_feat_added = add_feats(dat_typed) 
-              dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3])
+              dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3], ["Fake", "< Hard Scattering p_T", ">= Hard Scattering p_T"])
               drop_list = ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'] \
                      if not keep_pT else ['Eta', 'Phi', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']
               dat_drop = drop_feat(dat_labeled, drop_list)
@@ -42,7 +42,7 @@ def get_data(filename, rows_=10000000000, names_=['p_T', 'Eta', 'Phi', 'Area', '
        dat = dat.rename(columns={'Eps': 'Epsilon'})
        return dat
 
-def get_data_from_iterator(filename, chunksize_=100000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
+def get_data_from_iterator(filename, chunksize_=10000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
        '''
        Takes a filename and the names of the columns in the CSV file. Returns a DataFrame.
        '''
@@ -54,12 +54,15 @@ def add_feats(dat):
        dat_copy["pythia-mom"] = dat_copy['X_tru']*dat_copy['N-Trk']
        return dat_copy
 
-def label_data(dat, label_metric = 'pythia-mom',label_bins=[-1,0.00000001 ,10,10000000], labels_=[1,2,3]):
+def label_data(dat, label_metric = 'pythia-mom',label_bins=[-1,0.00000001 ,10,10000000], labels_=[1,2,3], label_names_=["Fake", "< Hard Scattering p_T", ">= Hard Scattering p_T"]):
        dat['Label'] = pd.cut(dat[label_metric], bins=label_bins, labels=labels_)
        
        dat['Label']=dat['Label'].astype(np.int64)
+
+       dat['Label_Name'] = [label_names_[i] for i in dat['Label'].apply(lambda x:x-1)]
        
        return dat
+
 
 def type_data(dat):
        dat_typed = dat.astype({'p_T': np.float32, 'Eta': np.float32, 'Phi': np.float32, 'Area': np.float32, 'Epsilon':np.float32, 'p_T-corr': np.float32, 'N-Trk': np.uint32, 'Angularity': np.float32, 'Angularity-NW':np.float32, 'Mean-p_T': np.float32, 'p_T_1': np.float32, 'p_T_2': np.float32, 'p_T_3': np.float32, 'p_T_4': np.float32, 'p_T_5': np.float32, 'distmatch':np.float32, 'XMatch':np.float32, 'X_tru': np.float32, 'Y_quark': np.float32, 'Y_gluon': np.float32, 'Y_beam':np.float32, 'Y_bkgd':np.float32})

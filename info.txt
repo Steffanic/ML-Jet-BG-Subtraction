@@ -781,3 +781,81 @@ Number of Fake Jets: 2815
 Number of Squishy Jets: 2832
 Number of Real Jets: 2853
 Silhouette Scores:
+Batch Number: 8
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
+Overall Score: 0.08173338323831558
+Per Column Scores: 
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Silhouette Scores:
+Overall Score: 0.08173338323831558
+Per Column Scores: 
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Batch Number: 2
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Batch Number: 2
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 24386
+Number of Squishy Jets: 22505
+Number of Real Jets: 1579
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 27863
+Number of Squishy Jets: 27909
+Number of Real Jets: 28067
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 24386
+Number of Squishy Jets: 22505
+Number of Real Jets: 1579
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 138932
+Number of Squishy Jets: 138963
+Number of Real Jets: 138812
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 56595
+Number of Squishy Jets: 56838
+Number of Real Jets: 56616
+Batch Number: 1
+Number of Features: 6
+Features: Index(['p_T', 'Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 0
+Number of Squishy Jets: 0
+Number of Real Jets: 0

@@ -10,7 +10,7 @@ from sklearn.metrics import silhouette_samples
 def msg(_msg):
     print("JEB: %s"%_msg)
 
-def plot_everything(train, rad, ptm, batch_num):
+def plot_everything(train, rad, ptm, batch_num, do_silhouette_score=False):
     msg("Plotting feature distributions.")
     plt.style.use("seaborn-dark")
     plot_all_columns(train, rad, ptm, batch_num)
@@ -24,10 +24,11 @@ def plot_everything(train, rad, ptm, batch_num):
 
     from RFBDoSBC.GetAndPrepareData import split_feat_label
 
-    plt.style.use("seaborn-dark")
-    X, y = split_feat_label(train)
-    msg("Plotting silhouette distributions.")
-    plot_silhouette_score_distributions(X, y, rad, ptm, batch_num)
+    if do_silhouette_score:
+        plt.style.use("seaborn-dark")
+        X, y = split_feat_label(train)
+        msg("Plotting silhouette distributions.")
+        plot_silhouette_score_distributions(X, y, rad, ptm, batch_num)
 
 def plot_all_columns(train, rad, ptm, batch_num):
     for cols in train.columns:
