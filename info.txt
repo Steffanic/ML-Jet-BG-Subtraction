@@ -734,3 +734,28 @@ Fake Jet Rate test: 0.0
 Squish Jet Rate test: 0.0
 Fake predicted real test: 1.0
 Real predicted fake test: 0.0
+Batch Number: 1
+Number of Features: 5
+Features: Index(['Area', 'Epsilon', 'p_T-corr', 'Angularity', 'Mean-p_T'], dtype='object')
+Number of Fake Jets: 2815
+Number of Squishy Jets: 2832
+Number of Real Jets: 2853
+Silhouette Scores:
+Overall Score: 0.06681910902261734
+Per Column Scores: 
+Column: Area  Score: 0.042034413665533066
+Column: Epsilon  Score: 0.06621050089597702
+Column: p_T-corr  Score: 0.08599205315113068
+Column: Angularity  Score: -0.029428573325276375
+Column: Mean-p_T  Score: 0.0588272362947464
+Feature importances: [('Area', 0.1963502733312718), ('Epsilon', 0.22184604301702612), ('p_T-corr', 0.2501416802295594), ('Angularity', 0.07047227978753443), ('Mean-p_T', 0.2611897236346082)]
+Real Jet Rate train: 1.0
+Fake Jet Rate train: 0.0
+Squish Jet Rate train: 0.0
+Fake predicted real train: 1.0
+Real predicted fake train: 0.0
+Real Jet Rate test: 1.0
+Fake Jet Rate test: 0.0
+Squish Jet Rate test: 0.0
+Fake predicted real test: 1.0
+Real predicted fake test: 0.0
