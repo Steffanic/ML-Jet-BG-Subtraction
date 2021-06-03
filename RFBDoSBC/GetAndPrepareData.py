@@ -15,7 +15,7 @@ def DataPipeline(filepath, ptm, rows=10000000000):
        train, test = split_data(dat_bal)
        return train, test
 
-def DataPipelineBatch(filepath, ptm, keep_pT=False):
+def DataPipelineBatch(filepath, ptm, keep_pT=False, keep_all=False):
        '''
        Get and Prepare a batch of the data from `filepath` 
        '''
@@ -27,7 +27,8 @@ def DataPipelineBatch(filepath, ptm, keep_pT=False):
               dat_feat_added = add_feats(dat_typed) 
               dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3], ["Fake", "< Hard Scattering p_T", ">= Hard Scattering p_T"])
               drop_list = ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'] \
-                     if not keep_pT else ['Eta', 'Phi', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']
+                     if not keep_pT else ['Eta', 'Phi', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'] \
+                            if not keep_all else []
               dat_drop = drop_feat(dat_labeled, drop_list)
               dat_bal = balance_classes(dat_drop)
               train, test = split_data(dat_bal)
