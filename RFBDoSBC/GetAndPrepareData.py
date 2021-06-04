@@ -2,15 +2,16 @@ import  pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-def DataPipeline(filepath, ptm, rows=10000000000):
+def DataPipeline(filepath, ptm, rows=10000000000, keep_pT=False):
        '''
        Get and Prepare the data from `filepath` 
        '''
        dat = get_data(filepath, rows) #Get data from `filepath`; also cleans repeated headers and renames Eps to Epsilon
        dat_typed = type_data(dat) #Types every column to either an integer or float
        dat_feat_added = add_feats(dat_typed) 
-       dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3])
-       dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
+       dat_labeled = label_data(dat_feat_added, 'pythia-mom', [-1,0.000000001, ptm, 10000000], [1,2,3], ["Fake", "< Hard Scattering p_T", ">= Hard Scattering p_T"])
+       dat_drop = drop_feat(dat_labeled, ['Eta', 'Phi', 'p_T', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'] \
+              if not keep_pT else ['Eta', 'Phi', 'Angularity-NW', 'N-Trk', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5', 'distmatch', 'XMatch', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd'])
        dat_bal = balance_classes(dat_drop)
        train, test = split_data(dat_bal)
        return train, test
@@ -43,7 +44,7 @@ def get_data(filename, rows_=10000000000, names_=['p_T', 'Eta', 'Phi', 'Area', '
        dat = dat.rename(columns={'Eps': 'Epsilon'})
        return dat
 
-def get_data_from_iterator(filename, chunksize_=10000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
+def get_data_from_iterator(filename, chunksize_=80000, names_=['p_T', 'Eta', 'Phi', 'Area', 'Eps', 'p_T-corr', 'N-Trk', 'Angularity', 'Angularity-NW', 'Mean-p_T', 'p_T_1', 'p_T_2', 'p_T_3', 'p_T_4', 'p_T_5','distmatch','XMatch', 'X_tru', 'Y_quark', 'Y_gluon', 'Y_beam', 'Y_bkgd']):
        '''
        Takes a filename and the names of the columns in the CSV file. Returns a DataFrame.
        '''
@@ -83,7 +84,7 @@ def balance_classes(dat, label='Label'):
        dat_bal = dat_bal.append(dat.loc[dat['Label']==3].sample(n=len(dat.loc[dat['Label']==2]), replace=True, random_state=42))
        return dat_bal
 
-def split_feat_label(data, drop_labels=['X_tru', 'pythia-mom', 'Label'], label_='Label'):
+def split_feat_label(data, drop_labels=['p_T', 'X_tru', 'pythia-mom', 'Label', 'Label_Name'], label_='Label'):
     X = data.drop(drop_labels, 1)
     Y=data[label_]
     return X, Y

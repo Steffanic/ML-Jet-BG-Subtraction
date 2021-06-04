@@ -15,6 +15,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import  RandomForestClassifier
 from sklearn.datasets import make_classification
 from sklearn.metrics import silhouette_score
+from scipy.stats import mode
 from RFBDoSBC.GetAndPrepareData import *
 from RFBDoSBC.modelPreparation import *
 from RFBDoSBC.modelEvaluation import *
@@ -78,7 +79,10 @@ def doRandomForestFit(X, Y, rfModel, batch_num):
 def doOracleFit(X, rfModel, rad, ptm, low_pT=False):
     msg("Initializing Oracle and fitting to rfModel's predictions")
     oracle = DecisionTreeClassifier(max_depth=3)
-    rfModel_guess = pd.Series(rfModel.predict(X))
+    predictions = np.array(list(map(lambda mod: mod.predict(X), rfModel)))
+    print(predictions.shape, predictions)
+    rfModel_guess = pd.Series([x[0] for x in mode(predictions, axis=0)])
+    print(rfModel_guess.shape, rfModel_guess)
     oracle.fit(X, rfModel_guess)
     display_single_tree(oracle, X, rfModel_guess, "Oracle%s_%1.1f_%d"%( "" if not low_pT else "Lowpt",rad, ptm))
     return oracle
