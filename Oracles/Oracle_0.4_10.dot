@@ -1,5 +1,33 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 16039\nvalue = 16039.0", fillcolor="#ffffff"] ;
+0 [label="Area <= 0.48\ngini = 0.66\nsamples = 1306236\nvalue = [389171, 390789, 526276]\nclass = Real", fillcolor="#ece2fb"] ;
+1 [label="Area <= 0.26\ngini = 0.54\nsamples = 767397\nvalue = [389171, 340844, 37382]\nclass = Fake", fillcolor="#fcf1e9"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Angularity <= 0.24\ngini = 0.08\nsamples = 367829\nvalue = [353264, 14362, 203]\nclass = Fake", fillcolor="#e68641"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 312170\nvalue = [311429, 741, 0]\nclass = Fake", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.38\nsamples = 55659\nvalue = [41835, 13621, 203]\nclass = Fake", fillcolor="#eeaa7a"] ;
+2 -> 4 ;
+5 [label="Angularity <= 0.24\ngini = 0.32\nsamples = 399568\nvalue = [35907, 326482, 37179]\nclass = Squish", fillcolor="#61ea9a"] ;
+1 -> 5 ;
+6 [label="gini = 0.36\nsamples = 41917\nvalue = [32164, 9753, 0]\nclass = Fake", fillcolor="#eda775"] ;
+5 -> 6 ;
+7 [label="gini = 0.2\nsamples = 357651\nvalue = [3743, 316729, 37179]\nclass = Squish", fillcolor="#52e891"] ;
+5 -> 7 ;
+8 [label="Epsilon <= 205.22\ngini = 0.17\nsamples = 538839\nvalue = [0, 49945, 488894]\nclass = Real", fillcolor="#8e4de8"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Mean-p_T <= 0.53\ngini = 0.49\nsamples = 70598\nvalue = [0, 39837, 30761]\nclass = Squish", fillcolor="#d2f9e2"] ;
+8 -> 9 ;
+10 [label="gini = 0.26\nsamples = 41329\nvalue = [0, 35066, 6263]\nclass = Squish", fillcolor="#5cea98"] ;
+9 -> 10 ;
+11 [label="gini = 0.27\nsamples = 29269\nvalue = [0, 4771, 24498]\nclass = Real", fillcolor="#9a60ea"] ;
+9 -> 11 ;
+12 [label="Epsilon <= 213.44\ngini = 0.04\nsamples = 468241\nvalue = [0, 10108, 458133]\nclass = Real", fillcolor="#843de6"] ;
+8 -> 12 ;
+13 [label="gini = 0.3\nsamples = 47825\nvalue = [0, 8938, 38887]\nclass = Real", fillcolor="#9e67eb"] ;
+12 -> 13 ;
+14 [label="gini = 0.01\nsamples = 420416\nvalue = [0, 1170, 419246]\nclass = Real", fillcolor="#813ae5"] ;
+12 -> 14 ;
 }

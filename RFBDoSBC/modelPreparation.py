@@ -1,11 +1,14 @@
+from sys import float_repr_style
 from sklearn.ensemble import  RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 import numpy as np
 import pickle
 
-def loadBestParameters(rad, ptm):
-    with open("Objects/best_params_%1.1f_%d.pickle"%(rad, ptm), 'rb') as f:
+def loadBestParameters(rad, ptm, low_pt=False, print_params=False):
+    with open("Objects/best_params_%1.1f_%d%s.pickle"%(rad, ptm, "" if not low_pt else "_lowpt"), 'rb') as f:
         best_params = pickle.load(f)
+        if print_params:
+            print(best_params)
     return best_params
 
 def GridSearchHandler(X, Y, rad, ptm):

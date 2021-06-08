@@ -10,7 +10,7 @@ def log(_msg, filename="info.txt"):
     with open(filename, "a") as f:
         f.write(_msg+'\n')
 
-def compute_model_statistics(clf):
+def compute_importance_statistics(clf):
     importances = clf.feature_importances_
     #permutation_importance(clf, Xtest, Ytest, n_repeats=10, random_state=42)
     std = np.std([tree.feature_importances_ for tree in clf.estimators_],axis=0)
@@ -79,8 +79,8 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     perf_metrics = {}
 
     y_pred_train = np.array(clf.predict(X))
-    print(y_pred_train)
-    print(len(np.array(Y==3).nonzero()[0]))
+    print(f"Number of Real Jets train: {len(np.array(Y==3).nonzero()[0])}")
+    print(f"Number of Fake Jets train: {len(np.array(Y==1).nonzero()[0])}")
     real_jet_ind_train = np.array(Y==3).nonzero()[0]
     fake_jet_ind_train = np.array(Y==1).nonzero()[0]
     squish_jet_ind_train = np.asarray(Y==2).nonzero()[0]
@@ -108,7 +108,8 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
 
     #Real Jet rate = real jets pred/real jets
     y_pred_test = np.array(clf.predict(X_test))
-    print(y_pred_test)
+    print(f"Number of Real Jets test: {len(np.array(Y_test==3).nonzero()[0])}")
+    print(f"Number of Fake Jets test: {len(np.array(Y_test==1).nonzero()[0])}")
     real_jet_ind_test = np.asarray(Y_test==3).nonzero()[0]
     fake_jet_ind_test = np.asarray(Y_test==1).nonzero()[0]
     squish_jet_ind_test = np.asarray(Y_test==2).nonzero()[0]

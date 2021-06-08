@@ -16,10 +16,10 @@ from sklearn.ensemble import  RandomForestClassifier
 from sklearn.datasets import make_classification
 from sklearn.metrics import silhouette_score
 from scipy.stats import mode
-from RFBDoSBC.GetAndPrepareData import *
-from RFBDoSBC.modelPreparation import *
-from RFBDoSBC.modelEvaluation import *
-from RFBDoSBC.plotData import *
+from .GetAndPrepareData import *
+from .modelPreparation import *
+from .modelEvaluation import *
+from .plotData import *
 
 def msg(_msg):
     print("JEB: %s"%_msg)
@@ -68,7 +68,7 @@ def doGridSearchOrLoadBestParams(X, Y, rad, ptm):
     #Ready for batch
 
 def makeRandomForest(best_params):
-    rfModel = RandomForestClassifier(**best_params, warm_start=True)
+    rfModel = RandomForestClassifier(**best_params)
     return rfModel
 
 def doRandomForestFit(X, Y, rfModel, batch_num):
@@ -81,7 +81,7 @@ def doOracleFit(X, rfModel, rad, ptm, low_pT=False):
     oracle = DecisionTreeClassifier(max_depth=3)
     predictions = np.array(list(map(lambda mod: mod.predict(X), rfModel)))
     print(predictions.shape, predictions)
-    rfModel_guess = pd.Series([x[0] for x in mode(predictions, axis=0)])
+    rfModel_guess = pd.Series(mode(predictions).mode[0])
     print(rfModel_guess.shape, rfModel_guess)
     oracle.fit(X, rfModel_guess)
     display_single_tree(oracle, X, rfModel_guess, "Oracle%s_%1.1f_%d"%( "" if not low_pT else "Lowpt",rad, ptm))
@@ -89,7 +89,7 @@ def doOracleFit(X, rfModel, rad, ptm, low_pT=False):
 
 def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm, feat_imp):
     msg("Computing feature importances and other model statistics.")
-    importances, indices, std, quant_75 = compute_model_statistics(rfModel)
+    importances, indices, std, quant_75 = compute_importance_statistics(rfModel)
 
     log("Feature importances: "+str(list(zip(X.columns, importances))))
 

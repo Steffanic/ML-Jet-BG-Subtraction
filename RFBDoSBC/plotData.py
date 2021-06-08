@@ -22,7 +22,7 @@ def plot_everything(train, rad, ptm, batch_num, do_silhouette_score=False):
     msg("Plotting correlation matrix.")
     plot_corr_mat(train, rad, ptm, batch_num)
 
-    from RFBDoSBC.GetAndPrepareData import split_feat_label
+    from .GetAndPrepareData import split_feat_label
 
     if do_silhouette_score:
         plt.style.use("seaborn-dark")
