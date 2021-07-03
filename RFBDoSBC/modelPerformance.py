@@ -6,20 +6,20 @@ def compute_performance_metrics(model, X, Y, X_test, Y_test, rad, ptm):
     
     encode_jet_labels = lambda label: 3 if label=="real" else (2 if label=="squish" else (1 if label=="fake" else None)) 
 
-    get_jet_indices = lambda data, ind: np.array(data==encode_jet_labels(ind)).nonzero()[0] 
+    get_jet_indices = lambda data, label: np.array(data==encode_jet_labels(label)).nonzero()[0] 
 
     perf_metrics = {}
 
     predictions_train = np.array(model.predict(X)) # Get model's predictions on training data
     predictions_test = np.array(model.predict(X_test)) # Get the model's prediction on the test data
 
-    print(f"Number of Real Jets train: {len(np.array(Y==3).nonzero()[0])}")
-    print(f"Number of Fake Jets train: {len(np.array(Y==1).nonzero()[0])}")
-    print(f"Number of Squishy Jets train: {len(np.array(Y==2).nonzero()[0])}")
+    print(f"Number of Real Jets train: {len(get_jet_indices(Y, "real"))}")
+    print(f"Number of Fake Jets train: {len(get_jet_indices(Y, "fake"))}")
+    print(f"Number of Squishy Jets train: {len(get_jet_indices(Y, "squish"))}")
 
-    real_jets_train_mask = np.array(Y==3).nonzero()[0] # Store locations of real/fake/squish jets in dataset for comparison to predictions
-    fake_jets_train_mask = np.array(Y==1).nonzero()[0] # Basically class masks
-    squish_jets_train_mask = np.asarray(Y==2).nonzero()[0] # These are lists of indices
+    real_jets_train_mask = get_jet_indices(Y, "real") # Store locations of real/fake/squish jets in dataset for comparison to predictions
+    fake_jets_train_mask = get_jet_indices(Y, "fake") # Basically class masks
+    squish_jets_train_mask = get_jet_indices(Y, "squish") # These are lists of indices
 
     pred_for_real_jets_train = predictions_train[real_jets_train_mask] # Apply masks to the predictions
     pred_for_fake_jets_train = predictions_train[fake_jets_train_mask] # These are lists of predictions

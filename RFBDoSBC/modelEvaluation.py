@@ -22,16 +22,16 @@ def print_feature_importances(X, importances, indices):
     for f in range(X.shape[1]):
         print("%d. %s (%f)" % (f + 1, X.columns[indices[f]], importances[indices[f]]))
 
-def plot_feature_importances(X, importances, indices, std, rad, ptm):
+def plot_feature_importances(X, importances, indices, std, rad, ptm, low_pt=False, model_no=0):
     plt.figure()
     plt.title("Feature importances")
     plt.bar(range(X.shape[1]), importances[indices],
             color="r", yerr=std[indices], align="center")
     plt.xticks(range(X.shape[1]), X.columns[indices])
     plt.xlim([-1, X.shape[1]])
-    plt.savefig("Plots/R=%1.1f/FeatureImportances_pthard=%d.png"%(rad, ptm))
+    plt.savefig("Plots/R=%1.1f/FeatureImportances_modelno%d_pthard=%d_%s.png"%(rad, model_no, ptm, "" if not low_pt else "low_pt"))
 
-def plot_feature_importance_distributions(clf, X, rad, ptm):
+def plot_feature_importance_distributions(clf, X, rad, ptm, low_pt=False, model_no=0):
     plt.figure(figsize=(10,10))
     feat_imp_dist = [tree.feature_importances_ for tree in clf.estimators_]
     
@@ -51,7 +51,7 @@ def plot_feature_importance_distributions(clf, X, rad, ptm):
     plt.ylabel("Feature Importance", fontsize=14)
     plt.xlim(-0.5, len(X.columns)+0.5)
     plt.ylim(-0.01, 1.01)
-    plt.savefig("Plots/R=%1.1f/FeatureImportancesDistribution_pthard=%d.png"%(rad, ptm))
+    plt.savefig("Plots/R=%1.1f/FeatureImportancesDistribution_modelno%d_pthard=%d_%s.png"%(rad, model_no, ptm, "" if not low_pt else "low_pt"))
 
 
 def display_single_tree(_tree, X, Y, name):
@@ -88,7 +88,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     pred_for_fake_jets_train = y_pred_train[fake_jet_ind_train]
     pred_for_squish_jets_train = y_pred_train[squish_jet_ind_train] 
 
-    print(str(len(real_jet_ind_train))+' '+str(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))
+    #print(str(len(real_jet_ind_train))+' '+str(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))
 
     real_jet_rate_train = float(len(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))/float(len(real_jet_ind_train))
     fake_jet_rate_train = float(len(np.asarray(pred_for_fake_jets_train==1).nonzero()[0]))/float(len(fake_jet_ind_train))
@@ -117,7 +117,7 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     pred_for_fake_jets_test = y_pred_test[fake_jet_ind_test]
     pred_for_squish_jets_test = y_pred_test[squish_jet_ind_test] 
 
-    print(str(len(real_jet_ind_test))+' '+str(len(np.asarray(pred_for_real_jets_test==3).nonzero()[0])))
+    #print(str(len(real_jet_ind_test))+' '+str(len(np.asarray(pred_for_real_jets_test==3).nonzero()[0])))
 
     real_jet_rate_test = float(len(np.asarray(pred_for_real_jets_test==3).nonzero()[0]))/float(len(real_jet_ind_test))
     fake_jet_rate_test = float(len(np.asarray(pred_for_fake_jets_test==1).nonzero()[0]))/float(len(fake_jet_ind_test))

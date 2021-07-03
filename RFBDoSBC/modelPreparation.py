@@ -7,6 +7,11 @@ import pickle
 def loadBestParameters(rad, ptm, low_pt=False, print_params=False):
     with open("Objects/best_params_%1.1f_%d%s.pickle"%(rad, ptm, "" if not low_pt else "_lowpt"), 'rb') as f:
         best_params = pickle.load(f)
+        best_params['max_features']='auto'
+        if low_pt:
+            best_params['class_weight'] = {1:1, 2:1, 3:4}
+        else:
+            best_params.pop('class_weight',None)
         if print_params:
             print(best_params)
     return best_params

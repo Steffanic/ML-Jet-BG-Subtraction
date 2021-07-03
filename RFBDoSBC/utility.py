@@ -87,7 +87,7 @@ def doOracleFit(X, rfModel, rad, ptm, low_pT=False):
     display_single_tree(oracle, X, rfModel_guess, "Oracle%s_%1.1f_%d"%( "" if not low_pT else "Lowpt",rad, ptm))
     return oracle
 
-def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm, feat_imp):
+def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm, feat_imp, low_pt=False, model_no=0):
     msg("Computing feature importances and other model statistics.")
     importances, indices, std, quant_75 = compute_importance_statistics(rfModel)
 
@@ -97,13 +97,40 @@ def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm, feat_imp):
     print_feature_importances(X, importances, indices)
 
     msg("Plotting feature importances.")
-    plot_feature_importances(X, importances, indices, std, rad, ptm)
+    plot_feature_importances(X, importances, indices, std, rad, ptm, low_pt, model_no)
 
     msg("Plot distribution of importances.")
-    plot_feature_importance_distributions(rfModel, X, rad, ptm)
+    plot_feature_importance_distributions(rfModel, X, rad, ptm, low_pt, model_no)
 
     feat_imp["pthard=%d"%ptm] = (X.columns, importances, std, quant_75)
     
     #display_single_tree(rfModel, X, Y, rad, ptm)
     msg("Computing performance metrics")
     compute_performance_metrics(rfModel, X, Y, Xtest, Ytest, rad, ptm)
+
+# Radius and momentum generators
+
+R = [0.2, 0.3, 0.4, 0.5, 0.6]
+pThardmin = [10,20,30,40]
+
+def next_radius():
+    global R
+    for i in range(len(R)):
+        yield R[i] 
+
+def next_momentum():
+    global pThardmin
+    for i in range(len(pThardmin)):
+        yield pThardmin[i] 
+
+def res_pT_iterator():
+    global R
+    global pThardmin
+
+    rad = next_radius()
+
+    for i in range(len(R)):
+        ptm = next_momentum()  
+        r = next(rad)
+        for j in range(len(pThardmin)):
+            yield (r, next(ptm))
