@@ -984,8 +984,8 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   if( !GRID ){
 
     //PUT THE PATH TO THE BKGD_ROOT_FILES directory here !!!!!!!//
-    sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
-    //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
+    //sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
+    sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
 
   }
   else if( GRID ){
@@ -1032,8 +1032,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     histpythia_events->Fill(1.00);
     
       if( event != 0){
-        free(time);
-        TDatime *time = new TDatime(); //creating new time stamp
+        //free(time);
+        //TDatime *time = new TDatime(); //creating new time stamp
+        time->Set(); //set to current time
         //cout << "\n\n\n\n\nTime at Event # "<< event << " is " << time->GetTime() <<"\n\n\n\n" << endl;
         time_array.push_back((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
         Int_t user_index = 1; //must reset this each event iteration loop
@@ -1073,8 +1074,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             //cout<<"\nCurrent Particle is a "<<MPart->GetName()<<endl;
             //cout<<"Current Particle Status is = "<<MPart->GetKS()<<"\n"<<endl;
 
-            //cout<<"The Index of the parent parton = "<<parent_parton(MPart->GetParent() , particles )<<endl;
-
+            //scout<<"The Index of the parent parton = "<<parent_parton(MPart->GetParent() , particles )<<endl;
             //cout<<"The Index of the current particle = "<<part-1<<" The KF of the current particle = "<<MPart->GetKF()<<endl;
             //if(event == 20){
               Int_t pparent;
@@ -1231,7 +1231,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , KF Origin = "<<UPKF<<endl;
             if( UPKF == 2212  ){ //proton beams
               has_beam = kTRUE;
-              pT_beam_pyth+=constituents_part[i_pyth].perp();
+              pT_beam_pyth+=constituents_part[i_pyth].perp();     
             }
             else {
               has_parton = kTRUE;
@@ -1263,7 +1263,16 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
        }
        else if( has_beam && !has_parton ){
          hist_pure_beam->Fill(1);
-         //cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
+/* un-comment these for local running
+         pythia -> Pylist(1);
+         for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){
+           if( constituents_part[i_pyth].perp() > 1e-50 ){
+            cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , px = "<<constituents_part[i_pyth].px()<<" , py = "<<constituents_part[i_pyth].py()<<" , pz = "<<constituents_part[i_pyth].pz()<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Origin Index = "<<constituents_part[i_pyth].user_index()<<" , KF Origin = "<<UPKF<<endl;
+           }
+         }
+*/
+         cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
+         //exit(3);
        }
        else if( !has_beam && has_parton ){
          hist_pure_parton->Fill(3);
