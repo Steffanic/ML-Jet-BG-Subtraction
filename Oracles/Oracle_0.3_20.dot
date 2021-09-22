@@ -1,0 +1,29 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="p_T-corr <= 8.91\ngini = 0.57\nsamples = 13896\nvalue = [6192, 1105, 6599]\nclass = Real", fillcolor="#f8f5fe"] ;
+1 [label="Area <= 0.27\ngini = 0.35\nsamples = 7778\nvalue = [6161, 1059, 558]\nclass = Fake", fillcolor="#eb9f69"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Mean-p_T <= 0.6\ngini = 0.11\nsamples = 6018\nvalue = [5661, 55, 302]\nclass = Fake", fillcolor="#e78945"] ;
+1 -> 2 ;
+3 [label="gini = 0.02\nsamples = 5218\nvalue = [5163, 55, 0]\nclass = Fake", fillcolor="#e5823b"] ;
+2 -> 3 ;
+4 [label="gini = 0.47\nsamples = 800\nvalue = [498, 0, 302]\nclass = Fake", fillcolor="#f5cdb1"] ;
+2 -> 4 ;
+5 [label="Angularity <= 0.19\ngini = 0.57\nsamples = 1760\nvalue = [500, 1004, 256]\nclass = Squish", fillcolor="#b0f5cd"] ;
+1 -> 5 ;
+6 [label="gini = 0.36\nsamples = 652\nvalue = [500, 0, 152]\nclass = Fake", fillcolor="#eda775"] ;
+5 -> 6 ;
+7 [label="gini = 0.17\nsamples = 1108\nvalue = [0, 1004, 104]\nclass = Squish", fillcolor="#4ee88e"] ;
+5 -> 7 ;
+8 [label="Epsilon <= 244.95\ngini = 0.02\nsamples = 6118\nvalue = [31, 46, 6041]\nclass = Real", fillcolor="#833ce5"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Area <= 0.27\ngini = 0.35\nsamples = 376\nvalue = [31, 46, 299]\nclass = Real", fillcolor="#9e67eb"] ;
+8 -> 9 ;
+10 [label="gini = 0.64\nsamples = 97\nvalue = [30, 44, 23]\nclass = Squish", fillcolor="#d6fae5"] ;
+9 -> 10 ;
+11 [label="gini = 0.02\nsamples = 279\nvalue = [1, 2, 276]\nclass = Real", fillcolor="#823be5"] ;
+9 -> 11 ;
+12 [label="gini = 0.0\nsamples = 5742\nvalue = [0, 0, 5742]\nclass = Real", fillcolor="#8139e5"] ;
+8 -> 12 ;
+}

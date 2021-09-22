@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="p_T <= 109.4\ngini = 0.54\nsamples = 170049\nvalue = [81615, 8214, 80220]\nclass = Fake", fillcolor="#fffdfc"] ;
+1 [label="Area <= 0.49\ngini = 0.29\nsamples = 97702\nvalue = [81277, 7478, 8947]\nclass = Fake", fillcolor="#ea985e"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="p_T-corr <= 15.61\ngini = 0.15\nsamples = 87074\nvalue = [79766, 44, 7264]\nclass = Fake", fillcolor="#e78d4b"] ;
+1 -> 2 ;
+3 [label="gini = 0.04\nsamples = 80217\nvalue = [78569, 7, 1641]\nclass = Fake", fillcolor="#e6843d"] ;
+2 -> 3 ;
+4 [label="gini = 0.3\nsamples = 6857\nvalue = [1197, 37, 5623]\nclass = Real", fillcolor="#9c64eb"] ;
+2 -> 4 ;
+5 [label="Angularity <= 0.26\ngini = 0.47\nsamples = 10628\nvalue = [1511, 7434, 1683]\nclass = Squish", fillcolor="#80eeae"] ;
+1 -> 5 ;
+6 [label="gini = 0.39\nsamples = 2059\nvalue = [1511, 0, 548]\nclass = Fake", fillcolor="#eeaf81"] ;
+5 -> 6 ;
+7 [label="gini = 0.23\nsamples = 8569\nvalue = [0, 7434, 1135]\nclass = Squish", fillcolor="#57e994"] ;
+5 -> 7 ;
+8 [label="p_T <= 110.79\ngini = 0.03\nsamples = 72347\nvalue = [338, 736, 71273]\nclass = Real", fillcolor="#833ce5"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Mean-p_T <= 0.57\ngini = 0.64\nsamples = 1679\nvalue = [318, 652, 709]\nclass = Real", fillcolor="#f8f4fe"] ;
+8 -> 9 ;
+10 [label="gini = 0.59\nsamples = 1177\nvalue = [269, 652, 256]\nclass = Squish", fillcolor="#abf4ca"] ;
+9 -> 10 ;
+11 [label="gini = 0.18\nsamples = 502\nvalue = [49, 0, 453]\nclass = Real", fillcolor="#8f4ee8"] ;
+9 -> 11 ;
+12 [label="Area <= 0.49\ngini = 0.0\nsamples = 70668\nvalue = [20, 84, 70564]\nclass = Real", fillcolor="#8139e5"] ;
+8 -> 12 ;
+13 [label="gini = 0.09\nsamples = 2314\nvalue = [20, 84, 2210]\nclass = Real", fillcolor="#8742e6"] ;
+12 -> 13 ;
+14 [label="gini = 0.0\nsamples = 68354\nvalue = [0, 0, 68354]\nclass = Real", fillcolor="#8139e5"] ;
+12 -> 14 ;
+}

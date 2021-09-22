@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="p_T-corr <= 25.84\ngini = 0.56\nsamples = 18004\nvalue = [8083, 1288, 8633]\nclass = Real", fillcolor="#f8f4fe"] ;
+1 [label="Area <= 0.77\ngini = 0.31\nsamples = 9585\nvalue = [7854, 861, 870]\nclass = Fake", fillcolor="#ea9a60"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Epsilon <= 229.04\ngini = 0.15\nsamples = 8456\nvalue = [7801, 168, 487]\nclass = Fake", fillcolor="#e78b49"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 7153\nvalue = [7141, 3, 9]\nclass = Fake", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.59\nsamples = 1303\nvalue = [660, 165, 478]\nclass = Fake", fillcolor="#f9e3d3"] ;
+2 -> 4 ;
+5 [label="Mean-p_T <= 0.56\ngini = 0.51\nsamples = 1129\nvalue = [53, 693, 383]\nclass = Squish", fillcolor="#adf4cb"] ;
+1 -> 5 ;
+6 [label="gini = 0.26\nsamples = 796\nvalue = [46, 679, 71]\nclass = Squish", fillcolor="#59e995"] ;
+5 -> 6 ;
+7 [label="gini = 0.12\nsamples = 333\nvalue = [7, 14, 312]\nclass = Real", fillcolor="#8946e7"] ;
+5 -> 7 ;
+8 [label="Epsilon <= 229.45\ngini = 0.15\nsamples = 8419\nvalue = [229, 427, 7763]\nclass = Real", fillcolor="#8b49e7"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Area <= 0.77\ngini = 0.62\nsamples = 1284\nvalue = [226, 424, 634]\nclass = Real", fillcolor="#e0cff9"] ;
+8 -> 9 ;
+10 [label="gini = 0.6\nsamples = 798\nvalue = [226, 424, 148]\nclass = Squish", fillcolor="#baf6d3"] ;
+9 -> 10 ;
+11 [label="gini = 0.0\nsamples = 486\nvalue = [0, 0, 486]\nclass = Real", fillcolor="#8139e5"] ;
+9 -> 11 ;
+12 [label="p_T-corr <= 26.07\ngini = 0.0\nsamples = 7135\nvalue = [3, 3, 7129]\nclass = Real", fillcolor="#8139e5"] ;
+8 -> 12 ;
+13 [label="gini = 0.33\nsamples = 21\nvalue = [2, 2, 17]\nclass = Real", fillcolor="#9c63ea"] ;
+12 -> 13 ;
+14 [label="gini = 0.0\nsamples = 7114\nvalue = [1, 1, 7112]\nclass = Real", fillcolor="#8139e5"] ;
+12 -> 14 ;
+}
