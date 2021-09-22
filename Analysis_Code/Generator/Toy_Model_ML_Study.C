@@ -1719,7 +1719,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         ofstream pbgOut;
         pbgOut.open(csv_out_file_str, fstream::app);
         if(HEADER__){
-          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd"<<endl;
+          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, Var-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd"<<endl;
           HEADER__--;
         }
 
@@ -1870,6 +1870,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             pbgOut<<std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()<<", ";
             Mean_p_T_tree = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
             Mean_p_T_tree_pat = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
+
+            //these lines are a crude way to generate the variance (2nd moment)
+            Double_t sq_sum = std::inner_product(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), total_constit_pT_vec.begin(), 0.0);
+            Double_t variance = (sq_sum / total_constit_pT_vec.size() - (std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()) * (std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()) );
+            pbgOut<<variance<<", ";
+            //////////////////////////////////////////////////////////////////
 
             std::sort(total_constit_pT_vec.begin(), total_constit_pT_vec.end()); //sorts least to greatest
 
