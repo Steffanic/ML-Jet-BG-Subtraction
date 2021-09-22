@@ -5,7 +5,7 @@
 pThardmin_array=(10.0 20.0 30.0 40.0)
 JetR_array=(0.2 0.3 0.4 0.5 0.6)
 
-for (( i=3667261; i<=3667287; i++ ))
+for (( i=3792650; i<=3792676; i++ ))
 do
    JOB_NUM=$((i))
    DIR_STR=$"/lustre/haven/user/chughe26/scratch/jetbin1/$JOB_NUM"".apollo-acf"
