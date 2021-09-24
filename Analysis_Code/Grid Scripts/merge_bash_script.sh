@@ -2,7 +2,7 @@
 #for (( i=1949417; i<=1959470; i++ ))
 #for (( i=1896303; i<=1896304; i++ ))
 
-pThardmin_array=(10.0 20.0 30.0 40.0)
+pThardmin_array=(10.0 20.0 30.0 40.0 60.0 80.0)
 JetR_array=(0.2 0.3 0.4 0.5 0.6)
 
 for (( i=3792650; i<=3792676; i++ ))
@@ -15,7 +15,7 @@ do
 if [ -d $DIR_STR ]
 then
 
-for(( w=0; w <=3; w++ ))
+for(( w=0; w <=5; w++ ))
   do
     for(( x=0; x <=4; x++ ))
       do  
@@ -32,7 +32,7 @@ fi
 done
 
 
-for(( r=0; r <=3; r++ ))
+for(( r=0; r <=5; r++ ))
   do
     for(( s=0; s <=4; s++ ))
       do  
