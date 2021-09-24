@@ -40,11 +40,10 @@ alienv --no-refresh load AliPhysics/latest
 
 #root -b -l -q "maindriver_newton.C( 100000000, $JOB_NUMBER, 100, 0.4, 0 , 1000 , 0 , 1, 0.,  kTRUE, kFALSE, kTRUE )"
 
-#pThardmin_array=(10.0 20.0 30.0 40.0)
-pThardmin_array=(60.0 80.0)
+pThardmin_array=(10.0 20.0 30.0 40.0 60.0 80.0)
 JetR_array=(0.2 0.3 0.4 0.5 0.6)
 
-for(( i=0; i <=1; i++ ))
+for(( i=0; i <=5; i++ ))
   do
     for(( j=0; j <=4; j++ ))
       do  

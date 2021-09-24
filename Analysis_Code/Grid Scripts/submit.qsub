@@ -6,7 +6,7 @@
 ####PBS -m abe
 ####PBS -M chughe26@vols.utk.edu
 ####PBS -j oe
-#PBS -l nodes=1:ppn=16,walltime=01:00:00
+#PBS -l nodes=1:ppn=16,walltime=04:00:00
 ####PBS -l advres=condo-cnattras.13776148
 ####PBS -l feature=beacon
 #PBS -l partition=general:beacon
