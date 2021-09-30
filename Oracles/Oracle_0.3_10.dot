@@ -1,5 +1,33 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 12856\nvalue = 12856.0", fillcolor="#ffffff"] ;
+0 [label="Area <= 0.17\ngini = 0.48\nsamples = 1412550\nvalue = [582251, 830299]\nclass = Squish", fillcolor="#c4e2f7"] ;
+1 [label="Area <= 0.17\ngini = 0.03\nsamples = 561068\nvalue = [551565, 9503]\nclass = Fake", fillcolor="#e5833c"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="p_T_1 <= 3.1\ngini = 0.01\nsamples = 536662\nvalue = [535044, 1618]\nclass = Fake", fillcolor="#e5813a"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 520444\nvalue = [520045, 399]\nclass = Fake", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.14\nsamples = 16218\nvalue = [14999, 1219]\nclass = Fake", fillcolor="#e78b49"] ;
+2 -> 4 ;
+5 [label="p_T_1 <= 2.06\ngini = 0.44\nsamples = 24406\nvalue = [16521, 7885]\nclass = Fake", fillcolor="#f1bd97"] ;
+1 -> 5 ;
+6 [label="gini = 0.09\nsamples = 10857\nvalue = [10331, 526]\nclass = Fake", fillcolor="#e68743"] ;
+5 -> 6 ;
+7 [label="gini = 0.5\nsamples = 13549\nvalue = [6190, 7359]\nclass = Squish", fillcolor="#e0effb"] ;
+5 -> 7 ;
+8 [label="Angularity <= 0.17\ngini = 0.07\nsamples = 851482\nvalue = [30686, 820796]\nclass = Squish", fillcolor="#40a1e6"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Area <= 0.23\ngini = 0.39\nsamples = 31768\nvalue = [23309, 8459]\nclass = Fake", fillcolor="#eeaf81"] ;
+8 -> 9 ;
+10 [label="gini = 0.2\nsamples = 25645\nvalue = [22748, 2897]\nclass = Fake", fillcolor="#e89152"] ;
+9 -> 10 ;
+11 [label="gini = 0.17\nsamples = 6123\nvalue = [561, 5562]\nclass = Squish", fillcolor="#4da7e8"] ;
+9 -> 11 ;
+12 [label="Angularity <= 0.17\ngini = 0.02\nsamples = 819714\nvalue = [7377, 812337]\nclass = Squish", fillcolor="#3b9ee5"] ;
+8 -> 12 ;
+13 [label="gini = 0.4\nsamples = 15571\nvalue = [4309, 11262]\nclass = Squish", fillcolor="#85c2ef"] ;
+12 -> 13 ;
+14 [label="gini = 0.01\nsamples = 804143\nvalue = [3068, 801075]\nclass = Squish", fillcolor="#3a9de5"] ;
+12 -> 14 ;
 }

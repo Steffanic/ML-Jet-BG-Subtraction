@@ -106,12 +106,12 @@ def doModelEvaluation(X, Y, Xtest, Ytest, rfModel, rad, ptm, feat_imp, low_pt=Fa
     
     #display_single_tree(rfModel, X, Y, rad, ptm)
     msg("Computing performance metrics")
-    compute_performance_metrics(rfModel, X, Y, Xtest, Ytest, rad, ptm)
+    return compute_performance_metrics(rfModel, X, Y, Xtest, Ytest, rad, ptm)
 
 # Radius and momentum generators
 
 R = [0.2, 0.3, 0.4, 0.5, 0.6]
-pThardmin = [10,20,30,40]
+pThardmin = [10,20,30,40,60,80]
 
 def next_radius():
     global R

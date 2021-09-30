@@ -1,5 +1,33 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 9576\nvalue = 9576.0", fillcolor="#ffffff"] ;
+0 [label="p_T_1 <= 2.97\ngini = 0.35\nsamples = 1306556\nvalue = [1011811, 294745]\nclass = Fake", fillcolor="#eda673"] ;
+1 [label="Mean-p_T <= 0.69\ngini = 0.17\nsamples = 1085423\nvalue = [986376, 99047]\nclass = Fake", fillcolor="#e88e4d"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Angularity <= 0.11\ngini = 0.07\nsamples = 1022487\nvalue = [986139, 36348]\nclass = Fake", fillcolor="#e68640"] ;
+1 -> 2 ;
+3 [label="gini = 0.42\nsamples = 72879\nvalue = [51299, 21580]\nclass = Fake", fillcolor="#f0b68c"] ;
+2 -> 3 ;
+4 [label="gini = 0.03\nsamples = 949608\nvalue = [934840, 14768]\nclass = Fake", fillcolor="#e5833c"] ;
+2 -> 4 ;
+5 [label="Mean-p_T <= 0.69\ngini = 0.01\nsamples = 62936\nvalue = [237, 62699]\nclass = Squish", fillcolor="#3a9de5"] ;
+1 -> 5 ;
+6 [label="gini = 0.41\nsamples = 817\nvalue = [231, 586]\nclass = Squish", fillcolor="#87c4ef"] ;
+5 -> 6 ;
+7 [label="gini = 0.0\nsamples = 62119\nvalue = [6, 62113]\nclass = Squish", fillcolor="#399de5"] ;
+5 -> 7 ;
+8 [label="p_T_1 <= 3.11\ngini = 0.2\nsamples = 221133\nvalue = [25435, 195698]\nclass = Squish", fillcolor="#53aae8"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Area <= 0.12\ngini = 0.49\nsamples = 42136\nvalue = [17845, 24291]\nclass = Squish", fillcolor="#cae5f8"] ;
+8 -> 9 ;
+10 [label="gini = 0.38\nsamples = 11432\nvalue = [8539, 2893]\nclass = Fake", fillcolor="#eeac7c"] ;
+9 -> 10 ;
+11 [label="gini = 0.42\nsamples = 30704\nvalue = [9306, 21398]\nclass = Squish", fillcolor="#8fc8f0"] ;
+9 -> 11 ;
+12 [label="Area <= 0.11\ngini = 0.08\nsamples = 178997\nvalue = [7590, 171407]\nclass = Squish", fillcolor="#42a1e6"] ;
+8 -> 12 ;
+13 [label="gini = 0.36\nsamples = 29793\nvalue = [6930, 22863]\nclass = Squish", fillcolor="#75bbed"] ;
+12 -> 13 ;
+14 [label="gini = 0.01\nsamples = 149204\nvalue = [660, 148544]\nclass = Squish", fillcolor="#3a9de5"] ;
+12 -> 14 ;
 }
