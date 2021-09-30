@@ -740,15 +740,16 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Angularity_tree_pyth; //7th
   Float_t Angularity_NW_tree_pyth; //8th
   Float_t Mean_p_T_tree_pyth; //9th
-  Float_t p_T_1_tree_pyth; //10th
-  Float_t p_T_2_tree_pyth; //11th
-  Float_t p_T_3_tree_pyth; //12th
-  Float_t p_T_4_tree_pyth; //13th
-  Float_t p_T_5_tree_pyth; //14th
-  Float_t X_tru_tree_pyth; //15th
-  Float_t Y_quark_tree_pyth; //16th
-  Float_t Y_gluon_tree_pyth; //17th
-  Float_t Y_beam_tree_pyth; //18th
+  Float_t Var_p_T_tree_pyth; //10th
+  Float_t p_T_1_tree_pyth; //11th
+  Float_t p_T_2_tree_pyth; //12th
+  Float_t p_T_3_tree_pyth; //13th
+  Float_t p_T_4_tree_pyth; //14th
+  Float_t p_T_5_tree_pyth; //15th
+  Float_t X_tru_tree_pyth; //16th
+  Float_t Y_quark_tree_pyth; //17th
+  Float_t Y_gluon_tree_pyth; //18th
+  Float_t Y_beam_tree_pyth; //19th
 
 
   //Now add these branches to the trees
@@ -763,6 +764,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_pyth->Branch("Angularity",&Angularity_tree_pyth,"Angularity/F");
    tree_pyth->Branch("Angularity_NW",&Angularity_NW_tree_pyth,"Angularity_NW/F");
    tree_pyth->Branch("MeanpT",&Mean_p_T_tree_pyth,"MeanpT/F");
+   tree_pyth->Branch("VarpT",&Var_p_T_tree_pyth,"VarpT/F");
    tree_pyth->Branch("pT1",&p_T_1_tree_pyth,"pT1/F");
    tree_pyth->Branch("pT2",&p_T_2_tree_pyth,"pT2/F");
    tree_pyth->Branch("pT3",&p_T_3_tree_pyth,"pT3/F");
@@ -838,12 +840,13 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Angularity_tree_antikt_bkgd; //7th
   Float_t Angularity_NW_tree_antikt_bkgd; //8th
   Float_t Mean_p_T_tree_antikt_bkgd; //9th
-  Float_t p_T_1_tree_antikt_bkgd; //10th
-  Float_t p_T_2_tree_antikt_bkgd; //11th
-  Float_t p_T_3_tree_antikt_bkgd; //12th
-  Float_t p_T_4_tree_antikt_bkgd; //13th
-  Float_t p_T_5_tree_antikt_bkgd; //14th
-  Float_t X_tru_tree_antikt_bkgd; //15th
+  Float_t Var_p_T_tree_antikt_bkgd; //10th
+  Float_t p_T_1_tree_antikt_bkgd; //11th
+  Float_t p_T_2_tree_antikt_bkgd; //12th
+  Float_t p_T_3_tree_antikt_bkgd; //13th
+  Float_t p_T_4_tree_antikt_bkgd; //14th
+  Float_t p_T_5_tree_antikt_bkgd; //15th
+  Float_t X_tru_tree_antikt_bkgd; //16th
 
 
 
@@ -859,6 +862,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_bkgd_antikt->Branch("Angularity",&Angularity_tree_antikt_bkgd,"Angularity/F");
    tree_bkgd_antikt->Branch("Angularity_NW",&Angularity_NW_tree_antikt_bkgd,"Angularity_NW/F");
    tree_bkgd_antikt->Branch("MeanpT",&Mean_p_T_tree_antikt_bkgd,"MeanpT/F");
+   tree_bkgd_antikt->Branch("VarpT",&Var_p_T_tree_antikt_bkgd,"VarpT/F");
    tree_bkgd_antikt->Branch("pT1",&p_T_1_tree_antikt_bkgd,"pT1/F");
    tree_bkgd_antikt->Branch("pT2",&p_T_2_tree_antikt_bkgd,"pT2/F");
    tree_bkgd_antikt->Branch("pT3",&p_T_3_tree_antikt_bkgd,"pT3/F");
@@ -885,16 +889,17 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Angularity_tree; //7th
   Float_t Angularity_NW_tree; //8th
   Float_t Mean_p_T_tree; //9th
-  Float_t p_T_1_tree; //10th
-  Float_t p_T_2_tree; //11th
-  Float_t p_T_3_tree; //12th
-  Float_t p_T_4_tree; //13th
-  Float_t p_T_5_tree; //14th
-  Float_t X_tru_tree; //15th
-  Float_t Y_quark_tree; //16th
-  Float_t Y_gluon_tree; //17th
-  Float_t Y_beam_tree; //18th
-  Float_t Y_bkgd_tree; //18th
+  Float_t Var_p_T_tree; //10th
+  Float_t p_T_1_tree; //11th
+  Float_t p_T_2_tree; //12th
+  Float_t p_T_3_tree; //13th
+  Float_t p_T_4_tree; //14th
+  Float_t p_T_5_tree; //15th
+  Float_t X_tru_tree; //16th
+  Float_t Y_quark_tree; //17th
+  Float_t Y_gluon_tree; //18th
+  Float_t Y_beam_tree; //19th
+  Float_t Y_bkgd_tree; //20th
 
 
   //Now add these branches to the trees
@@ -909,6 +914,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree->Branch("Angularity",&Angularity_tree,"Angularity/F");
    tree->Branch("Angularity_NW",&Angularity_NW_tree,"Angularity_NW/F");
    tree->Branch("MeanpT",&Mean_p_T_tree,"MeanpT/F");
+   tree->Branch("VarpT",&Var_p_T_tree,"VarpT/F");
    tree->Branch("pT1",&p_T_1_tree,"pT1/F");
    tree->Branch("pT2",&p_T_2_tree,"pT2/F");
    tree->Branch("pT3",&p_T_3_tree,"pT3/F");
@@ -937,18 +943,19 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Angularity_tree_pat; //7th
   Float_t Angularity_NW_tree_pat; //8th
   Float_t Mean_p_T_tree_pat; //9th
-  Float_t p_T_1_tree_pat; //10th
-  Float_t p_T_2_tree_pat; //11th
-  Float_t p_T_3_tree_pat; //12th
-  Float_t p_T_4_tree_pat; //13th
-  Float_t p_T_5_tree_pat; //14th
-  Float_t geom_match_tree_pat; //15th
-  Float_t mom_frac_match_tree_pat; //16th
-  Float_t X_tru_tree_pat; //17th
-  Float_t Y_quark_tree_pat; //18th
-  Float_t Y_gluon_tree_pat; //19th
-  Float_t Y_beam_tree_pat; //20th
-  Float_t Y_bkgd_tree_pat; //21st
+  Float_t Var_p_T_tree_pat; //10th
+  Float_t p_T_1_tree_pat; //11th
+  Float_t p_T_2_tree_pat; //12th
+  Float_t p_T_3_tree_pat; //13th
+  Float_t p_T_4_tree_pat; //14th
+  Float_t p_T_5_tree_pat; //15th
+  Float_t geom_match_tree_pat; //16th
+  Float_t mom_frac_match_tree_pat; //17th
+  Float_t X_tru_tree_pat; //18th
+  Float_t Y_quark_tree_pat; //19th
+  Float_t Y_gluon_tree_pat; //20th
+  Float_t Y_beam_tree_pat; //21th
+  Float_t Y_bkgd_tree_pat; //22st
 
 
   //Now add these branches to the trees
@@ -963,6 +970,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_pat->Branch("Angularity",&Angularity_tree_pat,"Angularity/F");
    tree_pat->Branch("Angularity_NW",&Angularity_NW_tree_pat,"Angularity_NW/F");
    tree_pat->Branch("MeanpT",&Mean_p_T_tree_pat,"MeanpT/F");
+   tree_pat->Branch("VarpT",&Var_p_T_tree_pat,"VarpT/F");
    tree_pat->Branch("pT1",&p_T_1_tree_pat,"pT1/F");
    tree_pat->Branch("pT2",&p_T_2_tree_pat,"pT2/F");
    tree_pat->Branch("pT3",&p_T_3_tree_pat,"pT3/F");
@@ -984,8 +992,8 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   if( !GRID ){
 
     //PUT THE PATH TO THE BKGD_ROOT_FILES directory here !!!!!!!//
-    sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
-    //sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
+    //sprintf(filepathstr,"/home/alidock/ML/BKGD_ROOT_FILES");
+    sprintf(filepathstr,"/home/charles/Documents/research/Background_Research/forcharles/Newest_Background_Code_05_15_2018/Harmonic_Code_for_copying/DiJet_Asymmetry/Updated_Code/Latest_most_up_to_date_Background_Code_08_31_2018/Latest_Version_meant_for_anti_kT/Frag_Func_Code/Heavy_Ion_BGLoad/Patrick_Studies/ML-Jet-BG-Subtraction/BKGD_ROOT_FILES");
 
   }
   else if( GRID ){
@@ -1032,8 +1040,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     histpythia_events->Fill(1.00);
     
       if( event != 0){
-        free(time);
-        TDatime *time = new TDatime(); //creating new time stamp
+        //free(time);
+        //TDatime *time = new TDatime(); //creating new time stamp
+        time->Set(); //set to current time
         //cout << "\n\n\n\n\nTime at Event # "<< event << " is " << time->GetTime() <<"\n\n\n\n" << endl;
         time_array.push_back((time->GetYear()*31540000) + (time->GetMonth()*2628000) + (time->GetDay()*86400) + (time->GetHour()*3600) + (time->GetMinute()*60) + time->GetSecond()) ;
         Int_t user_index = 1; //must reset this each event iteration loop
@@ -1073,8 +1082,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             //cout<<"\nCurrent Particle is a "<<MPart->GetName()<<endl;
             //cout<<"Current Particle Status is = "<<MPart->GetKS()<<"\n"<<endl;
 
-            //cout<<"The Index of the parent parton = "<<parent_parton(MPart->GetParent() , particles )<<endl;
-
+            //scout<<"The Index of the parent parton = "<<parent_parton(MPart->GetParent() , particles )<<endl;
             //cout<<"The Index of the current particle = "<<part-1<<" The KF of the current particle = "<<MPart->GetKF()<<endl;
             //if(event == 20){
               Int_t pparent;
@@ -1231,7 +1239,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , KF Origin = "<<UPKF<<endl;
             if( UPKF == 2212  ){ //proton beams
               has_beam = kTRUE;
-              pT_beam_pyth+=constituents_part[i_pyth].perp();
+              pT_beam_pyth+=constituents_part[i_pyth].perp();     
             }
             else {
               has_parton = kTRUE;
@@ -1263,7 +1271,16 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
        }
        else if( has_beam && !has_parton ){
          hist_pure_beam->Fill(1);
-         //cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
+/* un-comment these for local running
+         pythia -> Pylist(1);
+         for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){
+           if( constituents_part[i_pyth].perp() > 1e-50 ){
+            cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , px = "<<constituents_part[i_pyth].px()<<" , py = "<<constituents_part[i_pyth].py()<<" , pz = "<<constituents_part[i_pyth].pz()<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Origin Index = "<<constituents_part[i_pyth].user_index()<<" , KF Origin = "<<UPKF<<endl;
+           }
+         }
+*/
+         cout<<"\nThe Above is a Pure Beam Jet !\n"<<endl;
+         //exit(3);
        }
        else if( !has_beam && has_parton ){
          hist_pure_parton->Fill(3);
@@ -1297,6 +1314,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         if(pythia_constit_pT_vec.size() > 0){
           
           Mean_p_T_tree_pyth = std::accumulate(pythia_constit_pT_vec.begin(), pythia_constit_pT_vec.end(), 0.0) / pythia_constit_pT_vec.size() ;
+
+          Double_t sq_sum_pyth = std::inner_product(pythia_constit_pT_vec.begin(), pythia_constit_pT_vec.end(), pythia_constit_pT_vec.begin(), 0.0);
+
+          Double_t variance_pyth = (sq_sum_pyth / pythia_constit_pT_vec.size() - (std::accumulate(pythia_constit_pT_vec.begin(), pythia_constit_pT_vec.end(), 0.0) /  pythia_constit_pT_vec.size()) * (std::accumulate(pythia_constit_pT_vec.begin(), pythia_constit_pT_vec.end(), 0.0) /  pythia_constit_pT_vec.size()) );
+
+          Var_p_T_tree_pyth = variance_pyth;
 
           std::sort(pythia_constit_pT_vec.begin(), pythia_constit_pT_vec.end()); //sorts least to greatest
 
@@ -1631,7 +1654,13 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
           if(antikT_bkgd_constit_pT_vec.size() > 0){
           
-           Mean_p_T_tree_antikt_bkgd = std::accumulate(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), 0.0) / antikT_bkgd_constit_pT_vec.size();
+            Mean_p_T_tree_antikt_bkgd = std::accumulate(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), 0.0) / antikT_bkgd_constit_pT_vec.size();
+
+            Double_t sq_sum_antikt_bkgd = std::inner_product(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), antikT_bkgd_constit_pT_vec.begin(), 0.0);
+
+            Double_t variance_antikt_bkgd = (sq_sum_antikt_bkgd / antikT_bkgd_constit_pT_vec.size() - (std::accumulate(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), 0.0) /  antikT_bkgd_constit_pT_vec.size()) * (std::accumulate(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end(), 0.0) /  antikT_bkgd_constit_pT_vec.size()) );
+
+            Var_p_T_tree_antikt_bkgd = variance_antikt_bkgd;
 
             std::sort(antikT_bkgd_constit_pT_vec.begin(), antikT_bkgd_constit_pT_vec.end()); //sorts least to greatest
 
@@ -1710,7 +1739,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         ofstream pbgOut;
         pbgOut.open(csv_out_file_str, fstream::app);
         if(HEADER__){
-          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd"<<endl;
+          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, Var-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd"<<endl;
           HEADER__--;
         }
 
@@ -1861,6 +1890,23 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             pbgOut<<std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()<<", ";
             Mean_p_T_tree = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
             Mean_p_T_tree_pat = std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size();
+
+            //these lines are a crude way to generate the variance (2nd moment)
+            Double_t sq_sum = std::inner_product(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), total_constit_pT_vec.begin(), 0.0);
+            Double_t variance = (sq_sum / total_constit_pT_vec.size() - (std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()) * (std::accumulate(total_constit_pT_vec.begin(), total_constit_pT_vec.end(), 0.0) /  total_constit_pT_vec.size()) );
+/*
+             //DEBUG LINES
+             for( Int_t i = 0; i < total_constit_pT_vec.size(); i++ ){
+               cout<<total_constit_pT_vec[i]<<", ";
+             }
+
+             cout<<"\n\nThe variance = "<<variance<<", The vector size = "<<total_constit_pT_vec.size()<<"\n\n"<<endl;
+*/
+
+            Var_p_T_tree  = variance; 
+            Var_p_T_tree_pat = variance;
+            pbgOut<<variance<<", ";
+            //////////////////////////////////////////////////////////////////
 
             std::sort(total_constit_pT_vec.begin(), total_constit_pT_vec.end()); //sorts least to greatest
 
