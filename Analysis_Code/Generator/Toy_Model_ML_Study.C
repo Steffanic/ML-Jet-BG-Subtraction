@@ -226,6 +226,13 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   char expression15d[256];
   char expression15e[256];
 
+  char expression15f[256];
+  char expression15g[256];
+
+  char expression15h[256];
+  char expression15i[256];
+
+
   sprintf(expression2, "p_{T} distribution of all Pythia Particles with |#eta| < 0.9" );
   sprintf(expression3, "#eta distribution of all Pythia Particles with |#eta| < 0.9" );
   sprintf(expression4, "#phi distribution of all Pythia Particles with |#eta| < 0.9" );
@@ -325,6 +332,33 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   histpT_pyth_gluon_jet->Sumw2();
   histpT_pyth_gluon_jet->SetXTitle("p_{T}^{jet}");
   histpT_pyth_gluon_jet->SetYTitle("dN/dp_{T}^{jet}");
+
+
+  sprintf(expression15f, "Distribution of #rho^{median e.b.e} for pythia only k_{T} jets EXCLUDE GHOST JETS, |#eta^{kT jet}| < 0.9 - %g, p_{T}^{kT jet} > %g, R = %g, p_{T}^{hard. min} =  %g", Jet_Radius,constit_cut, Jet_Radius, (jet_pT_cut_low - 2.));
+  sprintf(expression15g, "Distribution of #rho^{median e.b.e} for pythia only k_{T} jets EXCLUDE GHOST JETS, excluding leading 2 k_{T} jets, |#eta^{kT jet}| < 0.9 - %g, p_{T}^{kT jet} > %g, R = %g, p_{T}^{hard. min} =  %g", Jet_Radius, constit_cut, Jet_Radius, (jet_pT_cut_low - 2.));
+
+  sprintf(expression15h, "Distribution of #rho^{median e.b.e} for pythia only k_{T} jets INCLUDE GHOST JETS, |#eta^{kT jet}| < 0.9 - %g, p_{T}^{kT jet} > %g, R = %g, p_{T}^{hard. min} =  %g", Jet_Radius,constit_cut, Jet_Radius, (jet_pT_cut_low - 2.));
+  sprintf(expression15i, "Distribution of #rho^{median e.b.e} for pythia only k_{T} jets INCLUDE GHOST JETS, excluding leading 2 k_{T} jets, |#eta^{kT jet}| < 0.9 - %g, p_{T}^{kT jet} > %g, R = %g, p_{T}^{hard. min} =  %g", Jet_Radius, constit_cut, Jet_Radius, (jet_pT_cut_low - 2.));
+
+  TH1D *hist_median_pythia_rho_ebe = new TH1D("hist_median_pythia_rho_ebe" ,expression15f,200,0,80);
+  hist_median_pythia_rho_ebe -> Sumw2();
+  hist_median_pythia_rho_ebe->SetXTitle("#rho = median^{e.b.e.}(p_{T}^{jet} / Area^{jet})");
+  hist_median_pythia_rho_ebe->SetYTitle("dN/d#rho");
+
+  TH1D *hist_median_pythia_rho_ebe_drop2 = new TH1D("hist_median_pythia_rho_ebe_drop2" ,expression15g,200,0,80);
+  hist_median_pythia_rho_ebe_drop2 -> Sumw2();
+  hist_median_pythia_rho_ebe_drop2->SetXTitle("#rho = median^{e.b.e.}( p_{T}^{jet} / Area^{jet} )");
+  hist_median_pythia_rho_ebe_drop2->SetYTitle("dN/d#rho");
+
+  TH1D *hist_median_pythia_rho_ebe_ghosts = new TH1D("hist_median_pythia_rho_ebe" ,expression15h,200,0,80);
+  hist_median_pythia_rho_ebe_ghosts -> Sumw2();
+  hist_median_pythia_rho_ebe_ghosts->SetXTitle("#rho = median^{e.b.e.}(p_{T}^{jet} / Area^{jet})");
+  hist_median_pythia_rho_ebe_ghosts->SetYTitle("dN/d#rho");
+
+  TH1D *hist_median_pythia_rho_ebe_drop2_ghosts = new TH1D("hist_median_pythia_rho_ebe_drop2" ,expression15i,200,0,80);
+  hist_median_pythia_rho_ebe_drop2_ghosts -> Sumw2();
+  hist_median_pythia_rho_ebe_drop2_ghosts->SetXTitle("#rho = median^{e.b.e.}( p_{T}^{jet} / Area^{jet} )");
+  hist_median_pythia_rho_ebe_drop2_ghosts->SetYTitle("dN/d#rho");
 
 
 //___________________________________BACKGROUND ONLY PARTICLES_________________________________//
@@ -549,8 +583,8 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
   TH1D *histmedianrhoebe_pythia_AND_bkgd = new TH1D("histmedianrhoebe-pythia-AND-bkgd", expression51,600,0.,600.);
   histmedianrhoebe_pythia_AND_bkgd -> Sumw2();
-  histmedianrhoebe_pythia_AND_bkgd->SetXTitle("p_{T}^{3rd-ld. tr.} (GeV/c");
-  histmedianrhoebe_pythia_AND_bkgd->SetYTitle("dN/dp_{T}^{3rd-ld. tr.}");
+  histmedianrhoebe_pythia_AND_bkgd->SetXTitle("#rho_{median}^{e.b.e.}");
+  histmedianrhoebe_pythia_AND_bkgd->SetYTitle("dN/d#rho_{median}^{e.b.e.}");
 
   TH1D *histX_pythia_tru_pythia_AND_bkgd = new TH1D("histX-pythia-tru-pythia-AND-bkgd", expression52,100,0.,1.);
   histX_pythia_tru_pythia_AND_bkgd -> Sumw2();
@@ -649,6 +683,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   std::vector <fastjet::PseudoJet> fjInputs_TOTAL_kT;
   std::vector <fastjet::PseudoJet> fjInputs_Background;
   std::vector <fastjet::PseudoJet> fjInputs_Pythia_Particle;
+  std::vector <fastjet::PseudoJet> fjInputs_Pythia_Particle_kT;
   ///////////////////////////////////////////////////////////////////////
 
   //the speed of light in a vaccum is 2.998E8 m/s
@@ -1011,6 +1046,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   std::vector <Double_t> rho_vec; //vector of rhos to get median from background only;
   std::vector <Double_t> rho_vec_TOTAL; //vector of rhos to get median from TOTAL while excluding 2 leading jets;
 
+  std::vector <Double_t> pythia_rho_vec; //vector of rhos to get median from pythia only EXCLUDE GHOSTS;
+  std::vector <Double_t> pythia_rho_vec_realistic; //vector of rhos to get median from pythia while excluding 2 leading jets EXCLUDE GHOSTS;
+
+  std::vector <Double_t> pythia_rho_vec_ghosts; //vector of rhos to get median from pythia only INCLUDE GHOSTS;
+  std::vector <Double_t> pythia_rho_vec_realistic_ghosts; //vector of rhos to get median from pythia while excluding 2 leading jets INCLUDE GHOSTS;
+
   char csv_out_file_str[256];
   sprintf(csv_out_file_str,"pbgOut-RParam-%.1f-pThardmin-%1.1f.csv",Jet_Radius,pT_hard_min);
 
@@ -1137,6 +1178,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             p1.set_user_index(Ultimate_Parent);
             //p1.set_user_index(user_index);
             fjInputs_Pythia_Particle.push_back(p1); //store in pseudo-jets to be clustered for PYTHIA only
+            fjInputs_Pythia_Particle_kT.push_back(p1); //store in pseudo-jets to be clustered for PYTHIA only !
             fjInputs_TOTAL.push_back(p1); //store in pseudo-jets to be clustered for PYTHIA + bkgd 
             fjInputs_TOTAL_kT.push_back(p1); //meant for a realistic assessment of mixed signal + bkgd
 
@@ -1159,6 +1201,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    //apply jet definitions 
     vector <fastjet::PseudoJet> inclusiveJetsPythia_part, sortedJetsPythia_part; // 
     fastjet::ClusterSequenceArea clustSeqPythia_Particle(fjInputs_Pythia_Particle, *jetDef , *AreaDef ); // 
+
+    vector <fastjet::PseudoJet> inclusiveJetsPythiakT_part, sortedJetsPythiakT_part;//
+    fastjet::ClusterSequenceArea clustSeqPythiakT_Particle(fjInputs_Pythia_Particle_kT, *jetDef2 , *AreaDef ); // 
     //fastjet::ClusterSequence clustSeqPythia_Particle(fjInputs_Pythia_Particle, *jetDef ); // 
 
    //fjInputs_Pythia_Particle.clear();
@@ -1166,11 +1211,13 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     //MCTRUTH (all particles)
     ////////////////////////////////////////////
     inclusiveJetsPythia_part = clustSeqPythia_Particle.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
+    inclusiveJetsPythiakT_part = clustSeqPythiakT_Particle.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
     ////////////////////////////////////////////  
 
    //sorting
     ////////////////////////////////////////////
     sortedJetsPythia_part   = sorted_by_pt(inclusiveJetsPythia_part); //sort by decreasing transverse momentum
+    sortedJetsPythiakT_part = sorted_by_pt(inclusiveJetsPythiakT_part); //sort by decreasing transverse momentum
     ////////////////////////////////////////////
 
 
@@ -1189,6 +1236,10 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     vector<fastjet::PseudoJet>selected_jetsPythia_part = select_both(sortedJetsPythia_part); 
     vector<fastjet::PseudoJet>selected_jetsPythia_sorted_part = sorted_by_pt(selected_jetsPythia_part);
     Int_t selected_jetsPythia_sorted_part_size = selected_jetsPythia_sorted_part.size();
+
+    //kT jets
+    vector<fastjet::PseudoJet>selected_jetsPythiakT_part = select_both2(sortedJetsPythiakT_part); 
+    vector<fastjet::PseudoJet>selected_jetsPythiakT_sorted_part = sorted_by_pt(selected_jetsPythiakT_part);
 
 /////////////______________FILLING THE PYTHIA JET HISTOGRAMS_________________________//////////////////////
 
@@ -1343,6 +1394,158 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
       } //end looping over pythia jets
     } //end if there are jets that pass your cuts
 
+    Double_t pythia_event_median; //all //EXCLUDE GHOSTS
+    Double_t pythia_event_median_realistic; //drop 2 (or 1) //EXCLUDE GHOSTS
+
+    Double_t pythia_event_median_ghosts; //all //INCLUDE GHOSTS
+    Double_t pythia_event_median_realistic_ghosts; //drop 2 (or 1) //INCLUDE GHOSTS
+
+    if(selected_jetsPythiakT_sorted_part.size()>0 && selected_jetsPythia_sorted_part.size() > 0){ //you had an anti-kT jet that passes
+
+//__________________________MOVE INTO PYTHIA ONLY JUST TO GET THE MEDIAN PYTHIA RHO (WITH REALISITIC LEADING JET SUPPRESSION)_________//
+      Int_t Num_all_ghost_jets =0;
+
+      Double_t Num_all_kT_jets = selected_jetsPythiakT_sorted_part.size();
+      for(unsigned i = 0 ; i < selected_jetsPythiakT_sorted_part.size() ; i++ ){ //exclude no leading jet !!!!!!!
+
+        std::vector <fastjet::PseudoJet> constituents_part_kT = selected_jetsPythiakT_sorted_part[i].constituents(); //grab the constituents
+
+        Int_t Num_constit_pythiakT =constituents_part_kT.size();
+        Int_t Num_ghost_constits_pythiakT =0;
+
+        for( Int_t j = 0 ; j < constituents_part_kT.size() ; j++ ){//constituent loop
+          if( constituents_part_kT[j].perp() < 1e-50 ){ //check for ghosts
+            Num_ghost_constits_pythiakT++;
+          } 
+        }
+        if((Num_ghost_constits_pythiakT/Num_constit_pythiakT) > 0.9999){
+          Num_all_ghost_jets++;
+          //cout<<"\nThe momentum of the ghost jet = "<<selected_jetsPythiakT_sorted_part[i].perp()<<endl;
+        }
+        constituents_part_kT.clear();
+      }
+ 
+      Float_t ghost_jet_fraction= Num_all_ghost_jets/Num_all_kT_jets;
+
+      cout<<"\n\n________for this event, Num of all ghost pythia only kT jets = "<< Num_all_ghost_jets <<", the fraction of pythia only kT jets that are all ghosts = "<<ghost_jet_fraction<<"________\n"<<endl; 
+
+      if(selected_jetsPythiakT_sorted_part.size() > 0){ //you must have at least 3 kT jets in TOTAL
+        for(unsigned i = 0 ; i < selected_jetsPythiakT_sorted_part.size() ; i++ ){ //exclude no leading jet !!!!!!!
+          if( selected_jetsPythiakT_sorted_part[i].pt() > 1e-50 ){ //suppress ghost jets
+            pythia_rho_vec_realistic.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area());
+            pythia_rho_vec.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area());
+           }
+           pythia_rho_vec_realistic_ghosts.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area()); //don't suppress ghosts
+           pythia_rho_vec_ghosts.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area());
+        }
+      }
+      if(selected_jetsPythiakT_sorted_part.size() > 1){
+        pythia_rho_vec_realistic.clear();
+        pythia_rho_vec_realistic_ghosts.clear();
+        for(unsigned i = 1 ; i < selected_jetsPythiakT_sorted_part.size() ; i++ ){ //exclude the leading jet !!!!!!!
+          if( selected_jetsPythiakT_sorted_part[i].pt() > 1e-50 ){ //suppress ghost jets
+            pythia_rho_vec_realistic.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area());
+          }
+          pythia_rho_vec_realistic_ghosts.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area()); //don't suppress ghosts
+        }
+      }
+      if(selected_jetsPythiakT_sorted_part.size() > 2){ //most restricitive
+        pythia_rho_vec_realistic.clear();
+        pythia_rho_vec_realistic_ghosts.clear();
+        for(unsigned i = 2 ; i < selected_jetsPythiakT_sorted_part.size() ; i++ ){ //exclude the two leading jets !!!!!!!
+          if( selected_jetsPythiakT_sorted_part[i].pt() > 1e-50 ){ //suppress ghost jets
+            pythia_rho_vec_realistic.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area());
+          }
+          pythia_rho_vec_realistic_ghosts.push_back(selected_jetsPythiakT_sorted_part[i].pt()/selected_jetsPythiakT_sorted_part[i].area()); //don't suppress ghosts
+        }
+      }
+
+//__________________EXCLUDE GHOSTS MEDIAN CALCULATION_____________________________________//
+      Int_t pythia_index_rho_vec;
+
+      if(pythia_rho_vec.size() > 0){
+        std::sort(pythia_rho_vec.begin(), pythia_rho_vec.end());
+        pythia_index_rho_vec = TMath::Ceil(pythia_rho_vec.size() / 2);
+        //cout<<"\n_________The size of the non-drop 2 = "<<pythia_rho_vec.size()<<"_________"<<endl;
+        if( pythia_rho_vec.size() % 2 == 0){ //median if even number of particle level jets
+          pythia_event_median = 0.5*(pythia_rho_vec[(pythia_rho_vec.size()/2)-1] + pythia_rho_vec[(pythia_rho_vec.size()/2)]);
+        }
+        else {
+          pythia_event_median = pythia_rho_vec[pythia_index_rho_vec]; //median if odd number of particle level jets
+        }
+      }
+      else {
+        pythia_event_median = 0.;
+      }
+
+      Int_t pythia_index_rho_vec_realistic;
+
+      if(pythia_rho_vec_realistic.size() > 0){
+        std::sort(pythia_rho_vec_realistic.begin(), pythia_rho_vec_realistic.end());
+        pythia_index_rho_vec_realistic = TMath::Ceil(pythia_rho_vec_realistic.size() / 2);
+        //cout<<"\n_________The size of the drop 2 = "<<pythia_rho_vec_realistic.size()<<"_________"<<endl;
+        if( pythia_rho_vec_realistic.size() % 2 == 0){ //median if even number of particle level jets
+          pythia_event_median_realistic = 0.5*(pythia_rho_vec_realistic[(pythia_rho_vec_realistic.size()/2)-1] + pythia_rho_vec_realistic[(pythia_rho_vec_realistic.size()/2)]);
+        }
+        else {
+          pythia_event_median_realistic = pythia_rho_vec_realistic[pythia_index_rho_vec_realistic]; //median if odd number of particle level jets
+        }
+      }
+      else {
+        pythia_event_median_realistic = 0.;
+      }
+
+      hist_median_pythia_rho_ebe->Fill(pythia_event_median);
+      hist_median_pythia_rho_ebe_drop2->Fill(pythia_event_median_realistic);
+
+//__________________INCLUDE GHOSTS MEDIAN CALCULATION_____________________________________//
+      Int_t pythia_index_rho_vec_ghosts;
+
+      if(pythia_rho_vec_ghosts.size() > 0){
+        std::sort(pythia_rho_vec_ghosts.begin(), pythia_rho_vec_ghosts.end());
+        pythia_index_rho_vec_ghosts = TMath::Ceil(pythia_rho_vec_ghosts.size() / 2);
+        if( pythia_rho_vec_ghosts.size() % 2 == 0){ //median if even number of particle level jets
+           pythia_event_median_ghosts = 0.5*(pythia_rho_vec_ghosts[(pythia_rho_vec_ghosts.size()/2)-1] + pythia_rho_vec_ghosts[(pythia_rho_vec_ghosts.size()/2)]);
+        }
+        else {
+          pythia_event_median_ghosts = pythia_rho_vec_ghosts[pythia_index_rho_vec_ghosts]; //median if odd number of particle level jets
+        }
+      }
+      else {
+        pythia_event_median_ghosts = 0.;
+      }
+
+      Int_t pythia_index_rho_vec_realistic_ghosts;
+
+      if(pythia_rho_vec_realistic_ghosts.size() > 0){
+        std::sort(pythia_rho_vec_realistic_ghosts.begin(), pythia_rho_vec_realistic_ghosts.end());
+        pythia_index_rho_vec_realistic_ghosts = TMath::Ceil(pythia_rho_vec_realistic_ghosts.size() / 2);
+        if( pythia_rho_vec_realistic_ghosts.size() % 2 == 0){ //median if even number of particle level jets
+          pythia_event_median_realistic_ghosts = 0.5*(pythia_rho_vec_realistic_ghosts[(pythia_rho_vec_realistic_ghosts.size()/2)-1] + pythia_rho_vec_realistic_ghosts[(pythia_rho_vec_realistic_ghosts.size()/2)]);
+        }
+        else {
+          pythia_event_median_realistic_ghosts = pythia_rho_vec_realistic_ghosts[pythia_index_rho_vec_realistic_ghosts]; //median if odd number of particle level jets
+        }
+      }
+      else {
+        pythia_event_median_realistic_ghosts = 0.;
+      }
+
+
+      hist_median_pythia_rho_ebe_ghosts->Fill(pythia_event_median_ghosts);
+      hist_median_pythia_rho_ebe_drop2_ghosts->Fill(pythia_event_median_realistic_ghosts);
+
+    }
+
+////////////////////////////clear out all the vectors 
+
+    pythia_rho_vec.clear();
+    pythia_rho_vec_realistic.clear();
+
+    pythia_rho_vec_ghosts.clear();
+    pythia_rho_vec_realistic_ghosts.clear();
+    
+
 //_______________________________________________________________LETS GET INTO THE BACKGROUND NOW___________________________________//
 
     if( selected_jetsPythia_sorted_part.size()==0){
@@ -1351,12 +1554,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
     else if( selected_jetsPythia_sorted_part.size() > 0) { //you had a PYTHIA jet that passed your cuts
 
-      if( event != 0){
+      if( num_background_events > 1 ){
         delete BKGD;
         TClonesArray *BKGD = (TClonesArray *)bkgd2->GetEventBG(); //(outside particle loop)
-        num_background_events++;
         cout<<"you got the new background event\n\n"<<endl;
       } 
+      num_background_events++;
 /*
       if( num_background_events == 1){ // you have not yet called the background, therefore not filled the XL file !!!
         //cout<<"\n\nyou want to remove the pre-existingXL file!!!!"<<endl;
@@ -1364,10 +1567,15 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         //exit(0);
       }
 */
+      cout<<"Is segfault here, line 1572 ?"<<endl;
       histbackground_events->Fill(1.00);
+
+      cout<<"Is segfault here, line 1575 ?"<<endl;  
 
       Double_t mass;
       Double_t nParticles= BKGD ->GetEntries();
+
+      cout<<"Is segfault here, line 1580 ?"<<endl; 
 
       Double_t Sum_Psi_1_numer = 0;
       Double_t Sum_Psi_1_denom = 0;
@@ -1687,7 +1895,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
       Double_t event_median_realistic;
 
-      if(sortedJets_TOTAL_kT.size()>0){
+      if(selected_jetsTOTAL_kT_sorted.size()>0){ //you need to look at the jets that pass your selection cuts
 
 //__________________________MOVE INTO BACKGROUND + PYTHIA JUST TO GET THE MEDIAN RHO (WITH REALISITIC LEADING JET SUPPRESSION)_________//
 
@@ -1696,13 +1904,13 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             rho_vec_TOTAL.push_back(selected_jetsTOTAL_kT_sorted[i].pt()/selected_jetsTOTAL_kT_sorted[i].area());
           }
         }
-        else if(selected_jetsTOTAL_kT_sorted.size() > 1){
+        if(selected_jetsTOTAL_kT_sorted.size() > 1){
           rho_vec_TOTAL.clear();
           for(unsigned i = 1 ; i < selected_jetsTOTAL_kT_sorted.size() ; i++ ){ //exclude the leading jet !!!!!!!
             rho_vec_TOTAL.push_back(selected_jetsTOTAL_kT_sorted[i].pt()/selected_jetsTOTAL_kT_sorted[i].area());
           }
         }
-        else if(selected_jetsTOTAL_kT_sorted.size() > 2){ //most restricitive
+        if(selected_jetsTOTAL_kT_sorted.size() > 2){ //most restricitive
           rho_vec_TOTAL.clear();
           for(unsigned i = 2 ; i < selected_jetsTOTAL_kT_sorted.size() ; i++ ){ //exclude the two leading jets !!!!!!!
             rho_vec_TOTAL.push_back(selected_jetsTOTAL_kT_sorted[i].pt()/selected_jetsTOTAL_kT_sorted[i].area());
@@ -1769,7 +1977,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
           pbgOut<<selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area())<<", ";
           p_T_corr_tree = selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
-          p_T_corr_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() - (((event_median_realistic/TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
+          p_T_corr_tree_pat = selected_jetsTOTAL_sorted[t_jet].pt() - ((event_median_realistic/(TMath::Pi()*Jet_Radius*Jet_Radius))*selected_jetsTOTAL_sorted[t_jet].area());
       
           vector <fastjet::PseudoJet> constituents_total = selected_jetsTOTAL_sorted[t_jet].constituents();
           vector <Double_t> total_constit_pT_vec;
@@ -1958,9 +2166,16 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     fjInputs_TOTAL.clear();
     fjInputs_TOTAL_kT.clear();
     fjInputs_Pythia_Particle.clear();
+    fjInputs_Pythia_Particle_kT.clear();
 
     rho_vec.clear();
     rho_vec_TOTAL.clear();
+
+    pythia_rho_vec.clear();
+    pythia_rho_vec_realistic.clear();
+
+    pythia_rho_vec_ghosts.clear();
+    pythia_rho_vec_realistic_ghosts.clear();
   }//________________________________________________END EVENT LOOP (line 1749)________________________________________
 
   bkgd2->CloseFiles(); //close all the damn files
@@ -2005,6 +2220,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     histruntime->Write();
   }
 
+  time_array.clear();
 
 //_______________________________________PYTHIA ONLY STUFF FIRST______________________________________________________
 
@@ -2035,6 +2251,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
   histpT_pyth_quark_jet->Write();
   histpT_pyth_gluon_jet->Write();
+
+  hist_median_pythia_rho_ebe->Write();
+  hist_median_pythia_rho_ebe_drop2->Write();
+
+  hist_median_pythia_rho_ebe_ghosts->Write();
+  hist_median_pythia_rho_ebe_drop2_ghosts->Write();
   
 
 //______________________________________END PYTHIA ONLY STUFF______________________________________________________________//
