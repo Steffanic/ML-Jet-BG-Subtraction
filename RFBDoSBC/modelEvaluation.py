@@ -78,7 +78,51 @@ def display_single_tree(_tree, X, Y, name):
 def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     perf_metrics = {}
 
+    # Get the predictions on the training set
     y_pred_train = np.array(clf.predict(X))
+
+    predictions_train = []
+
+    for lbl in Y.unique():
+        # This returns the predicted labels for the pure populations of Y==lbl
+        predictions_train.append(predictions_for_class(lbl, y_pred_train, Y))
+    print(f"{predictions_train=}")
+
+    population_rates_train = []
+
+    calc_rate = lambda cls_num, df, indices: float(len(np.asarray(df==cls_num).nonzero()[0]))/float(len(indices))
+
+    for lbl, pop in zip(Y.unique(),predictions_train):
+        population_rates_train.append(calc_rate(lbl, pop, true_indices_for_class(lbl, Y))) # Sensitivity and Specifity in a two-class system
+
+    print(f"{population_rates_train=}")
+
+    perf_metrics['population_rates_train'] = population_rates_train
+
+
+    y_pred_test = np.array(clf.predict(X_test))
+
+    predictions_test = []
+
+    for lbl in Y_test.unique():
+        # This returns the predicted labels for the pure populations of Y==lbl
+        predictions_test.append(predictions_for_class(lbl, y_pred_test, Y_test))
+    print(f"{predictions_test=}")
+
+    population_rates_test = []
+
+    calc_rate = lambda cls_num, df, indices: float(len(np.asarray(df==cls_num).nonzero()[0]))/float(len(indices))
+
+    for lbl, pop in zip(Y_test.unique(), predictions_test):
+        population_rates_test.append(calc_rate(lbl, pop, true_indices_for_class(lbl, Y_test))) # Sensitivity and Specifity in a two-class system
+
+    print(f"{population_rates_test=}")
+
+    perf_metrics['population_rates_test'] = population_rates_test
+
+
+    '''
+    # Partition the data by classes
     print(f"Number of Real Jets train: {len(np.array(Y==3).nonzero()[0])}")
     print(f"Number of Fake Jets train: {len(np.array(Y==1).nonzero()[0])}")
     real_jet_ind_train = np.array(Y==3).nonzero()[0]
@@ -87,16 +131,18 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
     pred_for_real_jets_train = y_pred_train[real_jet_ind_train]
     pred_for_fake_jets_train = y_pred_train[fake_jet_ind_train]
     pred_for_squish_jets_train = y_pred_train[squish_jet_ind_train] 
-
+    
     #print(str(len(real_jet_ind_train))+' '+str(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))
 
     real_jet_rate_train = float(len(np.asarray(pred_for_real_jets_train==3).nonzero()[0]))/float(len(real_jet_ind_train))
     fake_jet_rate_train = float(len(np.asarray(pred_for_fake_jets_train==1).nonzero()[0]))/float(len(fake_jet_ind_train))
     squish_jet_rate_train = float(len(np.asarray(pred_for_squish_jets_train==2).nonzero()[0]))/float(len(squish_jet_ind_train))
-
+    
     fall_out_train = float(len(np.asarray(pred_for_fake_jets_train==3).nonzero()[0]))/float(len(fake_jet_ind_train))
     fall_in_train = float(len(np.asarray(pred_for_real_jets_train==1).nonzero()[0]))/float(len(real_jet_ind_train))
+    '''
 
+    '''
     perf_metrics['real_jet_rate_train'] = real_jet_rate_train
     perf_metrics['fake_jet_rate_train'] = fake_jet_rate_train
     perf_metrics['squish_jet_rate_train'] = squish_jet_rate_train
@@ -105,9 +151,12 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
 
     print("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
     log("Real Jet Rate train: "+str(real_jet_rate_train)+"\nFake Jet Rate train: "+str(fake_jet_rate_train)+"\nSquish Jet Rate train: "+str(squish_jet_rate_train)+"\nFake predicted real train: "+str(fall_out_train)+"\nReal predicted fake train: "+str(fall_in_train))
+    '''
+
 
     #Real Jet rate = real jets pred/real jets
-    y_pred_test = np.array(clf.predict(X_test))
+
+    '''
     print(f"Number of Real Jets test: {len(np.array(Y_test==3).nonzero()[0])}")
     print(f"Number of Fake Jets test: {len(np.array(Y_test==1).nonzero()[0])}")
     real_jet_ind_test = np.asarray(Y_test==3).nonzero()[0]
@@ -136,9 +185,39 @@ def compute_performance_metrics(clf, X, Y, X_test, Y_test, rad, ptm):
 
     print("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
     log("Real Jet Rate test: "+str(real_jet_rate_test)+"\nFake Jet Rate test: "+str(fake_jet_rate_test)+"\nSquish Jet Rate test: "+str(squish_jet_rate_test)+"\nFake predicted real test: "+str(fall_out_test)+"\nReal predicted fake test: "+str(fall_in_test))
-
+    '''
 
     if(not os.path.isdir("Objects/R=%1.1f"%rad)):
         os.mkdir("Objects/R=%1.1f"%rad)
     with open("Objects/R=%1.1f/perf_metric_pthard=%d"%(rad, ptm), 'wb') as perffile:
         pickle.dump(perf_metrics, perffile)
+
+    return perf_metrics
+
+def predictions_for_class(class_num, df, label):
+    '''This extracts the predicted values for class class_num. 
+    
+    Arguments:
+    class_num -- integer label for the class you want.
+    df -- dataframe containing predictions for all classes.
+    label -- Series which only contains class labels
+
+    Returns:
+    class_exclusive_df -- dataframe containing only the rows of df which are in class, class_num
+    '''
+
+    class_indices = true_indices_for_class(class_num, label)
+    class_exclusive_df = df[class_indices]
+    return class_exclusive_df
+
+def true_indices_for_class(class_num, label):
+    '''This extracts the indices for class class_num in label. It can be used as a mask.
+    
+    Arguments:
+    class_num -- integer label for the class you want.
+    label -- Series which only contains class labels
+
+    Returns:
+    class_indices -- dataframe containing only the indices which are in class, class_num
+    '''
+    return np.array(label==class_num).nonzero()[0]

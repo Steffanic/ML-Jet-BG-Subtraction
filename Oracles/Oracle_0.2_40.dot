@@ -1,5 +1,33 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 8397\nvalue = 8397.0", fillcolor="#ffffff"] ;
+0 [label="p_T_1 <= 4.9\ngini = 0.48\nsamples = 114910\nvalue = [69008, 45902]\nclass = Fake", fillcolor="#f6d5bd"] ;
+1 [label="Mean-p_T <= 0.84\ngini = 0.02\nsamples = 69599\nvalue = [68916, 683]\nclass = Fake", fillcolor="#e5823b"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Mean-p_T <= 0.84\ngini = 0.0\nsamples = 68520\nvalue = [68427, 93]\nclass = Fake", fillcolor="#e58139"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 68286\nvalue = [68241, 45]\nclass = Fake", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.33\nsamples = 234\nvalue = [186, 48]\nclass = Fake", fillcolor="#eca26c"] ;
+2 -> 4 ;
+5 [label="p_T_1 <= 3.55\ngini = 0.5\nsamples = 1079\nvalue = [489, 590]\nclass = Squish", fillcolor="#ddeefb"] ;
+1 -> 5 ;
+6 [label="gini = 0.18\nsamples = 542\nvalue = [489, 53]\nclass = Fake", fillcolor="#e88f4e"] ;
+5 -> 6 ;
+7 [label="gini = 0.0\nsamples = 537\nvalue = [0, 537]\nclass = Squish", fillcolor="#399de5"] ;
+5 -> 7 ;
+8 [label="p_T_1 <= 4.99\ngini = 0.0\nsamples = 45311\nvalue = [92, 45219]\nclass = Squish", fillcolor="#399de5"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Mean-p_T <= 0.72\ngini = 0.45\nsamples = 256\nvalue = [89, 167]\nclass = Squish", fillcolor="#a3d1f3"] ;
+8 -> 9 ;
+10 [label="gini = 0.4\nsamples = 118\nvalue = [86, 32]\nclass = Fake", fillcolor="#efb083"] ;
+9 -> 10 ;
+11 [label="gini = 0.04\nsamples = 138\nvalue = [3, 135]\nclass = Squish", fillcolor="#3d9fe6"] ;
+9 -> 11 ;
+12 [label="p_T_1 <= 5.01\ngini = 0.0\nsamples = 45055\nvalue = [3, 45052]\nclass = Squish", fillcolor="#399de5"] ;
+8 -> 12 ;
+13 [label="gini = 0.1\nsamples = 54\nvalue = [3, 51]\nclass = Squish", fillcolor="#45a3e7"] ;
+12 -> 13 ;
+14 [label="gini = 0.0\nsamples = 45001\nvalue = [0, 45001]\nclass = Squish", fillcolor="#399de5"] ;
+12 -> 14 ;
 }

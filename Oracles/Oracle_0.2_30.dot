@@ -1,5 +1,29 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 11004\nvalue = 11004.0", fillcolor="#ffffff"] ;
+0 [label="p_T_1 <= 3.52\ngini = 0.33\nsamples = 463739\nvalue = [365438, 98301]\nclass = Fake", fillcolor="#eca36e"] ;
+1 [label="Angularity <= 0.11\ngini = 0.07\nsamples = 378943\nvalue = [365404, 13539]\nclass = Fake", fillcolor="#e68640"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="Angularity <= 0.11\ngini = 0.01\nsamples = 8090\nvalue = [33, 8057]\nclass = Squish", fillcolor="#3a9de5"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 7993\nvalue = [0, 7993]\nclass = Squish", fillcolor="#399de5"] ;
+2 -> 3 ;
+4 [label="gini = 0.45\nsamples = 97\nvalue = [33, 64]\nclass = Squish", fillcolor="#9fd0f2"] ;
+2 -> 4 ;
+5 [label="Mean-p_T <= 0.79\ngini = 0.03\nsamples = 370853\nvalue = [365371, 5482]\nclass = Fake", fillcolor="#e5833c"] ;
+1 -> 5 ;
+6 [label="gini = 0.0\nsamples = 366224\nvalue = [365369, 855]\nclass = Fake", fillcolor="#e58139"] ;
+5 -> 6 ;
+7 [label="gini = 0.0\nsamples = 4629\nvalue = [2, 4627]\nclass = Squish", fillcolor="#399de5"] ;
+5 -> 7 ;
+8 [label="p_T_1 <= 3.52\ngini = 0.0\nsamples = 84796\nvalue = [34, 84762]\nclass = Squish", fillcolor="#399de5"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Angularity <= 0.12\ngini = 0.37\nsamples = 137\nvalue = [34, 103]\nclass = Squish", fillcolor="#7abdee"] ;
+8 -> 9 ;
+10 [label="gini = 0.04\nsamples = 50\nvalue = [1, 49]\nclass = Squish", fillcolor="#3d9fe6"] ;
+9 -> 10 ;
+11 [label="gini = 0.47\nsamples = 87\nvalue = [33, 54]\nclass = Squish", fillcolor="#b2d9f5"] ;
+9 -> 11 ;
+12 [label="gini = 0.0\nsamples = 84659\nvalue = [0, 84659]\nclass = Squish", fillcolor="#399de5"] ;
+8 -> 12 ;
 }

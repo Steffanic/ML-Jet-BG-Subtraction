@@ -1,5 +1,33 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="gini = 0.0\nsamples = 17656\nvalue = 17656.0", fillcolor="#ffffff"] ;
+0 [label="Area <= 0.42\ngini = 0.5\nsamples = 545041\nvalue = [253887, 291154]\nclass = Squish", fillcolor="#e6f2fc"] ;
+1 [label="Area <= 0.42\ngini = 0.01\nsamples = 246033\nvalue = [245165, 868]\nclass = Fake", fillcolor="#e5813a"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="p_T_1 <= 3.9\ngini = 0.0\nsamples = 244322\nvalue = [244245, 77]\nclass = Fake", fillcolor="#e58139"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 241617\nvalue = [241616, 1]\nclass = Fake", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.05\nsamples = 2705\nvalue = [2629, 76]\nclass = Fake", fillcolor="#e6853f"] ;
+2 -> 4 ;
+5 [label="Angularity <= 0.31\ngini = 0.5\nsamples = 1711\nvalue = [920, 791]\nclass = Fake", fillcolor="#fbede3"] ;
+1 -> 5 ;
+6 [label="gini = 0.29\nsamples = 1093\nvalue = [900, 193]\nclass = Fake", fillcolor="#eb9c63"] ;
+5 -> 6 ;
+7 [label="gini = 0.06\nsamples = 618\nvalue = [20, 598]\nclass = Squish", fillcolor="#40a0e6"] ;
+5 -> 7 ;
+8 [label="Angularity <= 0.3\ngini = 0.06\nsamples = 299008\nvalue = [8722, 290286]\nclass = Squish", fillcolor="#3fa0e6"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="Area <= 0.5\ngini = 0.48\nsamples = 12750\nvalue = [7667, 5083]\nclass = Fake", fillcolor="#f6d5bc"] ;
+8 -> 9 ;
+10 [label="gini = 0.32\nsamples = 8779\nvalue = [7016, 1763]\nclass = Fake", fillcolor="#eca16b"] ;
+9 -> 10 ;
+11 [label="gini = 0.27\nsamples = 3971\nvalue = [651, 3320]\nclass = Squish", fillcolor="#60b0ea"] ;
+9 -> 11 ;
+12 [label="Angularity <= 0.3\ngini = 0.01\nsamples = 286258\nvalue = [1055, 285203]\nclass = Squish", fillcolor="#3a9de5"] ;
+8 -> 12 ;
+13 [label="gini = 0.37\nsamples = 3054\nvalue = [746, 2308]\nclass = Squish", fillcolor="#79bded"] ;
+12 -> 13 ;
+14 [label="gini = 0.0\nsamples = 283204\nvalue = [309, 282895]\nclass = Squish", fillcolor="#399de5"] ;
+12 -> 14 ;
 }
