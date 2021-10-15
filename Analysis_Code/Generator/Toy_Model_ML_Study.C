@@ -350,12 +350,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   hist_median_pythia_rho_ebe_drop2->SetXTitle("#rho = median^{e.b.e.}( p_{T}^{jet} / Area^{jet} )");
   hist_median_pythia_rho_ebe_drop2->SetYTitle("dN/d#rho");
 
-  TH1D *hist_median_pythia_rho_ebe_ghosts = new TH1D("hist_median_pythia_rho_ebe" ,expression15h,200,0,80);
+  TH1D *hist_median_pythia_rho_ebe_ghosts = new TH1D("hist_median_pythia_rho_ebe_ghosts" ,expression15h,200,0,80);
   hist_median_pythia_rho_ebe_ghosts -> Sumw2();
   hist_median_pythia_rho_ebe_ghosts->SetXTitle("#rho = median^{e.b.e.}(p_{T}^{jet} / Area^{jet})");
   hist_median_pythia_rho_ebe_ghosts->SetYTitle("dN/d#rho");
 
-  TH1D *hist_median_pythia_rho_ebe_drop2_ghosts = new TH1D("hist_median_pythia_rho_ebe_drop2" ,expression15i,200,0,80);
+  TH1D *hist_median_pythia_rho_ebe_drop2_ghosts = new TH1D("hist_median_pythia_rho_ebe_drop2_ghosts" ,expression15i,200,0,80);
   hist_median_pythia_rho_ebe_drop2_ghosts -> Sumw2();
   hist_median_pythia_rho_ebe_drop2_ghosts->SetXTitle("#rho = median^{e.b.e.}( p_{T}^{jet} / Area^{jet} )");
   hist_median_pythia_rho_ebe_drop2_ghosts->SetYTitle("dN/d#rho");
