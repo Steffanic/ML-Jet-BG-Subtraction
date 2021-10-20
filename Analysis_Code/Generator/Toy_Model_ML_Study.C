@@ -1222,18 +1222,18 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
 
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt = fastjet::SelectorPtRange(jet_pT_cut_low,10000); // Selects Jets with transverse momentum between 10. GeV and 10 TeV 
+    fastjet::Selector select_pt = fastjet::SelectorPtRange(10,10000); // Selects Jets with transverse momentum between 10 GeV and 10 TeV 
     /////////////////////////making jet cuts on eta and pT 
     fastjet::Selector select_pt2 = fastjet::SelectorPtRange(constit_cut,10000); // Selects Jets with transverse momentum between constit_cut and 10 TeV
     /////////////////////////making jet cuts on eta and pT 
-    fastjet::Selector select_pt3 = fastjet::SelectorPtRange(jet_pT_cut_low,10000); //Selects Jets with transverse momentum between 10. GeV and 10 TeV 
+    fastjet::Selector select_pt3 = fastjet::SelectorPtRange(jet_pT_cut_low,10000); //Selects Jets with transverse momentum between jet_pT_cut low and 10 TeV 
     fastjet::Selector select_rapidity = fastjet::SelectorEtaRange(-0.9 + Rparam , 0.9 - Rparam); // Selects Jets in the desired eta range
     fastjet::Selector select_both = select_pt && select_rapidity ; //combining the two jet cuts
     fastjet::Selector select_both2 = select_pt2 && select_rapidity ; //combining the two jet cuts for the second pT selector
     fastjet::Selector select_both3 = select_pt3 && select_rapidity ; //combining the two jet cuts for the third pT selector
     ////////////////////////////////////////
 
-    vector<fastjet::PseudoJet>selected_jetsPythia_part = select_both(sortedJetsPythia_part); 
+    vector<fastjet::PseudoJet>selected_jetsPythia_part = select_both3(sortedJetsPythia_part); 
     vector<fastjet::PseudoJet>selected_jetsPythia_sorted_part = sorted_by_pt(selected_jetsPythia_part);
     Int_t selected_jetsPythia_sorted_part_size = selected_jetsPythia_sorted_part.size();
 
@@ -1691,16 +1691,16 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
       sortedJetsBackground_antikT = sorted_by_pt( inclusiveJetsBackground_antikT ); //sort by decreasing transverse momentum
       ////////////////////////////////////////////
 
-      vector<fastjet::PseudoJet>selected_jetsTOTAL = select_both3(sortedJetsTOTAL); 
+      vector<fastjet::PseudoJet>selected_jetsTOTAL = select_both(sortedJetsTOTAL); //greater than 10 GeV always
       vector<fastjet::PseudoJet>selected_jetsTOTAL_sorted = sorted_by_pt(selected_jetsTOTAL);
 
-      vector<fastjet::PseudoJet>selected_jetsBackground = select_both3(sortedJetsBackground); 
+      vector<fastjet::PseudoJet>selected_jetsBackground = select_both2(sortedJetsBackground); //no lower level pT cut
       vector<fastjet::PseudoJet>selected_jetsBackground_sorted = sorted_by_pt(selected_jetsBackground);
 
-      vector<fastjet::PseudoJet>selected_jetsTOTAL_kT = select_both3(sortedJets_TOTAL_kT); 
+      vector<fastjet::PseudoJet>selected_jetsTOTAL_kT = select_both2(sortedJets_TOTAL_kT); //no lower level pT cut
       vector<fastjet::PseudoJet>selected_jetsTOTAL_kT_sorted = sorted_by_pt(selected_jetsTOTAL_kT);
 
-      vector<fastjet::PseudoJet>selected_jetsBackground_antikT = select_both3(sortedJetsBackground_antikT); 
+      vector<fastjet::PseudoJet>selected_jetsBackground_antikT = select_both(sortedJetsBackground_antikT); //greater than 10 GeV always
       vector<fastjet::PseudoJet>selected_jetsBackground_antikT_sorted = sorted_by_pt(selected_jetsBackground_antikT );
 
 
