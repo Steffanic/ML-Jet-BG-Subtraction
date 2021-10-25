@@ -1233,12 +1233,12 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     fastjet::Selector select_both3 = select_pt3 && select_rapidity ; //combining the two jet cuts for the third pT selector
     ////////////////////////////////////////
 
-    vector<fastjet::PseudoJet>selected_jetsPythia_part = select_both3(sortedJetsPythia_part); 
+    vector<fastjet::PseudoJet>selected_jetsPythia_part = select_both3(sortedJetsPythia_part);  //greater than pT_hard_min
     vector<fastjet::PseudoJet>selected_jetsPythia_sorted_part = sorted_by_pt(selected_jetsPythia_part);
     Int_t selected_jetsPythia_sorted_part_size = selected_jetsPythia_sorted_part.size();
 
     //kT jets
-    vector<fastjet::PseudoJet>selected_jetsPythiakT_part = select_both2(sortedJetsPythiakT_part); 
+    vector<fastjet::PseudoJet>selected_jetsPythiakT_part = select_both2(sortedJetsPythiakT_part);  //no momentum cut
     vector<fastjet::PseudoJet>selected_jetsPythiakT_sorted_part = sorted_by_pt(selected_jetsPythiakT_part);
 
 /////////////______________FILLING THE PYTHIA JET HISTOGRAMS_________________________//////////////////////
@@ -1555,7 +1555,9 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     else if( selected_jetsPythia_sorted_part.size() > 0) { //you had a PYTHIA jet that passed your cuts
 
       if( num_background_events > 1 ){
-        delete BKGD;
+        if(!GRID){
+          delete BKGD;
+        }
         TClonesArray *BKGD = (TClonesArray *)bkgd2->GetEventBG(); //(outside particle loop)
         cout<<"you got the new background event\n\n"<<endl;
       } 
@@ -1691,7 +1693,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
       sortedJetsBackground_antikT = sorted_by_pt( inclusiveJetsBackground_antikT ); //sort by decreasing transverse momentum
       ////////////////////////////////////////////
 
-      vector<fastjet::PseudoJet>selected_jetsTOTAL = select_both(sortedJetsTOTAL); //greater than 10 GeV always
+      vector<fastjet::PseudoJet>selected_jetsTOTAL = select_both2(sortedJetsTOTAL); //no lower level pT cut
       vector<fastjet::PseudoJet>selected_jetsTOTAL_sorted = sorted_by_pt(selected_jetsTOTAL);
 
       vector<fastjet::PseudoJet>selected_jetsBackground = select_both2(sortedJetsBackground); //no lower level pT cut
@@ -1700,7 +1702,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
       vector<fastjet::PseudoJet>selected_jetsTOTAL_kT = select_both2(sortedJets_TOTAL_kT); //no lower level pT cut
       vector<fastjet::PseudoJet>selected_jetsTOTAL_kT_sorted = sorted_by_pt(selected_jetsTOTAL_kT);
 
-      vector<fastjet::PseudoJet>selected_jetsBackground_antikT = select_both(sortedJetsBackground_antikT); //greater than 10 GeV always
+      vector<fastjet::PseudoJet>selected_jetsBackground_antikT = select_both2(sortedJetsBackground_antikT); //no lower level pT cut
       vector<fastjet::PseudoJet>selected_jetsBackground_antikT_sorted = sorted_by_pt(selected_jetsBackground_antikT );
 
 
