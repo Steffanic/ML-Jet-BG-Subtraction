@@ -1555,9 +1555,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
     else if( selected_jetsPythia_sorted_part.size() > 0) { //you had a PYTHIA jet that passed your cuts
 
       if( num_background_events > 1 ){
-        if(!GRID){
-          delete BKGD;
-        }
+        delete BKGD;
         TClonesArray *BKGD = (TClonesArray *)bkgd2->GetEventBG(); //(outside particle loop)
         cout<<"you got the new background event\n\n"<<endl;
       } 
