@@ -1,7 +1,7 @@
 //This file creates the interface b/w root and pythia libraries for macros you want to run in root that use
 //pythia libraries
 
-void maindriver_newton(Int_t nEvents = 100000000, Int_t jobID =8734, Int_t tune = 356, Double_t Jet_Radius = 0.2, Int_t HF = 0 , Double_t DCA = 1000 , Int_t cent_bin = 0 , Double_t pT_hard_min = 60., Int_t Num_BKGD_Files = 1 , Double_t constit_cut = 0.,  Bool_t Data = kTRUE, Bool_t RT_Stats = kFALSE , Bool_t GRID = kFALSE ){
+void maindriver_newton(Int_t nEvents = 100000000, Int_t jobID =8734, Int_t tune = 356, Double_t Jet_Radius = 0.2, Double_t subJet_Radius = 0.1 , Int_t HF = 0 , Double_t DCA = 1000 , Int_t cent_bin = 0 , Double_t pT_hard_min = 60., Int_t Num_BKGD_Files = 1 , Double_t constit_cut = 0.,  Bool_t Data = kTRUE, Bool_t RT_Stats = kFALSE , Bool_t GRID = kFALSE ){
 
 
 if( !GRID ){
@@ -55,6 +55,6 @@ else if( GRID){
   gROOT->ProcessLine(".L BkgrLoad.cxx+");
   gROOT->ProcessLine(".L Toy_Model_ML_Study.C++");
 
-  Toy_Model_ML_Study( nEvents, jobID , tune, Jet_Radius, HF , DCA, cent_bin , pT_hard_min , Num_BKGD_Files , constit_cut, Data, RT_Stats, GRID) ;
+  Toy_Model_ML_Study( nEvents, jobID , tune, Jet_Radius, subJet_Radius , HF , DCA, cent_bin , pT_hard_min , Num_BKGD_Files , constit_cut, Data, RT_Stats, GRID ) ;
 
 }	

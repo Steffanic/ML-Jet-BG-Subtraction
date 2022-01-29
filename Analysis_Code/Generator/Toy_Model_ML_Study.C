@@ -97,6 +97,7 @@ Int_t parent_parton( Int_t parent_id , TClonesArray* event_particles ){
 // nEvents is how many events we want. This is dynamic user input to be run from the command prompt and user specified
 // jobID is random number for seeding
 // Jet_Radius is desired resolution paramater for jets
+// Double_t subJet_Radius is the desired resolution parameter for subjets
 // HF is harmonic flag of background generator (only use this when generating background events, you don't use it when pre-loading)
 // DCA - distance to closest approach (can use to discriminate pythia primaries from other particles)
 // cent_bin - again for generating background events, don't need it if already pre-loading
@@ -104,7 +105,7 @@ Int_t parent_parton( Int_t parent_id , TClonesArray* event_particles ){
 // constit_cut - for pythia + bkgd jets
 // Data - file naming
 // RT_Stats - use to get a feel for how long events take
-void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Radius, Int_t HF , Double_t DCA , Int_t cent_bin , Double_t pT_hard_min, Int_t Num_BKGD_Files , Double_t constit_cut, Bool_t Data = kTRUE, Bool_t RT_Stats = kFALSE , Bool_t GRID = kFALSE ){
+void Toy_Model_ML_Study(Int_t nEvents, Int_t jobID , Int_t tune, Double_t Jet_Radius, Double_t subJet_Radius , Int_t HF , Double_t DCA , Int_t cent_bin , Double_t pT_hard_min, Int_t Num_BKGD_Files , Double_t constit_cut, Bool_t Data = kTRUE, Bool_t RT_Stats = kFALSE , Bool_t GRID = kFALSE){
 
   //Int_t HF = 0; // set harmonics flag (0 : v1 - v5) , (1 : v2 - v5) , (2: v3 - v5) , (3: v1 - v4) , (4: v1 - v3) , (5: no vn, uniform phi) , (6: v1 - v2 , v4 - v5) , (7: v1 -v3 , v5) , (8: v1 , v3 - v5) , (9: v1 only) , (10: v2 only) , (11: v3 only) , (12: v4 only) , (13: v5 only)
 
@@ -658,6 +659,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   //Creating a Jet Definition, choosing a Jet Algorithm
   ///////////////////////////////////////////////////////////////////////
   double Rparam = Jet_Radius; // <- Jet Radius  
+  double sub_jet_Rparam = subJet_Radius; // <- subJet Radius
   double ghost_maxrap = 2.0; //ghost particles go up to y=2
   int    repeat = 1; //only repeats once
   double ghost_area = 0.001; //area of ghost particles
@@ -669,6 +671,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   //fastjet::RecombinationScheme    recombScheme2 = fastjet::BIpt_scheme;
   fastjet::JetDefinition         *jetDef = NULL;
   fastjet::JetDefinition         *jetDef2 = NULL;
+  fastjet::JetDefinition         *jetDef3 = NULL;
   fastjet::JetAlgorithm           algorithm=fastjet::antikt_algorithm;
   fastjet::JetAlgorithm           algorithm2=fastjet::kt_algorithm;
   fastjet::AreaType               area_type=fastjet::active_area_explicit_ghosts;
@@ -679,11 +682,14 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   AreaDef = new fastjet::AreaDefinition(area_type, GhostedAreaSpec(ghost_maxrap , repeat , ghost_area , grid_scatter, pt_scatter, mean_ghost_pt ));
   jetDef = new fastjet::JetDefinition(algorithm,Rparam,recombScheme,strategy); //anti-kT
   jetDef2 = new fastjet::JetDefinition(algorithm2,Rparam,recombScheme,strategy); //kT
+  jetDef3 = new fastjet::JetDefinition(algorithm,sub_jet_Rparam,recombScheme,strategy); //anti-kT w/ subjet Radius
   std::vector <fastjet::PseudoJet> fjInputs_TOTAL;
   std::vector <fastjet::PseudoJet> fjInputs_TOTAL_kT;
   std::vector <fastjet::PseudoJet> fjInputs_Background;
   std::vector <fastjet::PseudoJet> fjInputs_Pythia_Particle;
   std::vector <fastjet::PseudoJet> fjInputs_Pythia_Particle_kT;
+  std::vector <fastjet::PseudoJet> fjInputs_Pythia_only_subjet; //for pythia only subjets in pythia only jets
+  std::vector <fastjet::PseudoJet> fjInputs_Pythia_in_TOTAL_subjet; //for pythia only subjets in TennGen + Pythia jets
   ///////////////////////////////////////////////////////////////////////
 
   //the speed of light in a vaccum is 2.998E8 m/s
@@ -785,6 +791,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Y_quark_tree_pyth; //17th
   Float_t Y_gluon_tree_pyth; //18th
   Float_t Y_beam_tree_pyth; //19th
+  Float_t z_subjet_tree_pyth; //20th
 
 
   //Now add these branches to the trees
@@ -809,6 +816,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree_pyth->Branch("Y_quark",&Y_quark_tree_pyth,"Y_quark/F");
    tree_pyth->Branch("Y_gluon",&Y_gluon_tree_pyth,"Y_gluon/F");
    tree_pyth->Branch("Y_beam",&Y_beam_tree_pyth,"Y_beam/F");
+   tree_pyth->Branch("z_subjet",&z_subjet_tree_pyth,"z_subjet/F");
 
 
 
@@ -935,6 +943,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Y_gluon_tree; //18th
   Float_t Y_beam_tree; //19th
   Float_t Y_bkgd_tree; //20th
+  Float_t z_subjet_tree; //21st
 
 
   //Now add these branches to the trees
@@ -960,6 +969,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree->Branch("Y_gluon",&Y_gluon_tree,"Y_gluon/F");
    tree->Branch("Y_beam",&Y_beam_tree,"Y_beam/F");
    tree->Branch("Y_bkgd",&Y_bkgd_tree,"Y_bkgd/F");
+   tree->Branch("z_subjet",&z_subjet_tree,"z_subjet/F");
 
 
 //___________________________________________________________________________________//
@@ -991,6 +1001,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
   Float_t Y_gluon_tree_pat; //20th
   Float_t Y_beam_tree_pat; //21th
   Float_t Y_bkgd_tree_pat; //22st
+  Float_t z_subjet_tree_pat; //23rd
 
 
   //Now add these branches to the trees
@@ -1018,6 +1029,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
    tree->Branch("Y_gluon",&Y_gluon_tree_pat,"Y_gluon/F");
    tree->Branch("Y_beam",&Y_beam_tree_pat,"Y_beam/F");
    tree->Branch("Y_bkgd",&Y_bkgd_tree_pat,"Y_bkgd/F");
+   tree->Branch("z_subjet",&z_subjet_tree_pat,"z_subjet/F");
 
 
 //____________________________________________________________________________________________________________________//
@@ -1277,7 +1289,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         Int_t UPKF;
 
         Int_t nPart_part = constituents_part.size();
-        for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){
+        for( Int_t i_pyth = 0 ; i_pyth < nPart_part ; i_pyth++ ){ //loop through constituents
           if( constituents_part[i_pyth].perp() > 1e-50 ){
             pythia_constit_pT_vec.push_back( constituents_part[i_pyth].perp() );
             //cout<<"Jet Number "<<py_jet_ind2+1<<" , Jet Constit "<<i_pyth<<" , Mass = "<<constituents_part[i_pyth].m()<<" , Point of Origin = "<<constituents_part[i_pyth].user_index()<<endl;
@@ -1301,8 +1313,30 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
                 pT_quark_pyth+=constituents_part[i_pyth].perp(); 
               }
             }
+
+            //fill the subjet objects !
+          
+            fastjet::PseudoJet psub( constituents_part[i_pyth].px(), constituents_part[i_pyth].py() , constituents_part[i_pyth].pz() , constituents_part[i_pyth].E() );
+
+            fjInputs_Pythia_only_subjet.push_back(psub);
+           
           }
         }
+
+       //cluster the subjet objects______________
+       //apply jet definitions
+       
+       vector <fastjet::PseudoJet> inclusivesubjetsPythia, sortedsubjetsPythia; //
+       fastjet::ClusterSequenceArea clustSeqPythia_subjet(fjInputs_Pythia_only_subjet, *jetDef3 , *AreaDef ); //
+
+       inclusivesubjetsPythia = clustSeqPythia_subjet.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
+       sortedsubjetsPythia   = sorted_by_pt(inclusivesubjetsPythia); //sort by decreasing transverse momentum
+
+       z_subjet_tree_pyth = sortedsubjetsPythia[0].pt() / selected_jetsPythia_sorted_part[py_jet_ind2].pt() ; //fill the tree
+
+       fjInputs_Pythia_only_subjet.clear(); //make sure to clear after EVERY jet
+
+       //_____________________
 
        Y_quark_tree_pyth = pT_quark_pyth/selected_jetsPythia_sorted_part[py_jet_ind2].pt(); //quark origin momentum fraction
        Y_gluon_tree_pyth = pT_gluon_pyth/selected_jetsPythia_sorted_part[py_jet_ind2].pt();    //gluon origin momentum fraction
@@ -1988,6 +2022,8 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           Double_t pT_beam_tot=0;
           Double_t pT_bkgd_tot=0;
 
+          Double_t pT_from_pyth_tot=0;
+
           Int_t UPTKF;
 
           Int_t nPart_total = constituents_total.size();
@@ -1995,6 +2031,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
             if( constituents_total[i_bkgd_total].perp() > 1e-50 ){
               total_constit_pT_vec.push_back( constituents_total[i_bkgd_total].perp() );
               if( constituents_total[i_bkgd_total].user_index() != 0 ){
+                pT_from_pyth_tot+=constituents_total[i_bkgd_total].pt();
                 TMCParticle *UPTPart2 = (TMCParticle *) particles->At(constituents_total[i_bkgd_total].user_index()-1);
                 UPTKF = UPTPart2->GetKF();
                 //cout<<"Jet Number "<<t_jet+1<<" , Jet Constit "<<i_bkgd_total<<" , Mass = "<<constituents_total[i_bkgd_total].m()<<" , Point of Origin = "<<constituents_total[i_bkgd_total].user_index()<<endl;
@@ -2013,6 +2050,11 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
                   }
                 }
 
+                //fill the subjet objects with pythia ONLY particles !
+          
+                fastjet::PseudoJet psubtot( constituents_total[i_bkgd_total].px(), constituents_total[i_bkgd_total].py() , constituents_total[i_bkgd_total].pz() , constituents_total[i_bkgd_total].E() );
+
+                fjInputs_Pythia_in_TOTAL_subjet.push_back(psubtot);
 
               }
               else {
@@ -2021,6 +2063,33 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
             }
           }
+
+          //cluster the subjet objects IFF we had pythia particles in the jet______________
+         //apply jet definitions
+       
+         if ( pT_from_pyth_tot > 0 ){
+           vector <fastjet::PseudoJet> inclusivesubjetsTotal, sortedsubjetsTotal; //
+           fastjet::ClusterSequenceArea clustSeqTotal_subjet(fjInputs_Pythia_in_TOTAL_subjet, *jetDef3 , *AreaDef ); //
+
+           inclusivesubjetsTotal = clustSeqTotal_subjet.inclusive_jets(0.0); //only jets with pt greater than 0.0 GeV
+           sortedsubjetsTotal   = sorted_by_pt(inclusivesubjetsTotal); //sort by decreasing transverse momentum
+
+           z_subjet_tree = sortedsubjetsTotal[0].pt() / pT_from_pyth_tot ; //fill the tree (pythia info ONLY)
+
+           z_subjet_tree_pat = sortedsubjetsTotal[0].pt() / pT_from_pyth_tot ; //fill the tree (pythia info ONLY)
+
+         }
+
+         else {
+
+           z_subjet_tree = -1 ;
+           z_subjet_tree_pat = -1 ;
+
+         }
+
+         fjInputs_Pythia_in_TOTAL_subjet.clear(); //make sure to clear after EVERY jet
+
+         //______________________________________________
 
          Y_quark_tree = pT_quark_tot/selected_jetsTOTAL_sorted[t_jet].pt(); //quark origin momentum fraction
          Y_gluon_tree = pT_gluon_tot/selected_jetsTOTAL_sorted[t_jet].pt();    //gluon origin momentum fraction
