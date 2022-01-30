@@ -1981,7 +1981,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
         ofstream pbgOut;
         pbgOut.open(csv_out_file_str, fstream::app);
         if(HEADER__){
-          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, Var-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd"<<endl;
+          pbgOut<<"p_T, Eta, Phi, Area, Eps, p_T-corr, N-Trk, Angularity, Angularity-NW, Mean-p_T, Var-p_T, p_T_1, p_T_2, p_T_3, p_T_4, p_T_5, distmatch, XMatch, X_tru, Y_quark, Y_gluon, Y_beam, Y_bkgd, z_subjet"<<endl;
           HEADER__--;
         }
 
@@ -2023,6 +2023,7 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           Double_t pT_bkgd_tot=0;
 
           Double_t pT_from_pyth_tot=0;
+          Double_t z_subjet_tot_csv;
 
           Int_t UPTKF;
 
@@ -2078,12 +2079,15 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
 
            z_subjet_tree_pat = sortedsubjetsTotal[0].pt() / pT_from_pyth_tot ; //fill the tree (pythia info ONLY)
 
+           z_subjet_tot_csv = sortedsubjetsTotal[0].pt() / pT_from_pyth_tot ; //for the .csv
+
          }
 
          else {
 
            z_subjet_tree = -1 ;
            z_subjet_tree_pat = -1 ;
+           z_subjet_tot_csv = -1.0; //for the .csv
 
          }
 
@@ -2213,7 +2217,8 @@ auto parent_parton_finder = []( TMCParticle *pyth_part , TClonesArray* event_par
           pbgOut<<pT_quark_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", ";
           pbgOut<<pT_gluon_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", "; 
           pbgOut<<pT_beam_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", ";    
-          pbgOut<<pT_bkgd_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<endl;
+          pbgOut<<pT_bkgd_tot/selected_jetsTOTAL_sorted[t_jet].pt()<<", ";
+          pbgOut<<z_subjet_tot_csv<<endl;
           X_tru_tree = (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt();
           X_tru_tree_pat = (X_tru*total_constit_pT_vec.size())/selected_jetsTOTAL_sorted[t_jet].pt();
           tree->Fill();
