@@ -51,10 +51,10 @@ for(( i=0; i <=5; i++ ))
         var=$(printf '\npThardmin = %s, Rparam = %s\n' "${pThardmin_array[$i]}" "${JetR_array[$j]}")
         echo $var
         echo '________________________________________________________________________________________________'
-        root -b -l -q "maindriver_newton.C( 100000000, $JOB_NUMBER, 356, ${JetR_array[$j]}, 0 , 1000 , 0 , ${pThardmin_array[$i]} , 1 , 0., kTRUE, kFALSE , kTRUE )"
+        root -b -l -q "maindriver_newton.C( 100000000, $JOB_NUMBER, 356, ${JetR_array[$j]}, 0.1 , 0 , 1000 , 0 , ${pThardmin_array[$i]} , 1 , 0., kTRUE, kFALSE , kTRUE )"
       done
   done
-# num_pythia events / seed / pythia tune / jet radius / Harmonic Flag / DCA / centrality bin / pT hard min / Number of BKGD Files (BKGD events / 100 ) / constit cut / Data Flag (legacy to be removed) / Runtime Stats Flag / Run on Grid Flag
+# num_pythia events / seed / pythia tune / jet radius / subjet radius / Harmonic Flag / DCA / centrality bin / pT hard min / Number of BKGD Files (BKGD events / 100 ) / constit cut / Data Flag (legacy to be removed) / Runtime Stats Flag / Run on Grid Flag
 
 ################################################################################################
 #rm -r $outdir/$JOB_NUMBER
